@@ -1,0 +1,210 @@
+<div id="page">
+
+	<app-header></app-header>
+
+
+
+	<div class="page-content">
+
+
+		<!-- START MAIN CONTAINER -->
+		<div class="main-container" id="profile-page">
+			<h3 class="with-breaker animate-me fadeInUp">
+				<span> Pro</span>grams
+			</h3>
+
+
+			<div class="container" *ngIf="isLoader">
+				<div class="center">
+				  <div class="loader"></div>
+				  <br>
+					<b> Loading... </b>
+				</div>
+			  </div>
+
+			  
+
+			<div class="container" *ngIf="!isLoader">
+				<div class="row">
+					<div class="col-md-12 ">
+						<div class="card">
+
+
+							<div *ngIf="userType=='R'">
+								<div class="card-body">
+									<div class="card-block">
+										<div class="col-md-offset-6 col-md-6 col-sm-offset-6 col-sm-6" style="margin-bottom: 20px;">
+											<form>
+												<div class="text-left col-sm-4">
+													<label class="control-label">Sort By :</label>
+												</div>
+												<div class="text-right col-sm-8">
+														<button (click)='reset()' class="btn mui-btn--primary">RESET</button>
+													</div>
+												<div class="row">
+													<div class="col-sm-4">
+														<!-- <select class="form-control">
+																		<option value="">DD-MM-YYYY</option>
+																	</select> -->
+
+														<input type="date" class="form-control" placeholder="DD-MM-YYYY">
+													</div>
+													<div class="col-sm-4">
+														<select class="form-control" [(ngModel)]="rewardType" name="rewardType">
+															<option value="" style="display: none">Reward Type</option>
+															<option value="Cash">Cash</option>
+															<option value="Gift">Gift</option>
+															<option value="HOF">Hall of fame</option>
+															<option value="Thanks">Thanks</option>
+														</select>
+													</div>
+													<div class="col-sm-4">
+														<select class="form-control" [(ngModel)]="programType" name="programType">
+															<option value="" style="display: none">Program Type</option>
+															<option value="OpenDiscover">Open Discover</option>
+															<option value="PrivateDiscover">Private Discover</option>
+														</select>
+													</div>
+												</div>
+											</form>
+										</div>
+										<div class="clearfix"> </div>
+
+										<div class="table-responsive">
+											<table class="mui-table ">
+												<thead>
+
+													<tr>
+														<th> </th>
+														<th>Program </th>
+														<th>Bugs Resolved</th>
+														<th>Minimum Reward</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr *ngIf = "!latestPrograms.length">
+														<td colspan="4" style="text-align:center;">
+															<h5>No Data!</h5>
+														</td>
+
+													</tr>
+													 <tr *ngFor="let latestProgram of latestPrograms | paginate: { itemsPerPage: 3, currentPage: p }"   [routerLink]="['/programdetails', latestProgram.programId]">											 
+														<!-- <ng-container *ngIf="latestProgram.rewardType==rewardType"> -->
+														<td>
+																		<a>
+																			<div class=" text-center">
+																				<img src="{{latestProgram.companyLogoUrl?latestProgram.companyLogoUrl : 'assets/images/avatar.jpg'}}" class="img-responsive profile-img" style="height:  42px;width:  42px; " alt="user">
+																				<h5>{{latestProgram.companyName}}</h5>
+																				<h6>Launch Date : <span>{{latestProgram.creation_date}}</span></h6>
+																			</div>
+																		</a>
+																	</td>
+																	<td>
+																		<a>
+																			<div class="">
+																				<h5>{{latestProgram.programName}}  (<span *ngIf="latestProgram.program_type != 'public'">Private</span> <span *ngIf="latestProgram.program_type == 'public'"> Discover </span>) - {{latestProgram.programId}}</h5>
+																				<p>{{latestProgram.programDesc}} </p>
+																				<h5>Reward Type : <span> {{latestProgram.rewardType || '---'}} </span> </h5>
+																			</div>
+																			<div class="clearfix"></div>
+																		</a>
+																	</td>
+																	<td>{{latestProgram.bugsResolved}}</td>
+																	<td><h5><i class="fa fa-inr"> </i> {{latestProgram.minimumReward}}  </h5></td>
+																<!-- </ng-container> -->
+																</tr>
+															
+
+												</tbody>
+											</table>
+											<pagination-controls (pageChange)="p = $event"></pagination-controls>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+							<div *ngIf="userType=='C'">
+
+								<!-- <pre>
+									{{latestPrograms | json}}
+								</pre> -->
+								<div class="card-body">
+									<div class="card-header">
+										<!-- <h3 class="text-center">Programs</h3> -->
+										<div class="row">
+											<div class="col-md-12">
+												<span class="pull-right">
+													<a  routerLink="/programlaunch" class="mui-btn mui-btn--raised mui-btn--primary ">Launch a new Program </a>
+												</span>
+											</div>
+										</div>
+
+									</div>
+									<div class="card-block">
+										<div class="table-responsive">
+											<table id="example" class="mui-table mui-table--bordered table-hover" cellspacing="0" width="100%">
+												<thead>
+													<tr>
+														<th>Date</th>
+														<th>Program name</th>
+														<th>Program ID</th>
+														<th>Program Type</th>
+														<th>status</th>
+														<th> </th>
+													</tr>
+												</thead>
+
+												<tbody>
+													<tr *ngFor="let program of latestPrograms" [routerLink]="['/programdetails', program.programId]">
+														<td>{{program.creation_date}}</td>
+														<td>{{program.programName}}</td>
+														<td>{{program.programId}}</td>
+														<td>{{program.program_type}}</td>
+
+														<td>
+															<!-- <label class="label label-success ">{{program.program_status}}</label> -->
+															<label *ngIf="program.status=='open'" class="label label-success ">Active</label>
+															<label  *ngIf="program.status!='open'" class="label label-info ">Inactive</label>
+														</td>
+														<td>
+															<button type="button" class="mui-btn mui-btn--raised mui-btn--danger mui-btn--small">Close
+																<span class="mui-btn__ripple-container">
+																	<span class="mui-ripple mui--is-animating" style="width: 132.79px; height: 132.79px; top: -50px; left: -26px;"></span>
+																</span>
+															</button>
+														</td>
+													</tr>
+													
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END MAIN CONTAINER -->
+
+
+	</div>
+
+
+
+
+	<app-footer></app-footer>
+
+	<!-- SCROLL TOP -->
+	<a id="scroll-top" class="fadeInRight animate-me">
+		<i class="fa fa-angle-double-up"></i>
+	</a>
+
+</div>

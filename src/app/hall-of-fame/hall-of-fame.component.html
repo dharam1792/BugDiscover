@@ -1,0 +1,432 @@
+<div id="page">
+
+	<app-header></app-header>
+
+
+
+	<div class="page-content">
+
+
+		<!-- START MAIN CONTAINER -->
+		<div class="main-container">
+			<!-- <h3 class="with-breaker animate-me fadeInUp">
+				Programs <span> launch</span>
+			</h3> -->
+
+
+			<div class="container" *ngIf="isLoader">
+				<div class="center">
+					<div class="loader"></div>
+					<br>
+					<b> Loading... </b>
+				</div>
+			</div>
+
+			<div class="container" *ngIf="!isLoader">
+				<div class=" " *ngIf="_baseService.isNewHallofFame">
+					<div class="card-body">
+						<div class="card-block">
+							<div class="row">
+								<div class="col-md-12">
+									<ul class="mui-tabs__bar mui-tabs__bar--justified">
+										<li class="mui--is-active">
+											<a data-mui-toggle="tab" data-mui-controls="pane-justified-1">Hall of Fame</a>
+										</li>
+										<li>
+											<a data-mui-toggle="tab" data-mui-controls="pane-justified-2">My Hall of Fame</a>
+										</li>
+
+									</ul>
+									<div class="mui-tabs__pane mui--is-active" id="pane-justified-1">
+										<div class="row" *ngIf="(HallofFame.halloffame)?.length>0">
+											<div class="col-md-offset-6 col-md-6 col-sm-offset-6 col-sm-6" style="margin-bottom: 20px;">
+												<form>
+													<div class="row" >
+														<div class="col-sm-6">
+															<input type="text" [(ngModel)]="searchText" name="search" class="form-control" placeholder="Search..">
+														</div>
+														<div class="col-sm-6">
+															<select class="form-control" [(ngModel)]="orderByField" name="search2">
+																<option value="" style="display: none" selected>Sort By</option>
+																<option value="researcher_name">Name</option>
+																<option value="rank">Rank</option>
+																<option value="score">Score</option>
+															</select>
+														</div>
+
+													</div>
+												</form>
+
+
+											</div>
+											<div class="clearfix"> </div>
+										</div>
+
+										<div class="row" *ngIf="(HallofFame.halloffame)?.length==0">
+											<div class="col-sm-12 text-center">
+												<h5>No Data!</h5>
+											</div>
+
+										</div>
+
+
+
+										<div class="row" *ngIf="(HallofFame.halloffame)?.length>0">
+											<div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let Item of HallofFame.halloffame | filter:{ researcher_name: searchText }   | orderBy: orderByField">
+												<a (click)="getUserByID(Item.researcher_id,'halloffame')">
+													<div class="directory row">
+														<div class="directory-left col-xs-3">
+															<img [src]="Item.image" onError="this.src='assets/images/avatar.jpg'" class="img-responsive directory-img" height="72px"
+															 alt="Image">
+														</div>
+														<div class="directory-right col-xs-9">
+															<h5>{{Item.researcher_name}} </h5>
+															<div class="clearfix"> </div>
+															<div class="card-info">
+																<ul class="card-list">
+																	<li>
+																		{{Item.rank}}
+																		<span>Rank</span>
+																	</li>
+																	<li>
+																		{{Item.score}}
+																		<span>Score</span>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</a>
+											</div>
+
+
+
+											<div class="row" *ngIf="(HallofFame.halloffame | filter:{ researcher_name: searchText })?.length==0">
+												<div class="col-sm-12 text-center">
+													<h5>No Data!</h5>
+												</div>
+											</div>
+
+										</div>
+									</div>
+
+
+
+
+									<div class="mui-tabs__pane" id="pane-justified-2">
+
+										<div class="row" *ngIf="(HallofFame.myhalloffame)?.length>0">
+											<div class="col-md-offset-6 col-md-6 col-sm-offset-6 col-sm-6" style="margin-bottom: 20px;">
+												<form>
+													<div class="row">
+														<div class="col-sm-6">
+															<input type="text" [(ngModel)]="searchTextformyhall" name="search" class="form-control" placeholder="Search..">
+														</div>
+														<div class="col-sm-6">
+															<select class="form-control" [(ngModel)]="orderByFieldmyhall" name="search2">
+																<option value="" style="display: none" selected>Sort By</option>
+																<option value="researcher_name">Name</option>
+																<option value="rank">Rank</option>
+																<option value="score">Score</option>
+															</select>
+														</div>
+
+													</div>
+												</form>
+
+
+											</div>
+											<div class="clearfix"> </div>
+										</div>
+
+
+
+
+
+
+
+										<div class="row" *ngIf="(HallofFame.myhalloffame)?.length>0">
+											<div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let Item of HallofFame.myhalloffame | filter:{ companyName: searchTextformyhall }   | orderBy: orderByFieldmyhall">
+												<!-- (click)="getUserByID(Item.company_id)" -->
+												<a (click)="getUserByID(Item.company_id,'myhalloffame')">
+													<div class="directory row">
+														<div class="directory-left col-xs-3">
+															<img [src]="Item.image" onError="this.src='assets/images/avatar.jpg'" class="img-responsive directory-img" height="72px"
+															 alt="Image">
+														</div>
+														<div class="directory-right col-xs-9" style="padding-top:5px;">
+															<h5>{{Item.companyName}} </h5>
+															<div class="clearfix"> </div>
+															<!-- <div class="card-info">
+																<ul class="card-list">
+																	<li>
+																		{{Item.rank}}
+																		<span>Rank</span>
+																	</li>
+																	<li>
+																		{{Item.score}}
+																		<span>Score</span>
+																	</li>
+																</ul>
+															</div> -->
+														</div>
+													</div>
+												</a>
+											</div>
+											<div class="row" *ngIf="(HallofFame.halloffame | filter:{ companyName: searchTextformyhall })?.length==0">
+												<div class="col-sm-12 text-center">
+													<h5>No Data!</h5>
+												</div>
+
+											</div>
+										</div>
+
+
+										<div class="row" *ngIf="(HallofFame.myhalloffame)?.length==0">
+											<div class="col-sm-12 text-center">
+												<h5>No Data!</h5>
+											</div>
+
+										</div>
+
+
+									</div>
+
+
+
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="container" *ngIf="!isLoader">
+				<!-- {{selectedUser == 'halloffame'}}\\\\{{!_baseService.isNewHallofFame}} -->
+				<div class=" " *ngIf="!_baseService.isNewHallofFame && selectedUser == 'halloffame'">
+					<div class="card-body">
+						<div class="card-block">
+
+
+
+							<div class="row" id="profile-page" *ngIf="!_baseService.isNewHallofFame" style="height:100vh !important;">
+								<div class="col-sm-12 col-md-12">
+									<div class="card">
+										<div class="card-body">
+											<div class="card-block">
+												<div class="col-xs-6 col-md-3">
+													<div class="">
+														<img [src]="userProfileInfo[0].profileImageUrl" onError="this.src='assets/images/avatar.jpg'" class="img-responsive profile-img"
+														 style=" height:  120px;    width:  120px;" alt="user">
+													</div>
+												</div>
+												<div class="col-xs-6 col-md-3">
+													<h4 class="text-center">{{userProfileInfo[0].fullName?userProfileInfo[0].fullName:''}}</h4>
+													<br>
+													<!-- <div class="">
+														<img src="assets/images/qr.png" class="img-responsive" style=" height:  72px;    width:  72px;    margin: 0 auto;" alt="QR-CODE">
+													</div> -->
+												</div>
+												<div class="col-xs-12 col-md-6">
+													<ul class="timeline">
+														<li>
+															<div class="timeline-left">
+																<img src="assets/images/reward.png" alt="Rewards" class="img-responsive">
+															</div>
+															<div class="timeline-right">
+																<span>{{userProfileInfo?(userProfileInfo[0].reward?userProfileInfo[0].reward:0):0}}</span>
+																<b>Rewards </b>
+															</div>
+														</li>
+
+														<li>
+															<div class="timeline-left">
+																<img src="assets/images/score.png" alt="Rewards" class="img-responsive">
+															</div>
+															<div class="timeline-right">
+																<span>{{userProfileInfo?(userProfileInfo[0].score?userProfileInfo[0].score:0):0}}</span>
+																<b>Score </b>
+															</div>
+														</li>
+
+														<li>
+															<div class="timeline-left">
+																<img src="assets/images/rank.png" alt="Rewards" class="img-responsive">
+															</div>
+															<div class="timeline-right">
+																<span>{{userProfileInfo?(userProfileInfo[0].rank?userProfileInfo[0].rank:0):0}}</span>
+																<b>Rank </b>
+															</div>
+														</li>
+														<div class="clearfix"> </div>
+													</ul>
+												</div>
+												<div class="clearfix"> </div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6 col-md-6">
+
+									<div class="card">
+										<div class="card-body">
+											<div class="card-block">
+												<h4>Personal Information </h4>
+												<br>
+												<h4>{{userProfileInfo[0].fullName?userProfileInfo[0].fullName:'---'}}</h4>
+												<h4>About Me </h4>
+												<p class="">{{userProfileInfo?userProfileInfo[0].aboutMe:'---'}}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6 col-md-6">
+									<div class="card">
+										<div class="card-body">
+											<div class="card-block">
+												<div class="table-responsive">
+													<table class="mui-table">
+														<tbody>
+															<tr>
+																<td>Email</td>
+																<td colspan="2">{{userProfileInfo[0].email?userProfileInfo[0].email:'---'}}</td>
+															</tr>
+															<tr>
+																<td>Phone Number</td>
+																<td colspan="2">{{userProfileInfo[0].phone?userProfileInfo[0].phone:'---'}}</td>
+															</tr>
+															<tr>
+																<td>Skype Id</td>
+																<td colspan="2">{{userProfileInfo[0].skype?userProfileInfo[0].skype:'---'}}</td>
+															</tr>
+
+															<tr>
+																<td>Website</td>
+																<td colspan="2">{{userProfileInfo[0].website?userProfileInfo[0].website:'---'}}</td>
+															</tr>
+															<tr>
+																<td>Social Links</td>
+																<td colspan="2">{{userProfileInfo[0].socialLinks?userProfileInfo[0].socialLinks:'---'}}</td>
+															</tr>
+															<tr>
+																<td>Achivements</td>
+																<td colspan="2">{{userProfileInfo[0].achivements?userProfileInfo[0].achivements:'---'}}</td>
+															</tr>
+															<tr>
+																<td>Hall of Fame</td>
+																<td colspan="2">{{userProfileInfo[0].hallOfFame?userProfileInfo[0].hallOfFame:'---'}}</td>
+															</tr>
+															<tr>
+																<td>Certificates</td>
+																<td>
+
+																	<table class="mui-table">
+																		<tbody>
+																			<tr *ngFor="let certificateItem of userProfileInfo[0].certificates">
+																				<td>{{certificateItem.certificate?certificateItem.certificate:'---'}}</td>
+																				<td>{{certificateItem.license?certificateItem.certificate:'---'}}</td>
+																			</tr>
+																		</tbody>
+																	</table>
+
+																</td>
+															</tr>
+															<tr>
+																<td colspan="3">
+
+																	<button class="btn btn-block btn-danger" (click)="backToMain();">
+																		Back
+																	</button>
+																</td>
+
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+
+				<div class="main-container" id="profile-page" *ngIf="!_baseService.isNewHallofFame && selectedUser == 'myhalloffame'">
+						<h3 class="with-breaker animate-me fadeInUp">
+							Company <span> Profile </span>
+						</h3>
+						<div class="container"> 
+							<div class="row">
+			
+								<div class="col-sm-6 col-md-4">
+									<div class="card">
+										<div class="card-body">
+											<div class="card-block">
+												<div class="">
+													<img src="{{companyInfo.companyLogoUrl}}" class="img-responsive profile-img" style=" height:  120px;    width:  120px;" alt="user">
+												</div>
+			
+												<h4 class="text-center">{{companyInfo.companyName || '---'}}</h4>
+												<h4>About us </h4>
+												<p class="">{{companyInfo.companyDesc || '---'}}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6 col-md-8">
+									<div class="card">
+										<div class="card-body">
+											<div class="card-block">							
+												<h4>Personal Information  </h4><br/>
+												<div class="table-responsive">			
+													<table class="mui-table">
+														<tbody>												
+															<tr><td>Company Name</td><td colspan="2">{{companyInfo.companyName || '---'}}</td></tr>
+															<tr><td>Registrar Name</td><td colspan="2">XXXX</td></tr>
+															<tr><td>Registrar Designation</td><td colspan="2">{{companyInfo.designation || '---'}}</td></tr>
+															<tr><td>Email</td><td colspan="2">XXXX</td></tr>
+															<tr><td>Phone Number</td><td colspan="2">XXXX</td></tr>
+															<tr><td>Website</td><td colspan="2">XXXX</td></tr>
+															<tr><td>Social Links</td><td colspan="2">--</td></tr>
+															
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+			</div>
+
+		</div>
+		<!-- END MAIN CONTAINER -->
+
+
+
+	</div>
+
+
+
+
+	<app-footer></app-footer>
+
+	<!-- SCROLL TOP -->
+	<a id="scroll-top" class="fadeInRight animate-me">
+		<i class="fa fa-angle-double-up"></i>
+	</a>
+
+</div>

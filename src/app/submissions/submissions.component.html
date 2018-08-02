@@ -1,0 +1,430 @@
+<div id="page">
+
+	<app-header></app-header>
+
+
+
+	<div class="page-content">
+
+
+		<!-- START MAIN CONTAINER -->
+		<div class="main-container">
+			<!-- <h3 class="with-breaker animate-me fadeInUp">
+				Programs <span> launch</span>
+			</h3> -->
+
+
+			<div class="container" *ngIf="isLoader">
+				<div class="center">
+					<div class="loader"></div>
+					<br>
+					<b> Loading... </b>
+				</div>
+			</div>
+
+
+			<div *ngIf="!isLoader">
+				<div *ngIf="userType=='R'">
+					<div class="container">
+						<div class=" ">
+							<div class="card-body">
+								<div class="card-block">
+									<div class="row">
+										<div class="col-md-12">
+											<ul class="mui-tabs__bar mui-tabs__bar--justified">
+												<li class="mui--is-active">
+													<a data-mui-toggle="tab" data-mui-controls="pane-justified-1">Submissions</a>
+												</li>
+												<li>
+													<a data-mui-toggle="tab" data-mui-controls="pane-justified-2">Submit report</a>
+												</li>
+
+											</ul>
+											<div class="mui-tabs__pane mui--is-active" id="pane-justified-1">
+												<div class="table-responsive">
+													<table class="mui-table">
+														<thead>
+															<tr>
+																<th>Submission Date</th>
+																<th>Submission Id</th>
+																<th>Program Name </th>
+																<th>Program Type </th>
+																<th>Scope </th>
+																<th>Status </th>
+																<th> </th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr *ngFor="let submission of latestSubmissions.submissions">
+																<td>
+																	{{submission.submissionDate}}
+																</td>
+																<td>
+																	{{submission.submissionId}}
+																</td>
+																<td>
+																	{{submission.programName}}
+																</td>
+																<td>
+																	{{submission.programType}}
+																</td>
+																<td>
+																	{{submission.scope.category}}
+																</td>
+																<td>
+																	<label *ngIf="submission.status == 'approve'" class="label label-success">Approved</label>
+																	<label class="label label-info" *ngIf="submission.status == 'pending'">Pending</label>
+																	<label class="label label-danger" *ngIf="submission.status == 'reject'">Rejected</label>
+																</td>
+																<td>
+																	<a href="message-support.html" class="mui-btn--raised  mui-btn--primary  mui-btn--small mui-btn--flat" title="Send Query">
+																		<i class="fa fa-envelope-o"> </i>
+																	</a>
+																	<a href="submission-preview.html" class="mui-btn--raised  mui-btn--primary  mui-btn--small mui-btn--flat" title="View">
+																		<i class="fa fa-eye"> </i>
+																	</a>
+																</td>
+															</tr>
+															<tr *ngIf="latestSubmissions.submissions.length == 0">
+																<td colspan="7" style="text-align:center;">
+																	<h5>No Data!</h5>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="mui-tabs__pane" id="pane-justified-2">
+												<div class="table-responsive">
+													<table class="mui-table">
+														<thead>
+															<tr>
+																<th>Participation Date</th>
+																<th>program name</th>
+																<th>program ID</th>
+																<th>program type</th>
+																<th> </th>
+															</tr>
+														</thead>
+														<tbody>
+
+															<tr *ngFor="let submitReport of latestSubmissions.submitReport">
+																<td>
+																	{{submitReport.participationDate}}
+																</td>
+																<td>
+																	{{submitReport.programName}}
+																</td>
+																<td>
+																	{{submitReport.programId}}
+																</td>
+																<td>
+																	{{submitReport.programType}}
+																</td>
+																<td>
+																	<a [routerLink]="['/submit-report',submitReport.programId,submitReport.programName]" class="mui-btn mui-btn--raised mui-btn--primary ">Submit Report </a>
+																</td>
+
+															</tr>
+															<tr *ngIf="latestSubmissions.submitReport.length == 0">
+																<td colspan="7" style="text-align:center;">
+																	<h5>No Data!</h5>
+																</td>
+															</tr>
+
+
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div *ngIf="userType=='C'">
+
+					<h3 class="with-breaker animate-me fadeInUp">
+						Sub
+						<span>missions </span>
+					</h3>
+
+					<div class="container">
+
+
+						<div class=" ">
+							<div class="card-body">
+								<div class="card-block">
+									<div class="row">
+
+										<div class="col-sm-12">
+											<div class="col-sm-3">
+												<div class="card" (click)="filterByTableDAta('totalSubmissions')">
+													<div class="card-body">
+														<div class="card-block">
+															<div class="media">
+																<div class="media-body text-xs-left">
+																	<h3 class="pink">{{latestSubmissions.status?latestSubmissions.status.totalSubmissions:0}}</h3>
+																	<span>Submissions Received</span>
+																</div>
+																<div class="media-right media-middle">
+																	<i class="fa fa-paper-plane pink font-large-2 float-xs-right"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="card" (click)="filterByTableDAta('completedCount')">
+													<div class="card-body">
+														<div class="card-block">
+															<div class="media">
+																<div class="media-body text-xs-left">
+																	<h3 class="pink">{{latestSubmissions.status?latestSubmissions.status.completedCount:0}}</h3>
+																	<span>Bugs Resolved</span>
+																</div>
+																<div class="media-right media-middle">
+																	<i class="fa fa-bug pink font-large-2 float-xs-right"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="card" (click)="filterByTableDAta('pendingCount')">
+													<div class="card-body">
+														<div class="card-block">
+															<div class="media">
+																<div class="media-body text-xs-left">
+																	<h3 class="pink">{{latestSubmissions.status?latestSubmissions.status.pendingCount:0}}</h3>
+																	<span>Bugs Pending</span>
+																</div>
+																<div class="media-right media-middle">
+																	<i class="fa fa-bug pink font-large-2 float-xs-right"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="card" (click)="filterByTableDAta('inProgressCount')">
+													<div class="card-body">
+														<div class="card-block">
+															<div class="media">
+																<div class="media-body text-xs-left">
+																	<h3 class="pink">{{latestSubmissions.status?latestSubmissions.status.inProgressCount:0}}</h3>
+																	<span>Bugs in Progress</span>
+																</div>
+																<div class="media-right media-middle">
+																	<i class="fa fa-bug pink font-large-2 float-xs-right"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="clearfix">
+											<div class="col-md-12">
+												<ul class="mui-tabs__bar mui-tabs__bar--justified">
+													<li class="mui--is-active">
+														<a data-mui-toggle="tab" data-mui-controls="pane-justified-1">Open Discover</a>
+													</li>
+													<li>
+														<a data-mui-toggle="tab" data-mui-controls="pane-justified-2">Private Discover</a>
+													</li>
+
+												</ul>
+												<div class="mui-tabs__pane mui--is-active" id="pane-justified-1">
+
+													<table class="mui-table">
+														<thead>
+															<tr>
+																<th>Date </th>
+																<th>Submission Id </th>
+																<th>Program Name </th>
+																<th>Scope </th>
+																<th>Researcher Name </th>
+																<th>Severity </th>
+																<th>Status </th>
+																<th>Action </th>
+																<th> </th>
+															</tr>
+														</thead>
+														<tbody>
+
+
+															<tr *ngFor="let publicitem of latestSubmissions.bugs.public">
+																<td>{{publicitem.date | date: 'dd/MM/yyyy'}}</td>
+																<td>{{publicitem.id}}</td>
+																<td>{{publicitem.program_name}}</td>
+																<td>
+																	<table>
+																		<tr *ngFor="let scopeItem of publicitem.scope">
+																			<td>
+																				<b>Category : </b> {{scopeItem.category}}</td>
+																			<td>
+																				<b>,</b>
+																			</td>
+																			<td>
+																				<b>Target domain : </b> {{scopeItem.targetDomain}} </td>
+																		</tr>
+																	</table>
+																</td>
+
+																<td>{{publicitem.researchername}}</td>
+																<td>
+																	<label class="label label-info">{{publicitem.severity}}</label>
+																</td>
+																<td>
+																	<label class="label label-info">{{publicitem.status}}</label>
+																	<!-- <label *ngIf="publicitem.status==1" class="label label-success ">{{publicitem.status}}</label>
+																												<label  *ngIf="publicitem.status==0" class="label label-info ">{{publicitem.status}}</label> -->
+
+																</td>
+																<td>
+																	<select>
+																		<option disabled="" selected="">Action</option>
+																		<option value="">In Progress</option>
+																		<option value="">Resolved</option>
+
+																	</select>
+																</td>
+																<td>
+																	<a class="mui-btn--raised  mui-btn--primary  mui-btn--small mui-btn--flat ">
+																		<i class="fa fa-envelope-o"> </i>
+																	</a>
+																	<a class="mui-btn--raised  mui-btn--primary  mui-btn--small mui-btn--flat ">
+																		<i class="fa fa-eye"> </i>
+																	</a>
+																</td>
+															</tr>
+
+															<tr *ngIf="latestSubmissions.bugs.public?.length==0">
+																<td colspan="9" style="border-bottom: 1px solid #dadada;">
+																	<h5 class="text-center">No Data!</h5>
+																</td>
+															</tr>
+
+														</tbody>
+													</table>
+
+												</div>
+												<div class="mui-tabs__pane" id="pane-justified-2">
+
+													<table class="mui-table">
+														<thead>
+															<tr>
+																<th>Date </th>
+																<th>Submission Id </th>
+																<th>Program Name </th>
+																<th>Scope </th>
+																<th>Researcher Name </th>
+																<th>Severity </th>
+																<th>Status </th>
+																<th>Action </th>
+																<th> </th>
+															</tr>
+														</thead>
+														<tbody>
+
+
+															<tr *ngFor="let publicitem of latestSubmissions.bugs.private">
+																<td>{{publicitem.date | date: 'dd/MM/yyyy'}}</td>
+																<td>{{publicitem.id}}</td>
+																<td>{{publicitem.program_name}}</td>
+																<td>
+																	<table>
+																		<tr *ngFor="let scopeItem of publicitem.scope">
+																			<td>
+																				<b>Category : </b> {{scopeItem.category}}</td>
+																			<td>
+																				<b>,</b>
+																			</td>
+																			<td>
+																				<b>Target domain : </b> {{scopeItem.targetDomain}} </td>
+																		</tr>
+																	</table>
+																</td>
+
+																<td>{{publicitem.researchername}}</td>
+																<td>
+																	<label class="label label-info">{{publicitem.severity}}</label>
+																</td>
+																<td>
+																	<label class="label label-info">{{publicitem.status}}</label>
+																	<!-- <label *ngIf="publicitem.status==1" class="label label-success ">{{publicitem.status}}</label>
+																												<label  *ngIf="publicitem.status==0" class="label label-info ">{{publicitem.status}}</label> -->
+
+																</td>
+																<td>
+																	<select>
+																		<option disabled="" selected="">Action</option>
+																		<option value="">In Progress</option>
+																		<option value="">Resolved</option>
+
+																	</select>
+																</td>
+																<td>
+																	<a class="mui-btn--raised  mui-btn--primary  mui-btn--small mui-btn--flat ">
+																		<i class="fa fa-envelope-o"> </i>
+																	</a>
+																	<a class="mui-btn--raised  mui-btn--primary  mui-btn--small mui-btn--flat ">
+																		<i class="fa fa-eye"> </i>
+																	</a>
+																</td>
+															</tr>
+
+															<tr *ngIf="latestSubmissions.bugs.private?.length==0">
+																<td colspan="9" style="border-bottom: 1px solid #dadada;">
+																	<h5 class="text-center">No Data!</h5>
+																</td>
+															</tr>
+
+														</tbody>
+													</table>
+
+
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+
+		</div>
+		<!-- END MAIN CONTAINER -->
+
+
+	</div>
+
+
+
+
+	<app-footer></app-footer>
+
+	<!-- SCROLL TOP -->
+	<a id="scroll-top" class="fadeInRight animate-me">
+		<i class="fa fa-angle-double-up"></i>
+	</a>
+
+</div>

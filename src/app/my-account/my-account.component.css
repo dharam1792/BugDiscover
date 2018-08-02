@@ -1,0 +1,7 @@
+.card {
+    min-height: 60vh;
+}
+
+.card.small-card {
+    min-height: 13vh !important;
+}

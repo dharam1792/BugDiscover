@@ -1,0 +1,62 @@
+<div id="page">
+
+    <!-- <app-header></app-header> -->
+  
+  
+  
+    <div class="page-content">
+  
+  
+      <!-- START MAIN CONTAINER -->
+      <div class="main-container">
+        <!-- <h3 class="with-breaker animate-me fadeInUp">
+          Programs <span> launch</span>
+        </h3> -->
+  
+        <div class="container">
+          <div class=" " style="height: 100vh;">
+            <div class="card-body">
+              <div class="card-block">
+                <div class="row">
+                 
+                    <div class="card-block">
+                      
+                        <div *ngIf="activationStatus.success" class="text-center" style="padding-top:5%;">
+                          <h2>{{activationStatus.message}}</h2>
+
+                          <a routerLink="/" class="mui-btn mui-btn--raised mui-btn--primary mui-btn--small">Go Back to Login</a>
+
+                        </div>
+
+                        <div *ngIf="!activationStatus.success" class="text-center" style="padding-top:5%;">
+                            <h2>{{activationStatus.message}}</h2>
+                          </div>
+                      </div>
+                      
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+      <!-- END MAIN CONTAINER -->
+  
+  
+  
+    </div>
+  
+  
+  
+  
+  
+  
+    <!-- <app-footer></app-footer> -->
+  
+    <!-- SCROLL TOP -->
+    <a id="scroll-top" class="fadeInRight animate-me">
+      <i class="fa fa-angle-double-up"></i>
+    </a>
+  
+  </div>

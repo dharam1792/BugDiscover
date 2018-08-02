@@ -1,0 +1,322 @@
+<div id="page">
+
+    <app-header></app-header>
+  
+  
+  
+    <div class="page-content">
+  
+  
+      <!-- START MAIN CONTAINER -->
+      <div class="main-container" id="profile-page">
+        <h3 class="with-breaker animate-me fadeInUp">
+          <span> Messages </span>
+        </h3>
+  
+        <div class="container" *ngIf="isLoader">
+          <div class="center">
+            <div class="loader"></div>
+            <br>
+            <b> Loading... </b>
+          </div>
+        </div>
+  
+  
+  
+        <div class="container" *ngIf="!isLoader">
+          <div class="row">
+            <div class="col-md-3 profile-left">
+              <div class="card">
+                <div class="card-body">
+                  <ul class="nav nav-tabs-left" role="tablist" style="width: 100%;float: none;">
+                    <li [ngClass]="{'active': isTabActive===1}" (click)="makeTabActive(1)">
+                      <a routerLink="/messages">
+                        <i class="fa fa-envelope"></i> INBOX</a>
+                    </li>
+                    <li [ngClass]="{'active': isTabActive===2}" (click)="makeTabActive(2)">
+                      <a>
+                        <i class="fa fa-envelope"></i> SENT </a>
+                    </li>
+                    <li [ngClass]="{'active': isTabActive===3}" (click)="makeTabActive(3)">
+                      <a>
+                        <i class="fa fa-trash"></i> TRASH</a>
+                    </li>
+                    <li [ngClass]="{'active': isTabActive===4}" (click)="makeTabActive(4)">
+                        <a>
+                          <i class="fa fa-info"></i> SUPPORT</a>
+                      </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-9 profile-right" *ngIf="isTabActive==1">
+                <div class="card">
+                    <div class="card-body">
+                     
+                      	<div class=" " id="message" *ngIf="!ViewMsgDetail">
+                            <h4 class="message-title">
+                              Inbox
+                              <span class="pull-right" *ngIf="InboxMessages?.length>0">
+                                <button class="mui-btn--danger  mui-btn--small mui-btn--flat " (click)="deleteMsg();"> <i class="fa fa-trash-o"> </i> </button>
+                              </span>
+                            </h4>
+          
+                            <div class="message-list-body">
+                              <ul class="message-list">											 
+                                <li> 
+                                  <div class="row" *ngFor="let inboxItem of InboxMessages">
+                                    <div class="col-xs-1 col-sm-1">
+                                      <div class="pure-checkbox1" (click)="selChk(inboxItem.messageid)">
+                                       
+                                        <label>
+                                          <input type="checkbox" >
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-xs-11 col-sm-11" (click)="viewMsg(inboxItem.messageid);">
+                                      <a> 
+                                        <div class="col-sm-3">
+                                          <p><span class="sender-name"> {{inboxItem.sender}}</span></p>
+                                        </div>
+                                        <div class="col-sm-7">
+                                          <div class="subject">{{inboxItem.subject}}  </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                          <div class="message-date"> {{inboxItem.createdtime  | date: 'dd/MM/yyyy'}}   </div>
+                                        </div>
+                                        <div class="clearfix"> </div>
+                                      </a>
+                                    </div>
+                                  </div> 								 
+                                </li>  											 
+                               
+                              </ul>
+
+                             
+                            </div>
+                          </div>
+
+                      <div class=" " id="message" *ngIf="ViewMsgDetail">
+                        <h4 class="message-title">Messages 
+                            <span class="pull-right" *ngIf="InboxMessages?.length>0">
+                                <button class="mui-btn--danger  mui-btn--small mui-btn--flat " (click)="closeMsg();"> <i class="fa fa-close"> </i> </button>
+                              
+                              </span>
+                        </h4>
+                        <div class="message-list-body">
+                          <ul class="message-chat-list">
+
+                            <span *ngFor="let msg of latestMessages">
+                                <li [ngClass]="{'sent': msg.msgType==='sent','received': msg.msgType==='received'}"> <span class="msg"> {{msg.subject}}  </span></li>
+                            </span>
+                            <!-- <li class="sent"> <span class="msg"> Message  </span></li>
+                            <li class="received"> <span class="msg"> Message  reply </span></li> -->
+      
+                          </ul>
+                        </div>
+                        <div class="message-reply">
+                          <form>
+                            <!-- <div class="form-group">
+                              <div class="row"> 
+                                <div class="col-md-8">
+                                  <input type="text" class="form-control" name="" placeholder="Subject">
+                                </div>
+                              </div>
+                            </div> -->
+                            <div class="row">
+                              <div class="message-input col-xs-10">
+                                <textarea class="form-control" name="replyMsg" [(ngModel)]="replyMsg" rows="1" placeholder="Type your message.."></textarea>
+                              
+                              </div>
+                              
+                              <!-- <div class="file-upload col-xs-2">
+                                <div class="upload">
+                                  <label><i class="fa fa-paperclip"> </i> </label> 
+                                  <input type="file" name="images1[]" id="images" multiple="">
+                                </div>
+                              </div> -->
+                              <div class="message-sent col-xs-2">
+                                <button type="button" (click)="sendMsg();"  class="mui-btn mui-btn--raised mui-btn--primary btn-block"><i class="fa fa-paper-plane"> </i> </button>
+                              </div>
+
+                            </div>
+                          </form>
+                        </div>
+      
+                      </div>
+                    </div>
+                  </div>
+            </div>
+  
+  
+            <div class="col-md-9 profile-right" *ngIf="isTabActive==2">
+                <div class="card">
+                    <div class="card-body">
+                      <div class=" " id="message">
+                        <h4 class="message-title">
+                          Sent
+                          <span class="pull-right" *ngIf="SentMessages?.length>0">
+                            <button class="mui-btn--danger  mui-btn--small mui-btn--flat " (click)="deleteMsg();"> <i class="fa fa-trash-o"> </i> </button>
+                          </span>
+                        </h4>
+      
+                        <div class="message-list-body">
+                          <ul class="message-list">											 
+                            <li> 
+                              <div class="row" *ngFor="let inboxItem of SentMessages">
+                                <div class="col-xs-1 col-sm-1">
+                                  <div class="pure-checkbox1" (click)="selChk(inboxItem.messageid)">
+                                   
+                                    <label>
+                                      <input type="checkbox" >
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-xs-11 col-sm-11" (click)="viewMsg(inboxItem.messageid);">
+                                  <a> 
+                                    <div class="col-sm-3">
+                                      <p><span class="sender-name"> {{inboxItem.sender}}</span></p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                      <div class="subject">{{inboxItem.subject}}  </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                      <div class="message-date"> {{inboxItem.createdtime  | date: 'dd/MM/yyyy'}}   </div>
+                                    </div>
+                                    <div class="clearfix"> </div>
+                                  </a>
+                                </div>
+                              </div> 								 
+                            </li>  											 
+                           
+                          </ul>
+
+                         
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+  
+  
+  
+            <div class="col-md-9 profile-right" *ngIf="isTabActive==3">
+                <div class="card">
+                    <div class="card-body">
+                      <div class=" " id="message">
+                        <h4 class="message-title">
+                          Trash
+                          <span class="pull-right" *ngIf="TrashMessages?.length>0">
+                            <button class="mui-btn--danger  mui-btn--small mui-btn--flat " (click)="deleteMsg();"> <i class="fa fa-trash-o"> </i> </button>
+                          </span>
+                        </h4>
+      
+                        <div class="message-list-body">
+                          <ul class="message-list">											 
+                            <li> 
+                              <div class="row" *ngFor="let inboxItem of TrashMessages">
+                                <div class="col-xs-1 col-sm-1">
+                                  <div class="pure-checkbox1" (click)="selChk(inboxItem.messageid)">
+                                   
+                                    <label>
+                                      <input type="checkbox" >
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-xs-11 col-sm-11" (click)="viewMsg(inboxItem.messageid);">
+                                  <a> 
+                                    <div class="col-sm-3">
+                                      <p><span class="sender-name"> {{inboxItem.sender}}</span></p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                      <div class="subject">{{inboxItem.subject}}  </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                      <div class="message-date"> {{inboxItem.createdtime  | date: 'dd/MM/yyyy'}}   </div>
+                                    </div>
+                                    <div class="clearfix"> </div>
+                                  </a>
+                                </div>
+                              </div> 								 
+                            </li>  											 
+                           
+                          </ul>
+
+                         
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+  
+
+            <div class="col-md-9 profile-right" *ngIf="isTabActive==4">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class=" " id="message">
+                            <h4 class="message-title">Messages 
+                             
+                            </h4>
+                            <div class="message-list-body">
+                              <ul class="message-chat-list">
+    
+                                <span *ngFor="let msg of SupportMessages">
+                                    <li [ngClass]="{'sent': msg.msgType==='sent','received': msg.msgType==='received'}"> <span class="msg"> {{msg.message}}  </span></li>
+                                </span>
+                                <!-- <li class="sent"> <span class="msg"> Message  </span></li>
+                                <li class="received"> <span class="msg"> Message  reply </span></li> -->
+          
+                              </ul>
+                            </div>
+                            <div class="message-reply">
+                              <form>
+                                <!-- <div class="form-group">
+                                  <div class="row"> 
+                                    <div class="col-md-8">
+                                      <input type="text" class="form-control" name="" placeholder="Subject">
+                                    </div>
+                                  </div>
+                                </div> -->
+                                <div class="row">
+                                  <div class="message-input col-xs-10">
+                                    <textarea class="form-control" name="replyMsg2" [(ngModel)]="replyMsg2" rows="1" placeholder="Type your message.."></textarea>
+                                  
+                                  </div>
+                                
+                                  <div class="message-sent col-xs-2">
+                                    <button type="button" (click)="sendMsg2();"  class="mui-btn mui-btn--raised mui-btn--primary btn-block"><i class="fa fa-paper-plane"> </i> </button>
+                                  </div>
+    
+                                </div>
+                              </form>
+                            </div>
+          
+                          </div>
+
+                    
+                    </div>
+                  </div>
+            </div>
+  
+  
+          </div>
+        </div>
+  
+      </div>
+      <!-- END MAIN CONTAINER -->
+  
+  
+    </div>
+  
+  
+  
+  
+    <app-footer></app-footer>
+  
+    <!-- SCROLL TOP -->
+    <a id="scroll-top" class="fadeInRight animate-me">
+      <i class="fa fa-angle-double-up"></i>
+    </a>
+  
+  </div>

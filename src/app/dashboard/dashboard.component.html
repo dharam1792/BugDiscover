@@ -1,0 +1,622 @@
+
+<div id="page">
+
+	<app-header></app-header>
+
+
+
+	<div class="page-content">
+
+
+		<!-- START MAIN CONTAINER -->
+		<div class="main-container">
+			<h3 class="with-breaker animate-me fadeInUp">
+				Dash
+				<span>board</span>
+			</h3>
+
+
+			<div class="container" *ngIf="isLoader">
+				<div class="center">
+					<div class="loader"></div>
+					<br>
+					<b> Loading... </b>
+				</div>
+			</div>
+
+			<div *ngIf="!isLoader">
+				<div *ngIf="userType=='R'">
+					<div class="container" *ngIf="!isLoader">
+						<div class="row">
+							<div class="col-md-4">
+	
+								<div class="card">
+									<div class="card-body">
+										<div class="card-block">
+											<div class="media-body">
+												<img [src]="_baseService.userProfile?_baseService.userProfile.profileImageUrl:'assets/images/avatar.jpg'" onError="this.src='assets/images/avatar.jpg'"
+												 class="img-responsive profile-img" style="height:  64px;width:  64px;float: left; margin-left: 7%;" alt="user"
+												/>
+												<h4 class="text-center" style="margin-top: 15px;"> {{_baseService.userProfile?_baseService.userProfile.fullName:''}} </h4>
+											</div>
+	
+											<div class="slider text-center">
+												<div id="text-carousel" class="carousel slide" data-ride="carousel">
+													<!-- Wrapper for slides -->
+													<div class="carousel-inner">
+														<div class="item active col-sm-4">
+															<div class="carousel-content">
+																<div>
+																	<h4 class="pink">{{dashboardInfo.rewards || '0'}}</h4>
+																	<span class="green">REWARDS</span>
+																</div>
+															</div>
+														</div>
+	
+														<div class="item active col-sm-4">
+															<div class="carousel-content">
+																<div>
+																	<h4 class="pink">{{dashboardInfo.rewards || '0'}}</h4>
+																	<span class="green">RANK</span>
+																</div>
+															</div>
+														</div>
+														<div class="item active col-sm-4">
+															<div class="carousel-content">
+																<div>
+																	<h4 class="pink">{{dashboardInfo.score || '0'}}</h4>
+																	<span class="green">SCORE</span>
+																</div>
+															</div>
+														</div>
+													</div>
+	
+	
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-8">
+								<div class="col-md-4 col-sm-4 col-xs-6">
+									<a>
+										<div class="card " (click)="makeFilter('totalPrograms')">
+											<div class="card-body">
+												<div class="card-block">
+													<div class="media">
+														<div class="media-body text-xs-left">
+															<h3 class="pink">{{dashboardInfo.tiles.totalPrograms?dashboardInfo.tiles.totalPrograms:0}}</h3>
+															<span>Total Programs</span>
+														</div>
+														<div class="media-right media-middle">
+															<i class="fa fa-tasks pink font-large-2 float-xs-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-6">
+									<a>
+										<div class="card " (click)="makeFilter('ongoingPrograms')">
+											<div class="card-body">
+												<div class="card-block">
+													<div class="media">
+														<div class="media-body text-xs-left">
+															<h3 class="green">{{dashboardInfo.tiles.ongoingPrograms?dashboardInfo.tiles.ongoingPrograms:0}}</h3>
+															<span>Ongoing Programs</span>
+														</div>
+														<div class="media-right media-middle">
+															<i class="fa fa-calendar green font-large-2 float-xs-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-6">
+									<a>
+										<div class="card " (click)="makeFilter('totalSubmissions')">
+											<div class="card-body">
+												<div class="card-block">
+													<div class="media">
+														<div class="media-body text-xs-left">
+															<h3 class="deep-orange">{{dashboardInfo.tiles.totalSubmissions?dashboardInfo.tiles.totalSubmissions:0}}</h3>
+															<span>Total Submissions</span>
+														</div>
+														<div class="media-right media-middle">
+															<i class="fa fa-paper-plane deep-orange font-large-2 float-xs-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-6">
+									<a>
+										<div class="card" (click)="makeFilter('successSubmissions')">
+											<div class="card-body">
+												<div class="card-block">
+													<div class="media">
+														<div class="media-body text-xs-left">
+															<h3 class="green">{{dashboardInfo.tiles.successSubmissions?dashboardInfo.tiles.successSubmissions:0}}</h3>
+															<span>Success Submissions</span>
+														</div>
+														<div class="media-right media-middle">
+															<i class="fa fa-paper-plane green font-large-2 float-xs-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-6">
+									<a>
+										<div class="card " (click)="makeFilter('rewards')">
+											<div class="card-body">
+												<div class="card-block">
+													<div class="media">
+														<div class="media-body text-xs-left">
+															<h3 class="cyan">{{dashboardInfo.tiles.rewards?dashboardInfo.tiles.rewards:0}}</h3>
+															<span>Rewards</span>
+														</div>
+														<div class="media-right media-middle">
+															<i class="fa fa-gift cyan font-large-2 float-xs-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-6">
+									<a>
+										<div class="card" (click)="makeFilter('score')">
+											<div class="card-body">
+												<div class="card-block">
+													<div class="media">
+														<div class="media-body text-xs-left">
+															<h3 class="pink">{{dashboardInfo.tiles.score?dashboardInfo.tiles.score:0}}</h3>
+															<span>Score</span>
+														</div>
+														<div class="media-right media-middle">
+															<i class="fa fa-pie-chart pink font-large-2 float-xs-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-6">
+									<a>
+										<div class="card" (click)="makeFilter('openDiscover')">
+											<div class="card-body">
+												<div class="card-block">
+													<div class="media">
+														<div class="media-body text-xs-left">
+															<h3 class="green">{{dashboardInfo.tiles.openDiscover?dashboardInfo.tiles.openDiscover:0}}</h3>
+															<span>Open Discover</span>
+														</div>
+														<div class="media-right media-middle">
+															<i class="fa fa-unlock green font-large-2 float-xs-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-6">
+									<a>
+										<div class="card" (click)="makeFilter('privateDiscover')">
+											<div class="card-body">
+												<div class="card-block">
+													<div class="media">
+														<div class="media-body text-xs-left">
+															<h3 class="pink">{{dashboardInfo.tiles.privateDiscover?dashboardInfo.tiles.privateDiscover:0}}</h3>
+															<span>Private Discover</span>
+														</div>
+														<div class="media-right media-middle">
+															<i class="fa fa-lock pink font-large-2 float-xs-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br/>
+					<br/>
+					<div class="container" *ngIf="!isLoader">
+						<!-- <input [(ngModel)]="searchText" placeholder="search text goes here"> -->
+	
+						<!-- | filter:{program_id: searchText}
+						{{searchText}} -->
+	
+						<div class=" table-responsive">
+							<table class="mui-table mui-table--bordered" id="">
+								<thead>
+									<th>Program Id</th>
+									<th>Program Name</th>
+									<th>Program Type</th>
+									<th>Program Status</th>
+									<th>Submission Status</th>
+									<th>Rewards</th>
+									<th>Score</th>
+								</thead>
+								<tbody>
+	
+									<!-- <tr *ngIf="!dashboardInfo.programs">
+										<td style="text-align:center;" colspan="7">
+										</td>
+									</tr>
+	
+									<tr *ngIf="!dashboardInfo.programs">
+										<td style="text-align:center;" colspan="7">No Records!</td>
+									</tr> -->
+	
+	
+									<tr *ngFor="let program of filterResponse | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+										<td>{{program.program_id}}</td>
+										<td>{{program.program_name}}</td>
+										<td>{{program.program_type}}</td>
+										<td>
+												{{program.program_status}}
+											<!-- <label class="label" [ngClass]="{'label-warning':program.program_status=='ongoing','label-success':program.program_status=='closed'}">{{program.program_status}}</label> -->
+										</td>
+										<td>
+											<label class="label label-success ">{{program.submission_status}}</label>
+										</td>
+										<td>{{program.rewards?program.rewards:0}}</td>
+										<td>{{program.score?program.score:0}}</td>
+									</tr>
+	
+									<tr *ngIf="filterResponse?.length==0">
+										<td style="text-align:center;" colspan="7"></td>
+	
+									</tr>
+	
+									<tr *ngIf="filterResponse?.length==0">
+										<td style="text-align:center;" colspan="7">No Records!</td>
+	
+									</tr>
+	
+								</tbody>
+							</table>
+	
+							<pagination-controls (pageChange)="p = $event" *ngIf="filterResponse?.length>0"></pagination-controls>
+	
+						</div>
+					</div>
+				</div>
+	
+				<div *ngIf="userType=='C'">
+					<div class="container">
+						<div class="row">
+	
+							<div class="col-sm-3 col-xs-12">
+								<div class="card text-center">
+									<div class="card-body">
+										<div class="card-block">
+											<div class="media-body">
+												<img [src]="_baseService.userProfile?_baseService.userProfile.profileImageUrl:'assets/images/avatar.jpg'" onError="this.src='assets/images/avatar.jpg'"
+												 class="img-responsive profile-img" style="height:  64px;width:  64px;float: left; margin-left: 7%;" alt="user"
+												/>
+												<h4 class="text-center" style="margin-top: 15px;"> {{_baseService.userProfile?_baseService.userProfile.companyName:''}} </h4>
+											</div>
+	
+										</div>
+									</div>
+								</div>
+							</div>
+	
+							<div class="col-sm-9 col-xs-12">
+								<!-- Risk States -->
+							</div>
+						</div>
+	
+						<br>
+						<br>
+						<br>
+						<div class="row">
+							<div class="col-md-3 col-sm-3 col-xs-6">
+								<a (click)="filterByTableDAta('totalPrograms')">
+									<div class="card">
+										<div class="card-body">
+											<div [ngClass]="{selectedTab: activeTab === 'totalPrograms'}" class="card-block">
+												<div class="media">
+													<div class="media-body text-xs-left">
+														<h3 class="pink" >{{dashboardInfo.tiles?dashboardInfo.tiles.totalPrograms:0}}</h3>
+														<span>Programs Launched</span>
+													</div>
+													<div class="media-right media-middle">
+														<i class="fa fa-tasks pink font-large-2 float-xs-right"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-6">
+								<a (click)="filterByTableDAta('submissionReceived')">
+									<div class="card">
+										<div class="card-body">
+											<div [ngClass]="{selectedTab: activeTab === 'submissionReceived'}" class="card-block">
+												<div class="media">
+													<div class="media-body text-xs-left">
+														<h3 class="pink">{{dashboardInfo.tiles?dashboardInfo.tiles.submissionReceived:0}}</h3>
+														<span>Submissions Received</span>
+													</div>
+													<div class="media-right media-middle">
+														<i class="fa fa-paper-plane  pink font-large-2 float-xs-right"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-6">
+								<a (click)="filterByTableDAta('bugResolved')">
+									<div class="card">
+										<div class="card-body">
+											<div [ngClass]="{selectedTab: activeTab === 'bugResolved'}" class="card-block">
+												<div class="media">
+													<div class="media-body text-xs-left">
+														<h3 class="pink">{{dashboardInfo.tiles?dashboardInfo.tiles.bugResolved:0}}</h3>
+														<span>Bugs Resolved</span>
+													</div>
+													<div class="media-right media-middle">
+														<i class="fa fa-trophy pink font-large-2 float-xs-right"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-6">
+								<a (click)="filterByTableDAta('bugPending')">
+									<div class="card">
+										<div class="card-body">
+											<div [ngClass]="{selectedTab: activeTab === 'bugPending'}" class="card-block">
+												<div class="media">
+													<div class="media-body text-xs-left">
+														<h3 class="pink">{{dashboardInfo.tiles?dashboardInfo.tiles.bugPending:0}}</h3>
+														<span>Bugs Pending</span>
+													</div>
+													<div class="media-right media-middle">
+														<i class="fa fa-hourglass-start pink font-large-2 float-xs-right"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-6">
+								<a (click)="filterByTableDAta('inprogressSubmission')">
+									<div class="card">
+										<div class="card-body">
+											<div [ngClass]="{selectedTab: activeTab === 'inprogressSubmission'}" class="card-block">
+												<div class="media">
+													<div class="media-body text-xs-left">
+														<h3 class="pink">{{dashboardInfo.tiles?dashboardInfo.tiles.inprogressSubmission:0}}</h3>
+														<span>Bugs In Progress</span>
+													</div>
+													<div class="media-right media-middle">
+														<i class="fa fa-spinner pink font-large-2 float-xs-right"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-6">
+								<a (click)="filterByTableDAta('openDiscover')">
+									<div class="card">
+										<div class="card-body">
+											<div [ngClass]="{selectedTab: activeTab === 'openDiscover'}" class="card-block">
+												<div class="media">
+													<div class="media-body text-xs-left">
+														<h3 class="pink">{{dashboardInfo.tiles?dashboardInfo.tiles.openDiscover:0}}</h3>
+														<span>Open Discover</span>
+													</div>
+													<div class="media-right media-middle">
+														<i class="fa fa-unlock pink font-large-2 float-xs-right"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-6">
+								<a (click)="filterByTableDAta('privateDiscover')">
+									<div class="card">
+										<div class="card-body">
+											<div [ngClass]="{selectedTab: activeTab === 'privateDiscover'}" class="card-block">
+												<div class="media">
+													<div class="media-body text-xs-left">
+														<h3 class="pink">{{dashboardInfo.tiles?dashboardInfo.tiles.privateDiscover:0}}</h3>
+														<span>Private Discover</span>
+													</div>
+													<div class="media-right media-middle">
+														<i class="fa fa-lock pink font-large-2 float-xs-right"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-6">
+								<a (click)="filterByTableDAta('rewards')">
+									<div class="card">
+										<div class="card-body">
+											<div [ngClass]="{selectedTab: activeTab === 'rewards'}" class="card-block">
+												<div class="media">
+													<div class="media-body text-xs-left">
+														<h3 class="pink">{{dashboardInfo.tiles?dashboardInfo.tiles.rewards:0}}</h3>
+														<span>Rewards - Gift / Cash</span>
+													</div>
+													<div class="media-right media-middle">
+														<i class="fa fa-inr pink font-large-3 float-xs-right"></i>
+														<i class="fa fa-gift pink font-large-3 float-xs-right"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</a>
+							</div>
+	
+						</div>
+					</div>
+	
+					<div class="container" *ngIf="!isLoader" style="padding-top: 5%;">
+						<!-- <input [(ngModel)]="searchText" placeholder="search text goes here"> -->
+	
+						<!-- | filter:{program_id: searchText}
+						{{searchText}} -->
+	
+						<div class=" table-responsive">
+							<table class="mui-table mui-table--bordered" id="">
+								<thead *ngIf = "activeTab == 'totalPrograms'">
+									<th>Creation Date</th>
+									<th>Program Type</th>
+									<th>Program Name</th>
+									<th>Number of Researcher</th>
+									<th>Status</th>
+								</thead>
+								<thead *ngIf = "activeTab == 'submissionReceived'">
+									<th>Program Name</th>
+									<th>Program Type</th>
+									<th>Program Scope</th>
+									<th>Researcher Name</th>
+									<th>Submission Date</th>
+									<th>Severity </th>
+								</thead>
+								<thead *ngIf = "activeTab == 'bugResolved'">
+									<th>Bug Receipt#</th>
+									<th>Submission Date</th>
+									<th>Severity </th>
+									<th>Due Date</th>
+									<th>Status </th>
+								</thead>
+								<thead *ngIf = "activeTab == 'bugPending'">
+									<th>Bug Receipt#</th>
+									<th>Submission Date</th>
+									<th>Severity </th>
+									<th>Due Date</th>
+									<th>Status </th>
+								</thead>
+								<thead *ngIf = "activeTab == 'inprogressSubmission'">
+									<th>Bug Receipt#</th>
+									<th>Submission Date</th>
+									<th>Severity </th>
+									<th>Due Date</th>
+									<th>Status</th>
+								</thead>
+								<thead *ngIf = "activeTab == 'openDiscover'">
+									<th>Researcher Name</th>
+									<th>Program Name</th>
+									<th>Participation Date</th>
+									<th>Number of Submissions</th>
+									<th>Researcher Status</th>
+									<th>Rewards </th>
+								</thead>
+								<thead *ngIf = "activeTab == 'privateDiscover'">
+									<th>Researcher Name</th>
+									<th>Program Name</th>
+									<th>Participation Date</th>
+									<th>Number of Submissions</th>
+									<th>Researcher Status</th>
+									<th>Rewards </th>
+								</thead>
+								<thead *ngIf = "activeTab == 'rewards'">
+									<th>Researcher Name</th>
+									<th>Program Name</th>
+									<th>Participation Date</th>
+									<th>Number of Submissions</th>
+									<th>Researcher Status </th>
+									<th>Rewards </th>
+								</thead>
+								<tbody>
+	
+									<tr *ngIf="!dashboardInfo.programs">
+										<td style="text-align:center;" colspan="7">
+										</td>
+									</tr>
+	
+									<tr *ngIf="!dashboardInfo.programs">
+										<td style="text-align:center;" colspan="7">No Records!</td>
+									</tr>
+	
+	
+									<tr *ngFor="let program of dashboardInfo.programs | filter:searchText  | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+										<td>{{program.creation_date| slice:0:10}}</td>
+										<td>{{program.program_type}}</td>
+										<td>{{program.program_name}}</td>
+										<td>{{program.researcher_count?program.researcher_count:0}}</td>
+										<!-- <td>
+												<label class="label  " [ngClass]="{'label-warning':program.program_status=='ongoing','label-success':program.program_status=='closed'}">{{program.program_status}}</label>
+											</td> -->
+										<td>
+											<label *ngIf="program.status=='Active'" class="label label-success ">Active</label>
+											<label  *ngIf="program.status=='Inactive'" class="label label-danger ">Inactive</label>
+										</td>
+									</tr>
+	
+									<tr *ngIf="(dashboardInfo.programs | filter:searchText)?.length==0">
+										<td style="text-align:center;" colspan="7"></td>
+	
+									</tr>
+	
+									<tr *ngIf="(dashboardInfo.programs | filter:searchText)?.length==0">
+										<td style="text-align:center;" colspan="7">No Records!</td>
+	
+									</tr>
+	
+								</tbody>
+							</table>
+	
+							<pagination-controls (pageChange)="p = $event" *ngIf="(dashboardInfo.programs | filter:searchText)?.length>0"></pagination-controls>
+	
+						</div>
+					</div>
+				</div>
+	
+	
+	
+			</div>
+
+			
+		</div>
+		<!-- END MAIN CONTAINER -->
+
+
+	</div>
+
+
+
+
+	<app-footer></app-footer>
+
+	<!-- SCROLL TOP -->
+	<a id="scroll-top" class="fadeInRight animate-me">
+		<i class="fa fa-angle-double-up"></i>
+	</a>
+
+</div>

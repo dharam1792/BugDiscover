@@ -1,0 +1,272 @@
+<div class="login-page">
+	<div id="page">
+		<div class=" ">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-offset-4 col-md-4 col-xs-12  ">
+						<div class="card">
+
+							<div class="card-header no-border">
+								<div class="card-title text-center">
+									<div class="p-1">
+										<img src="assets/images/logo/logo-small.png" alt="branding logo" height="36px">
+									</div>
+									<h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-1">
+										<span *ngIf="isSignup">Sign Up</span>
+										<span *ngIf="!isSignup">Sign In</span>
+
+
+									</h6>
+								</div>
+							</div>
+
+							<div class="card-body">
+								<div class="card-block">
+									<ul class="mui-tabs__bar  mui-tabs__bar--justified" style="
+									padding-left: 10%;
+									padding-right: 10%;
+								">
+										<li class="mui--is-active">
+											<a data-mui-toggle="tab" data-mui-controls="pane-justified-1">Researcher</a>
+										</li>
+										<li>
+											<a data-mui-toggle="tab" data-mui-controls="pane-justified-2">Company</a>
+										</li>
+									</ul>
+									<div style="text-align: center;">
+											{{loginIssue}}
+									</div>
+									
+									
+									<div class="mui-tabs__pane mui--is-active" id="pane-justified-1">
+										<div class="card-body collapse in">
+											<div class="signupForm" *ngIf="!isSignup">
+												<form class="mui-form" [formGroup]="signInForm" (ngSubmit)="SignIn()" novalidate autocomplete="off">
+
+													<div class="mui-textfield mui-textfield--float-label">
+														<input type="email" id="email" name="email" formControlName="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+														/>
+														<label>Email</label>
+													</div>
+													<div class="mui-textfield mui-textfield--float-label">
+														<input type="password" id="pswrd" name="password" formControlName="password" required/>
+														<label>Password</label>
+													</div>
+
+													<button type="submit" [disabled]="!signInForm.valid" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Sign in</button>
+
+													<br>
+
+													<div *ngIf="responseMsg">
+														<div class="alert alert-success" *ngIf="responseMsg.success">
+															<strong>Success!</strong>
+															{{responseMsg.message}}
+														</div>
+
+														<div class="alert alert-danger" *ngIf="!responseMsg.success">
+															<strong>Error!</strong>
+															{{responseMsg.message}}
+														</div>
+
+													</div>
+													<div style="text-align: left">
+														<a (click)='openModalForgotPassword()'>Forgot Password</a>
+													</div>
+												</form>
+
+												<!-- <a (click)="openModalForgotPassword()">shbfshdbfjdsnfjdsknfsdj</a>
+<button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+											</div>
+
+
+											<div class="userForm" *ngIf="isSignup">
+												<form class="mui-form" [formGroup]="userForm" novalidate>
+													<div class="mui-textfield mui-textfield--float-label">
+														<input type="text" name="username" formControlName="username" required>
+														<label>Username</label>
+													</div>
+													<div class="mui-textfield mui-textfield--float-label">
+														<input type="text" name="fullname" formControlName="fullname" required />
+														<label>Fullname</label>
+													</div>
+													<div class="mui-textfield mui-textfield--float-label">
+														<input type="email" name="email" formControlName="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+														/>
+														<label>Email</label>
+													</div>
+													<div class="mui-textfield mui-textfield--float-label">
+														<input type="password" name="password" id="password" formControlName="password" required/>
+														<label>Password</label>
+													</div>
+													<div class="mui-textfield mui-textfield--float-label">
+														<input type="password" name="confirmPassword" id="confirmPassword" formControlName="confirmPassword" required/>
+														<label>Confirm Password</label>
+													</div>
+
+													<button type="submit" [disabled]="!userForm.valid" (click)="SignUp()" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Signup</button>
+
+													<br>
+
+													<div *ngIf="responseMsg">
+														<div class="alert alert-success" *ngIf="responseMsg.success && responseMsg.SignupType=='R'">
+															<strong>{{responseMsg.message}}</strong>
+														</div>
+
+														<div class="alert alert-danger" *ngIf="!responseMsg.success && responseMsg.SignupType=='R'">
+															<strong>{{responseMsg.message}}</strong>
+														</div>
+
+													</div>
+
+												</form>
+											</div>
+
+
+
+
+										</div>
+
+									</div>
+									<div class="mui-tabs__pane" id="pane-justified-2">
+
+										<div class="SignIn" *ngIf="!isSignup">
+
+											<form class="mui-form" [formGroup]="signInFormCompany" (ngSubmit)="SignInCompany()" novalidate autocomplete="off">
+
+												<div class="mui-textfield mui-textfield--float-label">
+													<input type="email" name="email" formControlName="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+													/>
+													<label>Email</label>
+												</div>
+												<div class="mui-textfield mui-textfield--float-label">
+													<input type="password" name="password" formControlName="password" required/>
+													<label>Password</label>
+												</div>
+
+												<button type="submit" [disabled]="!signInFormCompany.valid" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Signin</button>
+
+												<br>
+
+												<div *ngIf="responseMsg">
+													<div class="alert alert-success" *ngIf="responseMsg.success">
+														<strong>Success!</strong>
+														{{responseMsg.message}}
+													</div>
+
+													<div class="alert alert-danger" *ngIf="!responseMsg.success">
+														<strong>Error!</strong>
+														{{responseMsg.message}}
+													</div>
+
+												</div>
+
+											</form>
+
+										</div>
+
+										<div class="SignUp" *ngIf="isSignup">
+											<form class="mui-form" [formGroup]="companyForm" novalidate>
+
+												<div class="mui-textfield mui-textfield--float-label">
+													<input type="text" name="companyName" formControlName="companyName" required />
+													<label>Company Name</label>
+												</div>
+												<div class="mui-textfield mui-textfield--float-label">
+													<input type="email" name="email" formControlName="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+													/>
+													<label>Email</label>
+												</div>
+												<div class="mui-textfield mui-textfield--float-label">
+													<input type="text" name="registrationName" formControlName="registrationName" required />
+													<label>Registrar Name</label>
+												</div>
+												<div class="mui-textfield mui-textfield--float-label">
+													<input type="text" name="designation" formControlName="designation" required />
+													<label>Designation</label>
+												</div>
+												<div class="mui-textfield mui-textfield--float-label">
+													<input type="password" name="password" formControlName="password" required />
+													<label>Password</label>
+												</div>
+												<div class="mui-textfield mui-textfield--float-label">
+													<input type="password" name="confirmPassword" formControlName="confirmPassword" required/>
+													<label>Confirm Password</label>
+												</div>
+												<button type="submit" (click)="CompanySignUp()" [disabled]="!companyForm.valid" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Signup</button>
+											</form>
+
+
+											<br>
+
+											<div *ngIf="responseMsg">
+												<div class="alert alert-success" *ngIf="responseMsg.success && responseMsg.SignupType=='C'">
+													<strong>{{responseMsg.message}}</strong>
+
+												</div>
+
+												<div class="alert alert-danger" *ngIf="!responseMsg.success && responseMsg.SignupType=='C'">
+													<strong>{{responseMsg.message}}</strong>
+												</div>
+
+											</div>
+
+
+										</div>
+
+
+
+									</div>
+									<div>
+
+										<br>
+										<p *ngIf="!isSignup" class="text-center">New User ?
+											<a (click)="isSignup=true" class="card-link">Sign Up</a>
+										</p>
+
+										<p *ngIf="isSignup" class="text-center">Existing User ?
+											<a (click)="isSignup=false" class="card-link">Sign In</a>
+										</p>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END MAIN CONTAINER -->
+	</div>
+</div>
+
+
+
+
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="cointainer">
+					
+					<div style="text-align: center"><label>Forgot Password</label></div>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+							{{forgotpasswordmsg}}	
+					<form>
+						<br><br>
+						<div class="form-group">
+							<!-- <label for="email">Email address:</label> -->
+							<input type="text" class="form-control" id="email1" [(ngModel)]='forgotEmailbind'
+							 name='forgotEmail'
+							
+							 placeholder="Enter your email-id"
+							
+							 required>
+						</div>
+						
+					</form>
+					<button class="btn btn-primary"  [disabled]="!forgotEmailbind" (click)="forgotpassword()" >SENT</button>
+				</div> 
+			</div>
+		</div>
+	</div>
+</div>

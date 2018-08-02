@@ -1,0 +1,384 @@
+/*
+ ==== NOTE: =====
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+@import url('../fonts/Proxima Nova Alt Bold-webfont.eot');
+@font-face {
+    font-family: 'ProximaNovaRegular';
+    src: url('../fonts/ProximaNovaRegular.eot');
+    src: local('../fonts/ProximaNovaRegular'), url('../fonts/ProximaNovaRegular.woff') format('woff'), url('../fonts/ProximaNovaRegular.ttf') format('truetype');
+}
+
+body {
+    font-family: "Raleway", helvetica, arial, sans-serif;
+    font-family: 'ProximaNovaRegular' !important;
+}
+
+a {
+    color: #c0273e;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+.mui-textfield>input {
+    box-shadow: 0 0 0px 1000px #FFF inset !important;
+}
+
+.p-1 {
+    padding: 1rem 1rem !important;
+}
+
+.pt-1 {
+    padding-top: 1rem !important;
+}
+
+.pt-2 {
+    padding-top: 1.5rem !important;
+}
+
+.login-page {
+    background-image: url('login-bg.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    /* margin-top: 10vh; */
+    height: 110vh;
+    padding-top: 5vh;
+}
+
+.login-page .card {
+    background: #ffffff;
+    background: -moz-linear-gradient(-45deg, #085bb1 0%, #085bb1 50%, #0e64bd 50%, #0e64bd 100%);
+    /* background: -webkit-linear-gradient(-45deg, #FFF 0%,#FFF 50%,#f9f9f9 50%,#f5f5f5 100%); */
+    /* background: linear-gradient(-45deg, #FFF 0%,#FFF 50%,#f9f9f9 50%,#f5f5f5 100%); */
+    /* -webkit-clip-path: polygon(0px 0px, 50% -5px, 100% 0%, 100% 116%, 0% 100%); */
+    /* background-image: linear-gradient(to right, #edf6ff, #fff, #edf6ff); */
+}
+
+.login-page form {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 5%;
+}
+
+.logmod__alter {
+    display: block;
+    position: relative;
+    margin-top: 10px;
+    padding: 1rem 1.5rem;
+}
+
+.logmod__alter::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.logmod__alter .connect:last-child {
+    border-radius: 0 0 4px 4px;
+}
+
+.connect {
+    float: left;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    width: 47%;
+    height: 46px;
+    line-height: 46px;
+    text-decoration: none;
+    margin: 0 1%;
+}
+
+.connect::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.connect:focus,
+.connect:hover,
+.connect:visited {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.connect__icon {
+    vertical-align: middle;
+    float: left;
+    width: 53px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.connect__context {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.connect.facebook {
+    background: #4267b2;
+    color: #FFF;
+}
+
+.connect.facebook a {
+    color: #FFF;
+}
+
+.connect.facebook .connect__icon {
+    background: #1a3f8a;
+}
+
+.connect.googleplus {
+    background: #f44336;
+    color: #FFF;
+}
+
+.connect.googleplus a {
+    color: #FFF;
+}
+
+.connect.googleplus .connect__icon {
+    background: #d62d20;
+}
+
+.nav-tabs.nav-justified>li>a {
+    border: none !important;
+    background: #f5f5f5;
+    color: #8e8e8e;
+    box-shadow: 0px 0px 2px #f2f2f2;
+    text-transform: uppercase;
+}
+
+.nav-tabs.nav-justified>.active>a,
+.nav-tabs.nav-justified>.active>a:focus,
+.nav-tabs.nav-justified>.active>a:hover {
+    border: none !important;
+    background: #c0273e;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.readMore {
+    white-space: nowrap;
+    width: 8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: 1s ease-in;
+}
+
+.readMore:hover {
+    white-space: unset;
+    width: unset;
+    overflow: unset;
+    text-overflow: unset;
+}
+
+table.dataTable thead th,
+table.dataTable thead td {
+    border-bottom: 1px solid #ccc !important;
+}
+
+table.dataTable thead th {
+    padding: 10px 10px !important;
+}
+
+.read-more-state {
+    display: none;
+}
+
+.read-more-wrap p {
+    margin: 0 !important;
+}
+
+.read-more-target {
+    opacity: 0;
+    max-height: 0;
+    font-size: 0;
+    transition: .25s ease;
+}
+
+.read-more-state:checked~.read-more-wrap .read-more-target {
+    opacity: 1;
+    font-size: inherit;
+    max-height: 999em;
+}
+
+.read-more-state~.read-more-trigger:before {
+    content: '\f055';
+    font-family: FontAwesome;
+}
+
+.read-more-state:checked~.read-more-trigger:before {
+    content: '\f056';
+    font-family: FontAwesome;
+}
+
+.read-more-trigger {
+    cursor: pointer;
+    display: inline-block;
+    color: #777;
+    margin: 0;
+}
+
+.line-on-side {
+    border-bottom: 1px solid #dadada;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+}
+
+.line-on-side span {
+    background: #FFF;
+    padding: 0 10px;
+}
+
+@media screen and (min-width: 0px) and (max-width: 320px) {
+    .connect {
+        width: 100%;
+        margin: 5px 0;
+    }
+    .login-page form {
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (min-width: 321px) and (max-width: 360px) {
+    .connect {
+        width: 100%;
+        margin: 5px 0;
+    }
+    .login-page form {
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (min-width: 361px) and (max-width: 420px) {
+    .connect {
+        width: 100%;
+        margin: 5px 0;
+    }
+    .login-page form {
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (min-width: 421px) and (max-width: 480px) {
+    .connect {
+        width: 100%;
+        margin: 5px 0;
+    }
+    .login-page form {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 520px) {
+    .connect {
+        width: 100%;
+        margin: 5px 0;
+    }
+    .login-page form {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (min-width: 520px) and (max-width: 768px) {
+    .connect {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+@media screen and (min-width: 520px) and (max-width: 768px) {
+    .connect {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+a {
+    cursor: pointer;
+}
+
+ul.ngx-pagination {
+    margin-left: 35% !important;
+}
+
+.loader {
+    /* border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #009732; */
+    width: 65px;
+    height: 65px;
+
+    background-image: url('http://bugdiscover.com/images/logo/BugDiscover_Icon-02.png');
+    background-size: 65px;
+    /* width: 24px;
+    height: 24px; */
+    background-repeat: no-repeat;
+    
+    /* -webkit-animation: spin 2s linear infinite; */
+    /* Safari */
+    /* animation: spin 2s linear infinite; */
+}
+
+.center {
+    position: absolute;
+    left: 45%;
+    top: 30vh;
+    z-index: 1;
+    margin: 0 auto;
+}
+
+.noData_middle {
+    position: absolute;
+    top: 40%;
+    z-index: 1;
+    margin: 0 auto;
+}
+
+
+/* Safari */
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+
+.uploadFile{
+    border: 1px solid #01579b;
+    padding: 10px;
+    cursor: pointer;
+    margin-right: 4%;
+    color: #ffffff;
+    background: #01579b;
+}
+
+.previewImage{
+    width:100px;
+    height: 100px;
+}

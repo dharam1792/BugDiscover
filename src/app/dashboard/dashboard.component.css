@@ -1,0 +1,5 @@
+.selectedTab{
+    box-shadow: 0 7px 17px 0 rgba(23,84,116,0.40);
+    /* transform: scale(0.5);  */
+    /* border: solid 0.9px #f3f3f3; */
+}

@@ -1,0 +1,227 @@
+<app-header></app-header>
+<div class="container"> 
+    <div class="container" *ngIf="isLoader">
+        <div class="center">
+          <div class="loader"></div>
+          <br>
+          <b> Loading... </b>
+        </div>
+      </div>
+
+
+    <div class="row">					
+      <div class="col-md-12">					
+        <div class="">							
+          <div class="card-body">
+            <div class="card-header">
+              <h3 class="text-center">{{response.program_name}}</h3>
+            </div>
+            <div class="card-block">
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="">
+                    <img src="../resources/images/avatar.jpg" class="img-responsive profile-img" style="height:  86px;width:  86px;float:  left;margin-right: 30px;" alt="user">
+                    <h5>{{response.companyName}}e</h5>
+                    <p>{{response.companyDesc}}</p>
+                    <h5>Launch Date :
+                        <span> {{response.launchDate || '--'}} </span>
+                      </h5>
+                    <div class="clearfix"></div>
+                  </div>													
+
+                  <div class="preview">
+                    <h5>Program Name : <span>{{response.program_name}},</span></h5>
+                    <h5>Program ID : <span> {{response.program_id}}</span></h5>
+                    <h5>Product Name : <span>{{response.product_name}},</span></h5>
+                    <h5>Program Type : <span>{{response.program_type}} </span> </h5>
+                    <h5>Expected No of Researchers : <span>{{response.expectedNoOfResearchers}}</span></h5>
+
+                    <h5>Program Description :</h5>
+                    <p>{{response.description}}</p>
+
+                    <h5>In Scope</h5>
+                    <div class="table-responsive">
+                      <table class="mui-table">
+                        <thead>
+                          <th>Category</th><th>Target Domain Name</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let inscope of response.in_scope">
+                              <td>{{inscope.category}}</td>
+                              <td>{{inscope.targetDomain}}
+                              </td>
+                            </tr>
+                          </tbody>
+                      </table>
+                    </div>
+                    <h5>Out of Scope</h5>
+                    <div class="table-responsive">
+                      <table class="mui-table">
+                        <thead class=" ">
+                          <th>Category</th><th>Target Domain Name</th>
+                        </thead>
+                        <tbody>
+                          <tr><td>Website</td> <td>https://www.google.co.in/search?dcr=0&site=&q=Kuppali+Venkatappa+Puttappa&oi=ddle&ct=kuppali-venkatappa-puttappas-113th-birthday-6430765557481472-l&hl=en&kgmid=/m/03v4c7&sa=X&ved=0ahUKEwjl-P-Rtq7YAhXFO48KHVGxAREQPQgG&biw=1366&bih=662&dpr=1</td></tr>
+                          <tr><td>Android</td> <td>http://www.jquery-steps.com/Examples#advanced-form</td></tr>
+                          <tr><td>Cloud Services</td> <td>http://localhost/bug/live/app/researcher/rewards-history.html</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <h5>Bounty Type</h5>
+                    <div class="table-responsive">
+                      <table class="mui-table">
+                        <thead>
+                          <th>Severity</th><th>Bounty Type</th><th>Reward</th>
+                        </thead>
+                        <tbody>
+                          <tr><td>High</td><td>Cash</td><td>1250</td></tr>
+                          <tr><td>Medium</td><td>Cash</td><td>1250</td></tr>
+                          <tr><td>Low</td><td>Gift</td><td> - </td></tr>
+                          <tr><td>Info</td><td>Thanks</td><td> - </td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <h5>Product Access information</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pharetra posuere feugiat. Vestibulum purus ligula, malesuada sed erat sed, finibus condimentum est. Suspendisse bibendum, sapien eu suscipit porta, neque sapien ornare mi, eu mollis justo lacus sed risus. Proin posuere quam leo, id iaculis magna pellentesque at...</p>
+
+                    <h5>Policy</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pharetra posuere feugiat. Vestibulum purus ligula, malesuada sed erat sed, finibus condimentum est. Suspendisse bibendum, sapien eu suscipit porta, neque sapien ornare mi, eu mollis justo lacus sed risus. Proin posuere quam leo, id iaculis magna pellentesque at...</p>
+
+
+                    <h5>Rules</h5>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pharetra posuere feugiat. Vestibulum purus ligula, malesuada sed erat sed, finibus condimentum est. Suspendisse bibendum, sapien eu suscipit porta, neque sapien ornare mi, eu mollis justo lacus sed risus. Proin posuere quam leo, id iaculis magna pellentesque at...</p>
+
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="card ">
+                    <div class="card-body">
+                      <div class="card-block">
+                        <h5>Minimum Bounty value : <span>122</span> </h5>
+                        <h5>Hall of Fame : <span> Yes / No</span> </h5>
+                        <h5>Bounties : <span> Cash, Gift </span> </h5>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class=" ">
+                    <button type="button" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Participate/Accept Invitation</button>
+                    <div class="clearfix"> </div>
+                    <a href="submit-report.html" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Submit Report</a>
+                    <div class="clearfix"> </div>
+                    <button type="button" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Cancel</button>
+                  </div><br/>
+
+                  <div class="card ">
+                    <div class="card-body">
+                      <div class="card-block">
+                        <h5> Rewards Paid : <span>1542</span>
+                        </h5><h5> Bugs Resolved : <span>1542</span>
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card ">
+                    <div class="card-body">
+                      <div class="card-block">
+                        <h5 style="margin-top: 0;">Hall of Fame </h5>
+                        <p>Hall of fame is empty </p>
+
+                        <div class="media">
+                          <div class="pull-left">
+                            <img src="../resources/images/avatar.jpg" class="img-responsive profile-img" style="height:  24px;width:  24px;" alt="user">
+                          </div>
+                          <div class="pull-left">
+                            <span>John D </span>
+                          </div>
+                        </div>
+
+                        <div class="clearfix"> </div>
+                        <div class="media">
+                          <div class="pull-left">
+                            <img src="../resources/images/avatar.jpg" class="img-responsive profile-img" style="height:  24px;width:  24px;" alt="user">
+                          </div>
+                          <div class="pull-left">
+                            <span>John D Wilson</span>
+                          </div>
+                        </div>
+                        <div class="clearfix"> </div>
+
+                        <div class="media">
+                          <div class="pull-left">
+                            <img src="../resources/images/avatar.jpg" class="img-responsive profile-img" style="height:  24px;width:  24px;" alt="user">
+                          </div>
+                          <div class="pull-left">
+                            <span>James Willamsan</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>								
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="more_submissions_section" style="margin-top: 2em; ">
+      <div class="card ">
+        <div class="card-body">
+          <div class="card-block">
+            <table class="mui-table">
+              <thead>
+                <th>Date</th><th>Submission Id</th><th>Scope</th> <th>Severity</th><th>Status</th>
+              </thead>
+              <tbody >
+                <tr>
+                  <td>DD-MM-YYYY</td>
+                  <td>RES45454</td>
+                  <td>Category : Target url</td> 
+                  <td><label class="label label-danger">High </label> </td>
+                  <td><label class="label label-success">Resolved </label> </td>
+                </tr>
+                <tr>
+                  <td>DD-MM-YYYY</td>
+                  <td>RES45454</td>
+                  <td>Category : Target url</td> 
+                  <td><label class="label label-success">Medium </label> </td>
+                  <td><label class="label label-success">In Progress </label> </td> 
+                </tr>
+                <tr>
+                  <td>DD-MM-YYYY</td>
+                  <td>RES45454</td>
+                  <td>Category : Target url</td> 
+                  <td><label class="label label-success">Low </label> </td>
+                  <td><label class="label label-success">Pending </label> </td>
+                </tr>										 
+                <tr>
+                  <td>DD-MM-YYYY</td>
+                  <td>RES45454</td>
+                  <td>Category : Target url</td> 
+                  <td><label class="label label-success">Info </label> </td>
+                  <td><label class="label label-success">Pending </label> </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="clearfix"> </div>
+            <div class="text-center">
+              <ul class="pagination">
+                <li class="disabled"><a href="#!"><i class="fa fa-angle-double-left"> </i></a></li>
+                <li class="active"><a href="#!">1</a></li>
+                <li class="waves-effect"><a href="#!">2</a></li>
+                <li class="waves-effect"><a href="#!">3</a></li>
+                <li class="waves-effect"><a href="#!">4</a></li>
+                <li class="waves-effect"><a href="#!">5</a></li>
+                <li class="waves-effect"><a href="#!"><i class="fa fa-angle-double-right"> </i></a></li>
+              </ul>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>

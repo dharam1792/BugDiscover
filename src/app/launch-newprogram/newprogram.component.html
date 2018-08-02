@@ -1,0 +1,485 @@
+<div id="page">
+
+	<app-header></app-header>
+
+
+
+	<div class="page-content">
+
+
+		<!-- START MAIN CONTAINER -->
+		<div class="main-container">
+			<!-- <h3 class="with-breaker animate-me fadeInUp">
+				Programs <span> launch</span>
+			</h3> -->
+
+			<div class="container">
+				<div class=" " style="height: 100vh;">
+					<div class="card-body">
+						<div class="card-block">
+							<div class="row">
+								<div class="col-md-offset-1 col-md-10">
+									<ul class="mui-tabs__bar mui-tabs__bar--justified">
+										<li class="" [ngClass]="{'mui--is-active': isTabActive===1}">
+											<a data-mui-toggle="tab">Program Launch</a>
+										</li>
+										<li [ngClass]="{'mui--is-active': isTabActive===2}">
+											<a data-mui-toggle="tab">Preview</a>
+										</li>
+										<li [ngClass]="{'mui--is-active': isTabActive===3}">
+											<a data-mui-toggle="tab">submit</a>
+										</li>
+									</ul>
+									<div class="mui-tabs__pane " [ngClass]="{'mui--is-active': isTabActive===1}" id="pane-justified-1">
+
+										<form   #programlaunchForm='ngForm'>
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label class="control-label">Program Name</label>
+														<div class="">
+															<input type="email" class="form-control" name="programName" 
+															[(ngModel)]="ProgramForm.programName"
+															 placeholder=" Program Name"
+															 #programName="ngModel"
+															 pattern="[a-zA-Z0-9 ]+" required>
+														</div>
+														
+														<span *ngIf="!programName.valid && programName.dirty " style="color:red">Program name can have alphabetic/numeric characters only</span>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label class="control-label">Product Name</label>
+														<div class="">
+															<input type="text" class="form-control" #productName="ngModel" name="productName" [(ngModel)]="ProgramForm.productName" placeholder="Product Name" required>
+														</div>
+													</div>
+													<span *ngIf="!productName.valid && productName.dirty " style="color:red">Product name can have alphabetic/numeric characters only</span>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label class="control-label">Program Type </label>
+														<div class="">
+															<select class="form-control" name="programType" (change)="setNoOfResearchers()" [(ngModel)]="ProgramForm.programType" required>
+																<option value="" disabled="" selected="">Program Type</option>
+																<option value="1">Open Discover</option>
+																<option value="2">Private Discover</option>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label class="control-label">Expected No of Researchers</label>
+														<div class="">
+															<input type="number" [disabled]="ProgramForm.programType != '2'" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"  class="form-control" name="noTypeResearchers" [(ngModel)]="ProgramForm.noTypeResearchers" placeholder="No of Researchers">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label">Program Description</label>
+												<div class="">
+													<textarea class="form-control" minlength="50" #programDescription="ngModel" rows="4" name="programDescription" [(ngModel)]="ProgramForm.programDescription" required></textarea>
+												</div>
+												<span *ngIf="programDescription.hasError('minlength') && programDescription.dirty " style="color:red">Program description need minimum 50 words</span>
+											</div>
+											<div class="form-group">
+												<div class="row" *ngFor="let inScopeItem of inScope; let i=index;">
+													<label class="control-label col-xs-12">In Scope</label>
+													<div class="col-sm-4">
+
+														<select class="form-control" name="{{i}}_inScopecategory"   [(ngModel)]="inScope[i].category" required>
+															 <option  value="" style="display:none" >Category</option>
+															<option *ngFor='let category of categoryInscope' value='{{category}}' >{{category}}</option>
+														</select>
+													</div>
+													<div class="col-sm-6">
+														<input type="text" class="form-control" name="{{i}}_inScopecategory"  [(ngModel)]="inScope[i].targetDomain" placeholder="Target domain" required>
+													</div>
+													<div class="col-sm-2">
+														<span *ngIf="i<(inScope.length-1)" class="addMore" (click)="removeMore('inScope',i,inScope[i].category);">
+															<i class="fa fa-minus"> </i>
+														</span>
+														<span *ngIf="i==(inScope.length-1)" class="addMore" (click)="addMore('inScope',inScope[i].category);">
+															<i class="fa fa-plus"> </i>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row" *ngFor="let outScopeItem of outScope; let i=index;">
+													<label class="control-label col-xs-12">Out Of Scope</label>
+													<div class="col-sm-4">
+
+														<select class="form-control" name="{{i}}_outScopecategory"  [(ngModel)]="outScope[i].category" required>
+															<option value="" >Category</option>
+															<option  value="" style="display:none" >Category</option>
+															<option *ngFor='let category of categoryOutscope' value='{{category}}' >{{category}}</option>
+															<!-- <option value="Website">Website</option>
+															<option value="Android">Android</option>
+															<option value="iOS">iOS</option>
+															<option value="API">API</option>
+															<option value="IOT">IOT</option>
+															<option value="Cloud Services">Cloud Services</option>
+															<option value="Others">Others</option> -->
+														</select>
+													</div>
+													<div class="col-sm-6">
+														<input type="text" class="form-control" name="{{i}}_outScopetargetDomain" [(ngModel)]="outScope[i].targetDomain" placeholder="Target domain" required>
+													</div>
+													<div class="col-sm-2">
+														<span *ngIf="i<(outScope.length-1)" class="addMore" (click)="removeMore('outScope',i);">
+															<i class="fa fa-minus"> </i>
+														</span>
+														<span *ngIf="i==(outScope.length-1)" class="addMore" (click)="addMore('outScope');">
+															<i class="fa fa-plus"> </i>
+														</span>
+													</div>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<div class="row" *ngFor="let bountyItem of bountyType; let i=index;">
+													<label class="control-label col-xs-12">Bounty Type</label>
+													<div class="col-sm-3">
+
+														<select class="form-control" name="{{i}}_bountyItemseverity"  [(ngModel)]="bountyType[i].severity" required>
+															<option value="" style="display:none">Severity</option>
+															<option *ngFor='let category of BountyCategory' value='{{category}}' [hidden] ='bountyhidden(category)'>{{category}}</option>
+															
+														</select>
+													</div>
+													<div class="col-sm-3">
+
+														<select class="form-control" name="{{i}}_bountyItemtype" [(ngModel)]="bountyType[i].type" required>
+															<option value="" >Bounty Type</option>
+															<option value="Gift">Gift</option>
+															<option value="Cash">Cash(Minimum cash reward)</option>
+															<option value="Thanks">Thanks</option>
+														</select>
+													</div>
+													<div class="col-sm-4">
+														<input type="text" *ngIf="bountyType[i].type != 'Cash'" class="form-control" name="{{i}}_bountyItemreward" [(ngModel)]="bountyType[i].reward" placeholder="Reward value/Gift Info" required>
+														<input type="text" *ngIf="bountyType[i].type == 'Cash'" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control" name="{{i}}_bountyItemreward" [(ngModel)]="bountyType[i].reward" placeholder="ex:0000" required>
+													</div>
+													<div class="col-sm-2">
+														<span *ngIf="i<(bountyType.length-1)" class="addMore" (click)="removeMore('bountyType',i);">
+															<i class="fa fa-minus"> </i>
+														</span>
+														<span *ngIf="i==(bountyType.length-1)" class="addMore" (click)="addMore('bountyType');">
+															<i class="fa fa-plus"> </i>
+														</span>
+													</div>
+												</div>
+
+
+
+
+
+
+
+
+												
+											</div>
+
+											<div class="form-group">
+												<label class="control-label">Hall of Fame </label>
+												<div class="">
+													<div class="pure-checkbox">
+														<input id="radio1" name="radio" type="radio" value="1" (click)="hallofFame(true)" required ngModel #gender="ngModel">
+														<label for="radio1">Yes </label>
+
+														<input id="radio2" name="radio" type="radio" value="0" (click)="hallofFame(false)" required ngModel #gender="ngModel" >
+														<label for="radio2">No </label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label">Product Access information</label>
+												<div class="">
+													<textarea class="form-control" minlength="50" #productAccessInfo="ngModel" required rows="4" name="accessInfo" [(ngModel)]="ProgramForm.accessInfo"></textarea>
+												</div>
+												<span *ngIf="productAccessInfo.hasError('minlength') && productAccessInfo.dirty " style="color:red">Product Access information need minimum 50 words</span>
+											
+											</div>
+											<div class="form-group">
+												<label class="control-label">Policy</label>
+												<div class="text-readonly">
+													<textarea class="form-control" rows="4" [readonly]="isPolicyReadOnly"  #Policy="ngModel" minlength="50" required name="policy" [(ngModel)]="ProgramForm.policy"></textarea>
+													<span class="text-readonly-edit" (click)="isPolicyReadOnly=!isPolicyReadOnly">
+														<i class="fa fa-pencil"> </i>
+													</span>
+													<span *ngIf="Policy.hasError('minlength') && Policy.dirty " style="color:red">Policy need minimum 50 words</span>
+											
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label">Rules</label>
+												<div class="text-readonly">
+													<textarea class="form-control" rows="4" [readonly]="isRulesReadOnly" #Rules="ngModel" minlength="50" required name="rules" [(ngModel)]="ProgramForm.rules"></textarea>
+													<span class="text-readonly-edit" (click)="isRulesReadOnly=!isRulesReadOnly">
+														<i class="fa fa-pencil"> </i>
+													</span>
+													<span *ngIf="Rules.hasError('minlength') && Rules.dirty " style="color:red">Rules need minimum 50 words</span>
+											
+												</div>
+											</div>
+
+
+											<div class="form-group">
+												<div class="row">
+													<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+														<div class=" text-center">
+															<button type="button" [disabled]="!programlaunchForm.valid"
+															 (click)="makeTabActive(2); setFormData();calMinBountyType()" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Next</button>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</form>
+
+										<pre>
+									
+								</pre>
+									</div>
+									<div class="mui-tabs__pane" [ngClass]="{'mui--is-active': isTabActive===2}">
+										<div class="row">
+											<div class="col-md-9">
+
+
+												<div class="">
+													<img [src]="_baseService.userProfile?_baseService.userProfile.profileImageUrl:'error'" onError="this.src='assets/images/avatar.jpg'"
+													 class="img-responsive profile-img" style="height:  86px;width:  86px;float:  left;margin-right: 30px;" alt="user">
+
+													<h5>{{_baseService.userProfile?_baseService.userProfile.fullName:''}}</h5>
+													<h5>{{ProgramForm.programName}}</h5>
+													<h6>{{ProgramForm.productName}}</h6>
+													<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.. Know More</p> -->
+													<h5>Launch Date :
+														<span> DD-MM-YYYY </span>
+													</h5>
+													<div class="clearfix"></div>
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="card ">
+													<div class="card-body">
+														<div class="card-block">
+															<h5>Min. Bounty value :{{minBountV}}
+																<!-- <span [value]='calMinBountyType'></span> -->
+																<!-- <span>{{ProgramForm.bountyType?.length}}</span> -->
+															</h5>
+															<h5>Hall of Fame :
+																<span *ngIf="ProgramForm.hallofFame == 1"> yes</span>
+																<span *ngIf="ProgramForm.hallofFame == 0"> no</span>
+															</h5>
+															<h5>Bounties :
+																<span *ngFor="let bountyTypeItem of tempBountyType; let i=index;">
+																	{{bountyTypeItem}}  <span *ngIf="i!=tempBountyType.length-1">,</span>
+																</span>
+															</h5>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="clearfix"></div>
+											<div class="col-sm-9">
+												<div class=" ">
+													<h5>Program Name :
+														<span>{{ProgramForm.programName}}</span>
+													</h5>
+													<h5>Product Name :
+														<span>{{ProgramForm.productName}}</span>
+													</h5>
+													<h5>Program Type :
+														<span *ngIf="ProgramForm.programType == '1'">Open Discover</span>
+														<span *ngIf="ProgramForm.programType == '2'">Private Discover</span>
+													</h5>
+													<h5 *ngIf ="ProgramForm.programType == '2'" >Expected No of Researchers :
+														<span>{{ProgramForm.noTypeResearchers || '--'}}</span>
+													</h5>
+
+													<h5>Program Description :</h5>
+													<p>{{ProgramForm.programDescription}}</p>
+
+													<h5>In Scope</h5>
+													<div class="table-responsive">
+														<table class="mui-table">
+															<thead>
+																<tr>
+																	<th>Category</th>
+																	<th>Target Domain Name</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr *ngFor="let inscopeItem of ProgramForm.inScope">
+																	<td>{{inscopeItem.category}}</td>
+																	<td>{{inscopeItem.targetDomain}}</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+													<h5>Out of Scope</h5>
+													<div class="table-responsive">
+														<table class="mui-table">
+															<thead>
+																<tr>
+																	<th>Category</th>
+																	<th>Target Domain Name</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr *ngFor="let outScopeItem of ProgramForm.outScope">
+																	<td>{{outScopeItem.category}}</td>
+																	<td>{{outScopeItem.targetDomain}}</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+													<h5>Bounty Type</h5>
+													<div class="table-responsive">
+														<table class="mui-table">
+															<thead>
+																<tr>
+																	<th>Severity</th>
+																	<th>Bounty Type</th>
+																	<th>Reward</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr *ngFor="let bountyTypeItem of ProgramForm.bountyType">
+																	<td>{{bountyTypeItem.severity}}</td>
+																	<td>{{bountyTypeItem.type}}</td>
+																	<td>{{bountyTypeItem.reward}}</td>
+																</tr>
+
+															</tbody>
+														</table>
+													</div>
+													<h5>Product Access information</h5>
+													<p>{{ProgramForm.accessInfo}}</p>
+
+													<h5>Policy</h5>
+													<p>{{ProgramForm.policy}}</p>
+
+
+													<h5>Rules</h5>
+													<p>{{ProgramForm.rules}}</p>
+
+
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class=" ">
+													<button type="button" class="mui-btn mui-btn--raised mui-btn--primary btn-block" disabled="">Participate</button>
+													<div class="card ">
+														<div class="card-body">
+															<div class="card-block">
+																<h5> Rewards Paid :
+																	<span>null</span>
+																</h5>
+																<h5> Bugs Resolved :
+																	<span>null</span>
+																</h5>
+															</div>
+														</div>
+													</div>
+													<div class="card ">
+														<div class="card-body">
+															<div class="card-block">
+																<h5 style="margin-top: 0;">Hall of Fame </h5>
+																<p>{{ProgramForm.hallofFame}}</p>
+																<!-- 
+																<div class="media">
+																	<div class="pull-left">
+																		<img src="../resources/images/avatar.jpg" class="img-responsive profile-img" style="height:  24px;width:  24px;" alt="user">
+																	</div>
+																	<div class="pull-left">
+																		<span>John D </span>
+																	</div>
+																</div>
+
+																<div class="clearfix"> </div>
+																<div class="media">
+																	<div class="pull-left">
+																		<img src="../resources/images/avatar.jpg" class="img-responsive profile-img" style="height:  24px;width:  24px;" alt="user">
+																	</div>
+																	<div class="pull-left">
+																		<span>John D Wilson</span>
+																	</div>
+																</div>
+																<div class="clearfix"> </div>
+
+																<div class="media">
+																	<div class="pull-left">
+																		<img src="../resources/images/avatar.jpg" class="img-responsive profile-img" style="height:  24px;width:  24px;" alt="user">
+																	</div>
+																	<div class="pull-left">
+																		<span>James Willamsan</span>
+																	</div>
+																</div> -->
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="clearfix"> </div>
+										<div class="row" style="padding-bottom:5%;">
+											<div class="col-sm-4 col-xs-12">
+												<button (click)="makeTabActive(1)" type="reset" class="mui-btn mui-btn--raised mui-btn--danger btn-block">Previous</button>
+											</div>
+											<div class="col-sm-4 col-xs-12">
+												<button (click)="makeTabActive(3); doSubmit();" type="button" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Submit</button>
+											</div>
+										</div>
+									</div>
+									<div class="mui-tabs__pane" [ngClass]="{'mui--is-active': isTabActive===3}" id="pane-justified-3">
+										<div class="card-block">
+
+											<div class="container" *ngIf="isLoader">
+												<div class="center">
+													<div class="loader"></div>
+												</div>
+											</div>
+
+											<div class="text-center" *ngIf="!isLoader">
+												<h2>Your program is submitted successfully for verification.</h2>
+
+												<button type="reset" routerLink="/programs" class="mui-btn mui-btn--raised mui-btn--primary ">Go Back</button>
+
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- END MAIN CONTAINER -->
+
+
+
+	</div>
+
+
+
+
+
+
+	<app-footer></app-footer>
+
+	<!-- SCROLL TOP -->
+	<a id="scroll-top" class="fadeInRight animate-me">
+		<i class="fa fa-angle-double-up"></i>
+	</a>
+
+</div>

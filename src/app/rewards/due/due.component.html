@@ -1,0 +1,89 @@
+<div id="page">
+
+	<app-header></app-header>
+
+
+
+	<div class="page-content">
+
+
+		<!-- START MAIN CONTAINER -->
+		<div class="main-container">
+		
+
+			<div *ngIf="userType=='C'">
+
+					<h3 class="with-breaker animate-me fadeInUp">
+							<span> Rewards </span> Due
+						</h3>
+
+						<div class="container"> 
+								<div class="row">					
+									<div class="col-md-12">					
+										<div class="">							
+											<div class="card-body">
+												<div class="card-header">
+				
+												</div>
+												<div class="card-block">
+
+													<div class="table-responsive">
+														<table id="example" class="mui-table mui-table--bordered table-hover" cellspacing="0" width="100%">
+															<thead> 
+																<tr><th>Submission ID</th>
+																<th>CVSS</th>
+																<th>Due Date</th> 
+																<th>status</th>												
+																<th>Reward Type</th>												
+																<th>Reward</th>												
+																<th>total </th>												
+																<th>checkout/ACK</th>	 
+															</tr></thead>
+				
+															<tbody>
+																<tr *ngFor="let due of latestRewards.due">
+																	<td>{{due.submissionID}}</td> 													 
+																	<td>{{due.CVSS}}</td>													 
+																	<td>{{due.dueDate  | date: 'dd/MM/yyyy'}}</td>
+																	<td>{{due.status}}</td>												 
+																	<td>{{due.rewardType}}</td>												 
+																	<td>{{due.reward}}</td>												 
+																	<td>{{due.total}}</td>		 	
+																	<td><button type="button" class="mui-btn mui-btn--raised mui-btn--danger mui-btn--small">{{due.status}}</button></td> 													 
+																</tr>
+																
+																<tr *ngIf="latestRewards.due?.length==0">
+																		<td colspan="8" style="border-bottom: 1px solid #dadada;">
+																			<h5 class="text-center">No Data!</h5>
+																		</td>
+																	</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+			</div>
+
+		
+
+		</div>
+		<!-- END MAIN CONTAINER -->
+
+
+	</div>
+
+
+
+
+	<app-footer></app-footer>
+
+	<!-- SCROLL TOP -->
+	<a id="scroll-top" class="fadeInRight animate-me">
+		<i class="fa fa-angle-double-up"></i>
+	</a>
+
+</div>
