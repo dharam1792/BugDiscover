@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from '../config';
 import { BaseService } from '../base-service.service';
 import { AuthenticationService } from '../core/auth/auth.service';
-import { HallOfFameService, halloffame } from './hall-of-fame.service';
+import { HallOfFameService } from './hall-of-fame.service';
 import { DashboardService } from '../dashboard/dashboard.service';
  
 
@@ -177,15 +177,14 @@ export class HallOfFameComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.service.getHallOfFame().subscribe(res =>{
-    //   console.log('Hall of fame', res);
-    //   this.halloffame = res.halloffame;
-    //   this.myhalloffame = res.myhalloffame;
-    //   this.isLoader = false;
-    // }, err =>{
-    //   this.authService.logout();
-    // })
-    this.halloffame = halloffame.halloffame;
+    this.service.getHallOfFame().subscribe(res =>{
+      console.log('Hall of fame', res);
+      this.halloffame = res.halloffame;
+      this.myhalloffame = res.myhalloffame;
+      this.isLoader = false;
+    }, err =>{
+      this.authService.logout();
+    })
     console.log("hello this.halloffame", this.halloffame);
     this.profileService.getProfile().subscribe(res =>{
       console.log(res);

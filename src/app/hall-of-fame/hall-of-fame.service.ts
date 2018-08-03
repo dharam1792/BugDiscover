@@ -20,33 +20,3 @@ export class HallOfFameService {
     }
 
 }
-
-
-export const halloffame = {  
-    "halloffame":[  
-       {  
-          "researcher_id":4,
-          "researcher_name":"munish",
-          "image":"http://18.219.207.120//uploads/users/7b7697b221131ed434dcb3e04c0e621b.png",
-          "score":0,
-          "rank":0
-       },
-       {  
-          "researcher_id":5,
-          "researcher_name":"arun",
-          "image":"http://18.219.207.120//uploads/users/7b7697b221131ed434dcb3e04c0e621b.png",
-          "score":1,
-          "rank":1
-       },
-       {  
-          "researcher_id":6,
-          "researcher_name":"barun",
-          "image":"http://18.219.207.120//uploads/users/7b7697b221131ed434dcb3e04c0e621b.png",
-          "score":3,
-          "rank":3
-       }
-    ],
-    "myhalloffame":[  
- 
-    ]
- }
