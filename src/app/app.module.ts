@@ -31,6 +31,7 @@ import { BaseService } from './base-service.service'
 import { ConfigService } from './config';
 // import { EqualValidator } from './EqualValidator';
 import { FilterPipe } from './filter.pipe';
+import { FindFilterPipe } from './filter.pipe';
 
 
 //  import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -66,6 +67,8 @@ import { HallOfFameService } from './hall-of-fame/hall-of-fame.service';
 import { ProgramService } from './programs/program.service';
 import { ProgramDetailsService } from './program-details/program-details.service';
 import { SubmissionsService } from './submissions/submissions.service';
+
+import { DatePipe } from '@angular/common';
  
 export function createHttpService(backend: ConnectionBackend,
   defaultOptions: RequestOptions,
@@ -87,6 +90,7 @@ return new HttpService(backend, defaultOptions, httpCacheService, authService);
     HeaderComponent,
     FooterComponent,
     FilterPipe,
+    FindFilterPipe,
     ActivateComponent,
     LaunchnewProgramComponent,
     SubmissionsDueComponent,
@@ -111,6 +115,7 @@ return new HttpService(backend, defaultOptions, httpCacheService, authService);
     RouterModule.forRoot(appRoutes,{ useHash: true })
   ],
   providers: [
+    DatePipe,
     ConfigService, 
     BaseService,
     AuthGuard, 

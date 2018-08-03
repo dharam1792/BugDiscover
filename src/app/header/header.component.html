@@ -1,23 +1,23 @@
 <!-- START HEADER -->
 <header id="header" class="small with-separation-bottom">
-  <div class="container" style="width: 100%;">
-    <div class="topnav">
-      <nav>
-        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
-        <a href="#" id="close-navigation-mobile">
-          <i class="fa fa-long-arrow-left"></i>
-        </a>
-        <div class="menu-list" id="myTopnav">
-          <ul class="nav-left">
-            <li class="menu-item ">
-              <a routerLink="/dashboard" id="logo-left"> </a>
-            </li>
-          </ul>
-        
-          <ul class="nav-right">
-         
+    <div class="container" style="width: 100%;">
+        <div class="topnav">
+            <nav>
+                <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+                <a href="#" id="close-navigation-mobile">
+                    <i class="fa fa-long-arrow-left"></i>
+                </a>
+                <div class="menu-list" id="myTopnav">
+                    <ul class="nav-left">
+                        <li class="menu-item ">
+                            <a routerLink="/dashboard" id="logo-left"> </a>
+                        </li>
+                    </ul>
 
-            <span *ngIf="userType=='R'">
+                    <ul class="nav-right">
+
+
+                        <span *ngIf="userType=='R'">
               <li class="menu-item">
                 <a routerLink="/halloffame">Hall of Fame</a>
               </li>
@@ -47,9 +47,9 @@
                   </ul>
                 </li> -->
             </span>
-         
-         
-            <span *ngIf="userType=='C'">
+
+
+                        <span *ngIf="userType=='C'">
               <li class="menu-item">
                 <a routerLink="/halloffame" (click)="stateChangeFunc();">Hall of Fame</a>
               </li>
@@ -72,39 +72,36 @@
              
             </span>
 
-            <li class="menu-item">
-              <a (click)="alertMsg()">Messages</a>
-            </li>
-         
-            <li class="menu-item-has-children" style="padding: 3px;">
-              <a *ngIf="userType=='R'">
-                <img [src]="_baseService.userProfile?_baseService.userProfile.profileImageUrl:'assets/images/avatar.jpg'"   onError="this.src='assets/images/avatar.jpg'"  class="profile-img" alt="img" height="55px" width="55px" /> 
-                {{_baseService.userProfile?_baseService.userProfile.fullName:''}}
-                <i class="fa fa-angle-down"> </i>
-              </a>
+                        <li class="menu-item">
+                            <a (click)="alertMsg()">Messages</a>
+                        </li>
 
-              <a  *ngIf="userType=='C'">
-                <img [src]="_baseService.userProfile?_baseService.userProfile.profileImageUrl:'assets/images/avatar.jpg'"   onError="this.src='assets/images/avatar.jpg'"  class="profile-img" alt="img" height="55px" width="55px" /> 
-                {{_baseService.userProfile?_baseService.userProfile.companyName:''}}
-                <i class="fa fa-angle-down"> </i>
-              </a>
+                        <li class="menu-item-has-children" style="padding: 3px;">
+                            <a *ngIf="userType=='R'">
+                                <img [src]="userProfile?userProfile.profileImageUrl:'assets/images/avatar.jpg'" onError="this.src='assets/images/avatar.jpg'" class="profile-img" alt="img" height="55px" width="55px" /> {{userProfile?userProfile.fullName:''}}
+                                <i class="fa fa-angle-down"> </i>
+                            </a>
 
-              <ul class="sub-menu">
-                <li class="">
-                  <a routerLink="/myaccount">My Account</a>
-                </li>
-                <li class="">
-                  <a (click)="Logout()">Signout</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
+                            <a *ngIf="userType=='C'">
+                                <img [src]="userProfile?userProfile.profileImageUrl:'assets/images/avatar.jpg'" onError="this.src='assets/images/avatar.jpg'" class="profile-img" alt="img" height="55px" width="55px" /> {{userProfile?userProfile.companyName:''}}
+                                <i class="fa fa-angle-down"> </i>
+                            </a>
+
+                            <ul class="sub-menu">
+                                <li class="">
+                                    <a routerLink="/myaccount">My Account</a>
+                                </li>
+                                <li class="">
+                                    <a (click)="Logout()">Signout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
 
 
+                </div>
+            </nav>
         </div>
-      </nav>
     </div>
-  </div>
 </header>
 <!-- END HEADER -->
-

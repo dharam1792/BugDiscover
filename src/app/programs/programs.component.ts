@@ -1,17 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Http } from "@angular/http";
-import "rxjs/Rx";
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { ConfigService } from '../config';
-import { BaseService } from '../base-service.service';
 
 import { AuthenticationService } from '../core/auth/auth.service';
 import { ProgramService } from './program.service';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -89,10 +80,14 @@ export class ProgramsComponent implements OnInit {
   userType: any;
   rewardType:string = '';
   programType:string = '';
+  p: any = 1;
+  orderByValue: any;
+  date: any;
 
   constructor(
     private service: ProgramService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit() {
@@ -109,11 +104,20 @@ export class ProgramsComponent implements OnInit {
     }, err =>{
       this.authService.logout();
     })
+    this.isLoader = false;
   }
 
   reset(){
     this.rewardType= '';
     this.programType= '';
+    this.orderByValue = '';
+  }
+
+  changeSort(data: any){
+    // window.alert(data);
+    const date1 = this.datePipe.transform(this.date, 'short');
+    window.alert(this.date);
+    this.orderByValue = data;
   }
 
 }
