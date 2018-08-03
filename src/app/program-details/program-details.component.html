@@ -26,7 +26,7 @@
               <div class="row">
                 <div class="col-md-9">
                   <div class="">
-                    <img [src]="response.companyLogoUrl" class="img-responsive profile-img" style="height:  86px;width:  86px;float:  left;margin-right: 30px;"
+                    <img [src]="response.companyLogoUrl?response.companyLogoUrl:'assets/images/avatar.jpg'" class="img-responsive profile-img" style="height:  86px;width:  86px;float:  left;margin-right: 30px;"
                       alt="user">
                     <h5>{{response.companyName}}</h5>
                     <p>{{response.companyDesc}}</p>

@@ -10,8 +10,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from '../config';
 import { BaseService } from '../base-service.service';
 import { debug } from 'util';
-import { AuthGuard } from '../authGuard.service';
-
+// import { AuthGuard } from '../authGuard.service';
+import { AuthenticationService } from '../core/auth/auth.service';
+ 
 declare var jQuery: any;
 // declare var $: any;
 
@@ -36,12 +37,18 @@ export class HomeComponent implements OnInit {
 
   responseMsg: any;
   forgotEmailbind: string;
+  
+  loginIssue: any ;
+  error: any = '';
 
   forgotpasswordmsg: any;
   constructor(public http: Http, public _config: ConfigService, public _baseService: BaseService, private fb: FormBuilder,
-    private router: Router, private AuthGuard: AuthGuard) {
+    private router: Router, 
+    private authService: AuthenticationService,
+    // private AuthGuard: AuthGuard,  
+  ) {
 
-    this.AuthGuard.isLogedin = false;
+    // this.AuthGuard.isLogedin = false;
     // Swal('Hello world!');
     this.createForm();
 
@@ -234,103 +241,130 @@ export class HomeComponent implements OnInit {
   }
 
   async SignIn() {
-    //alert("SignIn");
-    localStorage.setItem('token', '');
-
-    let postData = {
+     let postData = {
       "email": this.signInForm.value.email,
       "password": this.signInForm.value.password,
+      "from": 'Researcher'
     }
-
-    this._baseService.makeSignin(postData).subscribe(
-      (result: any) => {
-
-        if (result) {
-          console.log(result);
-          // alert(result.success);
-          if (result.success != false) {
-            this.AuthGuard.isLogedin = true;
-            localStorage.setItem('token', result.data.token);
-            localStorage.setItem('userType', result.data.userType);
-            localStorage.setItem('userID', result.data.userid);
-            localStorage.setItem('refreshToken', result.data.refreshToken);
-            this.router.navigate(['dashboard']);
-          } else {
-            // alert("dnbkdsjf");
-            this.loginIssue = 'Login with company signin tab.';
-
-            setTimeout(() => {
-              this.loginIssue = "";
-            }, 5000);
-          }
-
-
-        }
-
-      },
-      (error) => {
-
-        if (error.status === 400) {
-          //code
-        }
-        else {
-          this.responseMsg = error;
-
-          // setTimeout(()=> {
-          //   this.responseMsg = "";
-          // }, 5000);
-
-        }
+    this.authService.login(postData).subscribe(res =>{
+      console.log(res)
+      if(!res.message){
+        this.router.navigate(['dashboard']);
+      } else {
+        this.error = res.message;
       }
-    );
+    })
+
+
+    //alert("SignIn");
+    // localStorage.setItem('token', '');
+
+    // let postData = {
+    //   "email": this.signInForm.value.email,
+    //   "password": this.signInForm.value.password,
+    // }
+
+    // this._baseService.makeSignin(postData).subscribe(
+    //   (result: any) => {
+
+    //     if (result) {
+    //       console.log(result);
+    //       // alert(result.success);
+    //       if (result.success != false) {
+    //         this.AuthGuard.isLogedin = true;
+    //         localStorage.setItem('token', result.data.token);
+    //         localStorage.setItem('userType', result.data.userType);
+    //         localStorage.setItem('userID', result.data.userid);
+    //         localStorage.setItem('refreshToken', result.data.refreshToken);
+    //         this.router.navigate(['dashboard']);
+    //       } else {
+    //         // alert("dnbkdsjf");
+    //         this.loginIssue = 'Login with company signin tab.';
+
+    //         setTimeout(() => {
+    //           this.loginIssue = "";
+    //         }, 5000);
+    //       }
+
+
+    //     }
+
+    //   },
+    //   (error) => {
+
+    //     if (error.status === 400) {
+    //       //code
+    //     }
+    //     else {
+    //       this.responseMsg = error;
+
+    //       // setTimeout(()=> {
+    //       //   this.responseMsg = "";
+    //       // }, 5000);
+
+    //     }
+    //   }
+    // );
 
   }
-  loginIssue;
   async SignInCompany() {
-    localStorage.setItem('token', '');
+    // localStorage.setItem('token', '');
+
+    // let postData = {
+    //   "email": this.signInFormCompany.value.email,
+    //   "password": this.signInFormCompany.value.password,
+    // }
+
+
+    // this._baseService.makeSigninCompany(postData).subscribe(
+    //   (result: any) => {
+
+    //     if (result) {
+    //       if (result.success != false) {
+    //         localStorage.setItem('token', result.data.token);
+    //         localStorage.setItem('userType', result.data.userType);
+    //         localStorage.setItem('userID', result.data.userid);
+    //         this.router.navigate(['dashboard']);
+    //       } else {
+    //         this.loginIssue = 'Login with researcher signin tab.';
+    //         setTimeout(() => {
+    //           this.loginIssue = "";
+    //         }, 5000);
+    //       }
+
+
+    //     }
+
+    //   },
+    //   (error) => {
+    //     debugger;
+
+    //     if (error.status === 400) {
+    //       //code
+    //     }
+    //     else {
+    //       this.responseMsg = error;
+
+    //       // setTimeout(()=> {
+    //       //   this.responseMsg = "";
+    //       // }, 5000);
+
+    //     }
+    //   }
+    // );
 
     let postData = {
-      "email": this.signInFormCompany.value.email,
-      "password": this.signInFormCompany.value.password,
-    }
-
-
-    this._baseService.makeSigninCompany(postData).subscribe(
-      (result: any) => {
-
-        if (result) {
-          if (result.success != false) {
-            localStorage.setItem('token', result.data.token);
-            localStorage.setItem('userType', result.data.userType);
-            localStorage.setItem('userID', result.data.userid);
-            this.router.navigate(['dashboard']);
-          } else {
-            this.loginIssue = 'Login with researcher signin tab.';
-            setTimeout(() => {
-              this.loginIssue = "";
-            }, 5000);
-          }
-
-
-        }
-
-      },
-      (error) => {
-        debugger;
-
-        if (error.status === 400) {
-          //code
-        }
-        else {
-          this.responseMsg = error;
-
-          // setTimeout(()=> {
-          //   this.responseMsg = "";
-          // }, 5000);
-
-        }
+        "email": this.signInFormCompany.value.email,
+        "password": this.signInFormCompany.value.password,
+        "from": 'Company'
       }
-    );
+    this.authService.login(postData).subscribe(res =>{
+      if(res.message){
+        this.error = res.message;
+      } else {
+        this.router.navigate(['dashboard']);
+      }
+    })
 
   }
 

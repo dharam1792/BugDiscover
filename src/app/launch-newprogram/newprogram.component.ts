@@ -48,12 +48,12 @@ export class LaunchnewProgramComponent implements OnInit {
   constructor(private zone:NgZone , public http: Http, public _config: ConfigService, public _baseService: BaseService, private fb: FormBuilder,
     private router: Router) {
 
-    if (localStorage.getItem("token")) {
-      this._baseService.getProfile();
-    }
-    else {
-      this.router.navigate(['dashboard']);
-    }
+    // if (localStorage.getItem("token")) {
+    //   this._baseService.getProfile();
+    // }
+    // else {
+    //   this.router.navigate(['dashboard']);
+    // }
   }
 
   ngOnInit() {

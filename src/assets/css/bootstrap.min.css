@@ -5803,7 +5803,7 @@ fieldset[disabled] .navbar-inverse .btn-link:hover {
 
 .label {
     display: inline;
-    padding: .5em .8em .5em;
+    padding: 6px;
     font-size: 75%;
     font-weight: 700;
     line-height: 1;
@@ -5812,6 +5812,7 @@ fieldset[disabled] .navbar-inverse .btn-link:hover {
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: .25em;
+    text-transform: capitalize;
 }
 
 a.label:focus,

@@ -44,9 +44,9 @@ import { SubmissionsComponent } from './submissions/submissions.component';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { ActivateComponent } from './activate/activate.component';
 import { MessagesComponent } from './messages/messages.component';
-import { AppRoutingModule } from './app.routing.modules';
+import { appRoutes } from './app.routing.modules';
 
-import { AuthGuard } from './authGuard.service';
+// import { AuthGuard } from './authGuard.service';
 
 //for Admin
 
@@ -54,10 +54,25 @@ import { LoggedoutComponent } from './loggedout/loggedout.component';
 import { ProgramDetailsResearchComponent } from './program-details-research/program-details-research.component';
 import { SubmitReportComponent } from './submit-report/submit-report.component';
 
+import {  XHRBackend, ConnectionBackend, RequestOptions } from '@angular/http';
+import { AuthGuard } from './core/auth/auth.guard';
+import { AuthenticationService } from './core/auth/auth.service';
+import { HttpService } from './core/http/http.service';
+import { HttpCacheService } from './core/http/http-cache.service';
 
-
-
-
+import { HomeService } from './home/home.service';
+import { DashboardService } from './dashboard/dashboard.service';
+import { HallOfFameService } from './hall-of-fame/hall-of-fame.service';
+import { ProgramService } from './programs/program.service';
+import { ProgramDetailsService } from './program-details/program-details.service';
+import { SubmissionsService } from './submissions/submissions.service';
+ 
+export function createHttpService(backend: ConnectionBackend,
+  defaultOptions: RequestOptions,
+  httpCacheService: HttpCacheService,
+  authService: AuthenticationService) {
+return new HttpService(backend, defaultOptions, httpCacheService, authService);
+}
 
 @NgModule({
   declarations: [
@@ -93,9 +108,27 @@ import { SubmitReportComponent } from './submit-report/submit-report.component';
     HttpModule,
     HttpClientModule,
     OrderModule,
-    AppRoutingModule
+    RouterModule.forRoot(appRoutes,{ useHash: true })
   ],
-  providers: [ConfigService, BaseService,AuthGuard],
+  providers: [
+    ConfigService, 
+    BaseService,
+    AuthGuard, 
+    AuthenticationService,
+    HttpService,
+    HttpCacheService,
+    {
+      provide: HttpService,
+      deps: [XHRBackend, RequestOptions, HttpCacheService, AuthenticationService],
+      useFactory: createHttpService
+    },
+    HomeService,
+    DashboardService,
+    HallOfFameService,
+    ProgramService,
+    ProgramDetailsService,
+    SubmissionsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './authGuard.service';
+import { Routes } from '@angular/router';
+import { AuthGuard } from './core/auth/auth.guard';
 
 
 import { HomeComponent } from './home/home.component';
@@ -25,11 +25,11 @@ import { LoggedoutComponent } from './loggedout/loggedout.component';
 import { ProgramDetailsResearchComponent } from './program-details-research/program-details-research.component';
 import { SubmitReportComponent } from './submit-report/submit-report.component';
 
+ 
 
-
-
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
+    { path: 'home', component: HomeComponent },
     { path: 'dashboard', canActivate: [AuthGuard], component: DashboardComponent },
     { path: 'halloffame', canActivate: [AuthGuard], component: HallOfFameComponent },
     { path: 'programs', canActivate: [AuthGuard], component: ProgramsComponent },
@@ -53,17 +53,3 @@ const appRoutes: Routes = [
     {path:'programdetailsR/:pid',component:ProgramDetailsResearchComponent},
     { path: '**', redirectTo: '' },
 ];
-
-
-
-@NgModule({
-    imports: [
-        RouterModule.forRoot(appRoutes,{ useHash: false })
-    ],
-    exports: [
-        RouterModule
-    ]
-})
-export class AppRoutingModule {
-
-}

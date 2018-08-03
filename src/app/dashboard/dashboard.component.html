@@ -34,10 +34,10 @@
 									<div class="card-body">
 										<div class="card-block">
 											<div class="media-body">
-												<img [src]="_baseService.userProfile?_baseService.userProfile.profileImageUrl:'assets/images/avatar.jpg'" onError="this.src='assets/images/avatar.jpg'"
+												<img [src]="userProfile?userProfile.profileImageUrl:'assets/images/avatar.jpg'" onError="this.src='assets/images/avatar.jpg'"
 												 class="img-responsive profile-img" style="height:  64px;width:  64px;float: left; margin-left: 7%;" alt="user"
 												/>
-												<h4 class="text-center" style="margin-top: 15px;"> {{_baseService.userProfile?_baseService.userProfile.fullName:''}} </h4>
+												<h4 class="text-center" style="margin-top: 15px;"> {{userProfile?userProfile.fullName:''}} </h4>
 											</div>
 	
 											<div class="slider text-center">
@@ -47,7 +47,7 @@
 														<div class="item active col-sm-4">
 															<div class="carousel-content">
 																<div>
-																	<h4 class="pink">{{dashboardInfo.rewards || '0'}}</h4>
+																	<h4 class="pink">{{dashboardInfo.tiles.rewards || '0'}}</h4>
 																	<span class="green">REWARDS</span>
 																</div>
 															</div>
@@ -56,7 +56,7 @@
 														<div class="item active col-sm-4">
 															<div class="carousel-content">
 																<div>
-																	<h4 class="pink">{{dashboardInfo.rewards || '0'}}</h4>
+																	<h4 class="pink">{{dashboardInfo.tiles.rank || '0'}}</h4>
 																	<span class="green">RANK</span>
 																</div>
 															</div>
@@ -64,7 +64,7 @@
 														<div class="item active col-sm-4">
 															<div class="carousel-content">
 																<div>
-																	<h4 class="pink">{{dashboardInfo.score || '0'}}</h4>
+																	<h4 class="pink">{{dashboardInfo.tiles.score || '0'}}</h4>
 																	<span class="green">SCORE</span>
 																</div>
 															</div>
@@ -265,7 +265,7 @@
 									</tr> -->
 	
 	
-									<tr *ngFor="let program of filterResponse | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+									<tr *ngFor="let program of currentProgram | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
 										<td>{{program.program_id}}</td>
 										<td>{{program.program_name}}</td>
 										<td>{{program.program_type}}</td>
@@ -280,12 +280,12 @@
 										<td>{{program.score?program.score:0}}</td>
 									</tr>
 	
-									<tr *ngIf="filterResponse?.length==0">
+									<tr *ngIf="currentProgram?.length==0">
 										<td style="text-align:center;" colspan="7"></td>
 	
 									</tr>
 	
-									<tr *ngIf="filterResponse?.length==0">
+									<tr *ngIf="currentProgram?.length==0">
 										<td style="text-align:center;" colspan="7">No Records!</td>
 	
 									</tr>
@@ -293,7 +293,7 @@
 								</tbody>
 							</table>
 	
-							<pagination-controls (pageChange)="p = $event" *ngIf="filterResponse?.length>0"></pagination-controls>
+							<pagination-controls (pageChange)="p = $event" *ngIf="currentProgram?.length>0"></pagination-controls>
 	
 						</div>
 					</div>
@@ -308,10 +308,10 @@
 									<div class="card-body">
 										<div class="card-block">
 											<div class="media-body">
-												<img [src]="_baseService.userProfile?_baseService.userProfile.profileImageUrl:'assets/images/avatar.jpg'" onError="this.src='assets/images/avatar.jpg'"
+												<img [src]="userProfile?userProfile.profileImageUrl:'assets/images/avatar.jpg'" onError="this.src='assets/images/avatar.jpg'"
 												 class="img-responsive profile-img" style="height:  64px;width:  64px;float: left; margin-left: 7%;" alt="user"
 												/>
-												<h4 class="text-center" style="margin-top: 15px;"> {{_baseService.userProfile?_baseService.userProfile.companyName:''}} </h4>
+												<h4 class="text-center" style="margin-top: 15px;"> {{userProfile?userProfile.companyName:''}} </h4>
 											</div>
 	
 										</div>
@@ -555,36 +555,37 @@
 								</thead>
 								<tbody>
 	
-									<tr *ngIf="!dashboardInfo.programs">
+									<tr *ngIf="!currentProgram">
 										<td style="text-align:center;" colspan="7">
 										</td>
 									</tr>
 	
-									<tr *ngIf="!dashboardInfo.programs">
+									<tr *ngIf="!currentProgram">
 										<td style="text-align:center;" colspan="7">No Records!</td>
 									</tr>
 	
-	
-									<tr *ngFor="let program of dashboardInfo.programs | filter:searchText  | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+									<!-- <div *ngIf="activeTab == 'totalPrograms'"> -->
+									<tr *ngFor="let program of currentProgram | filter:searchText  | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
 										<td>{{program.creation_date| slice:0:10}}</td>
 										<td>{{program.program_type}}</td>
 										<td>{{program.program_name}}</td>
 										<td>{{program.researcher_count?program.researcher_count:0}}</td>
-										<!-- <td>
-												<label class="label  " [ngClass]="{'label-warning':program.program_status=='ongoing','label-success':program.program_status=='closed'}">{{program.program_status}}</label>
-											</td> -->
+										<td>
+											<label class="label  " [ngClass]="{'label-warning':program.program_status=='created','label-success':program.program_status=='active','label-primary':program.program_status=='submitted'}">{{program.program_status}}</label>
+										</td>
 										<td>
 											<label *ngIf="program.status=='Active'" class="label label-success ">Active</label>
 											<label  *ngIf="program.status=='Inactive'" class="label label-danger ">Inactive</label>
 										</td>
 									</tr>
+									<!-- </div> -->
 	
-									<tr *ngIf="(dashboardInfo.programs | filter:searchText)?.length==0">
+									<tr *ngIf="(currentProgram | filter:searchText)?.length==0">
 										<td style="text-align:center;" colspan="7"></td>
 	
 									</tr>
 	
-									<tr *ngIf="(dashboardInfo.programs | filter:searchText)?.length==0">
+									<tr *ngIf="(currentProgram | filter:searchText)?.length==0">
 										<td style="text-align:center;" colspan="7">No Records!</td>
 	
 									</tr>
@@ -592,7 +593,7 @@
 								</tbody>
 							</table>
 	
-							<pagination-controls (pageChange)="p = $event" *ngIf="(dashboardInfo.programs | filter:searchText)?.length>0"></pagination-controls>
+							<pagination-controls (pageChange)="p = $event" *ngIf="(currentProgram | filter:searchText)?.length>0"></pagination-controls>
 	
 						</div>
 					</div>

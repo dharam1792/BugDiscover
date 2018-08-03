@@ -23,7 +23,7 @@
 			</div>
 
 			<div class="container" *ngIf="!isLoader">
-				<div class=" " *ngIf="_baseService.isNewHallofFame">
+				<div class=" " *ngIf="isNewHallofFame">
 					<div class="card-body">
 						<div class="card-block">
 							<div class="row">
@@ -38,7 +38,7 @@
 
 									</ul>
 									<div class="mui-tabs__pane mui--is-active" id="pane-justified-1">
-										<div class="row" *ngIf="(HallofFame.halloffame)?.length>0">
+										<div class="row" *ngIf="halloffame?.length>0">
 											<div class="col-md-offset-6 col-md-6 col-sm-offset-6 col-sm-6" style="margin-bottom: 20px;">
 												<form>
 													<div class="row" >
@@ -48,6 +48,7 @@
 														<div class="col-sm-6">
 															<select class="form-control" [(ngModel)]="orderByField" name="search2">
 																<option value="" style="display: none" selected>Sort By</option>
+																<option value="">All</option>
 																<option value="researcher_name">Name</option>
 																<option value="rank">Rank</option>
 																<option value="score">Score</option>
@@ -62,7 +63,7 @@
 											<div class="clearfix"> </div>
 										</div>
 
-										<div class="row" *ngIf="(HallofFame.halloffame)?.length==0">
+										<div class="row" *ngIf="halloffame?.length==0">
 											<div class="col-sm-12 text-center">
 												<h5>No Data!</h5>
 											</div>
@@ -71,8 +72,8 @@
 
 
 
-										<div class="row" *ngIf="(HallofFame.halloffame)?.length>0">
-											<div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let Item of HallofFame.halloffame | filter:{ researcher_name: searchText }   | orderBy: orderByField">
+										<div class="row" *ngIf="halloffame?.length>0">
+											<div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let Item of halloffame | filter:{ researcher_name: searchText }   | orderBy: orderByField">
 												<a (click)="getUserByID(Item.researcher_id,'halloffame')">
 													<div class="directory row">
 														<div class="directory-left col-xs-3">
@@ -101,7 +102,7 @@
 
 
 
-											<div class="row" *ngIf="(HallofFame.halloffame | filter:{ researcher_name: searchText })?.length==0">
+											<div class="row" *ngIf="(halloffame | filter:{ researcher_name: searchText })?.length==0">
 												<div class="col-sm-12 text-center">
 													<h5>No Data!</h5>
 												</div>
@@ -115,7 +116,7 @@
 
 									<div class="mui-tabs__pane" id="pane-justified-2">
 
-										<div class="row" *ngIf="(HallofFame.myhalloffame)?.length>0">
+										<div class="row" *ngIf="myhalloffame?.length>0">
 											<div class="col-md-offset-6 col-md-6 col-sm-offset-6 col-sm-6" style="margin-bottom: 20px;">
 												<form>
 													<div class="row">
@@ -145,8 +146,8 @@
 
 
 
-										<div class="row" *ngIf="(HallofFame.myhalloffame)?.length>0">
-											<div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let Item of HallofFame.myhalloffame | filter:{ companyName: searchTextformyhall }   | orderBy: orderByFieldmyhall">
+										<div class="row" *ngIf="myhalloffame?.length>0">
+											<div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let Item of myhalloffame | filter:{ companyName: searchTextformyhall }   | orderBy: orderByFieldmyhall">
 												<!-- (click)="getUserByID(Item.company_id)" -->
 												<a (click)="getUserByID(Item.company_id,'myhalloffame')">
 													<div class="directory row">
@@ -173,7 +174,7 @@
 													</div>
 												</a>
 											</div>
-											<div class="row" *ngIf="(HallofFame.halloffame | filter:{ companyName: searchTextformyhall })?.length==0">
+											<div class="row" *ngIf="(halloffame | filter:{ companyName: searchTextformyhall })?.length==0">
 												<div class="col-sm-12 text-center">
 													<h5>No Data!</h5>
 												</div>
@@ -182,7 +183,7 @@
 										</div>
 
 
-										<div class="row" *ngIf="(HallofFame.myhalloffame)?.length==0">
+										<div class="row" *ngIf="myhalloffame?.length==0">
 											<div class="col-sm-12 text-center">
 												<h5>No Data!</h5>
 											</div>
@@ -205,14 +206,14 @@
 
 
 			<div class="container" *ngIf="!isLoader">
-				<!-- {{selectedUser == 'halloffame'}}\\\\{{!_baseService.isNewHallofFame}} -->
-				<div class=" " *ngIf="!_baseService.isNewHallofFame && selectedUser == 'halloffame'">
+				<!-- {{selectedUser == 'halloffame'}}\\\\{{!isNewHallofFame}} -->
+				<div class=" " *ngIf="!isNewHallofFame && selectedUser == 'halloffame'">
 					<div class="card-body">
 						<div class="card-block">
 
 
 
-							<div class="row" id="profile-page" *ngIf="!_baseService.isNewHallofFame" style="height:100vh !important;">
+							<div class="row" id="profile-page" *ngIf="!isNewHallofFame" style="height:100vh !important;">
 								<div class="col-sm-12 col-md-12">
 									<div class="card">
 										<div class="card-body">
@@ -337,7 +338,7 @@
 															<tr>
 																<td colspan="3">
 
-																	<button class="btn btn-block btn-danger" (click)="backToMain();">
+																	<button class="btn btn-block btn-danger" (click)="backToMain()">
 																		Back
 																	</button>
 																</td>
@@ -360,7 +361,7 @@
 					</div>
 				</div>
 
-				<div class="main-container" id="profile-page" *ngIf="!_baseService.isNewHallofFame && selectedUser == 'myhalloffame'">
+				<div class="main-container" id="profile-page" *ngIf="!isNewHallofFame && selectedUser == 'myhalloffame'">
 						<h3 class="with-breaker animate-me fadeInUp">
 							Company <span> Profile </span>
 						</h3>
@@ -372,7 +373,7 @@
 										<div class="card-body">
 											<div class="card-block">
 												<div class="">
-													<img src="{{companyInfo.companyLogoUrl}}" class="img-responsive profile-img" style=" height:  120px;    width:  120px;" alt="user">
+													<img src="{{companyInfo.companyLogoUrl}}" onError="this.src='assets/images/avatar.jpg'" class="img-responsive profile-img" style=" height:  120px;    width:  120px;" alt="user">
 												</div>
 			
 												<h4 class="text-center">{{companyInfo.companyName || '---'}}</h4>
@@ -397,6 +398,14 @@
 															<tr><td>Phone Number</td><td colspan="2">XXXX</td></tr>
 															<tr><td>Website</td><td colspan="2">XXXX</td></tr>
 															<tr><td>Social Links</td><td colspan="2">--</td></tr>
+															<tr>
+																<td colspan="3">
+																	<button class="btn btn-block btn-danger" (click)="backToMain()">
+																		Back
+																	</button>
+																</td>
+
+															</tr>
 															
 														</tbody>
 													</table>
