@@ -3,257 +3,259 @@
 <!-- START MAIN CONTAINER -->
 <div class="main-container">
 
-  <!-- <a href="program-launch.html">Launch a Program </a> -->
+    <!-- <a href="program-launch.html">Launch a Program </a> -->
 
-  <div class="container">
+    <div class="container">
 
-    <div class="container" *ngIf="isLoader">
-      <div class="center">
-        <div class="loader"></div>
-        <br>
-        <b> Loading... </b>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="">
-          <div class="card-body">
-            <div class="card-header">
-              <h3 class="text-center">{{response.program_name}}</h3>
+        <div class="container" *ngIf="isLoader">
+            <div class="center">
+                <div class="loader"></div>
+                <br>
+                <b> Loading... </b>
             </div>
-            <div class="card-block">
-              <div class="row">
-                <div class="col-md-9">
-                  <div class="">
-                    <img [src]="response.companyLogoUrl?response.companyLogoUrl:'assets/images/avatar.jpg'" class="img-responsive profile-img" style="height:  86px;width:  86px;float:  left;margin-right: 30px;"
-                      alt="user">
-                    <h5>{{response.companyName}}</h5>
-                    <p>{{response.companyDesc}}</p>
-                    <h5>Launch Date :
-                      <span> {{response.launchDate || '--'}} </span>
-                    </h5>
-                    <div class="clearfix"></div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="">
-                    <h5>Minimum Bounty value :
-                      <span>{{response.minimumReward || 'null'}}</span>
-                    </h5>
-                    <h5>Hall of Fame :
-                      <span> {{response.hall_of_fame}}</span>
-                    </h5>
-                    <h5>Bounties :
-                      <span *ngFor="let bounty of response.bounty_type;let last = last;"> {{bounty.type}}
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <h3 class="text-center">{{response.program_name}}</h3>
+                        </div>
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="">
+                                        <img [src]="response.companyLogoUrl?response.companyLogoUrl:'assets/images/avatar.jpg'" class="img-responsive profile-img" style="height:  86px;width:  86px;float:  left;margin-right: 30px;" alt="user">
+                                        <h5>{{response.companyName}}</h5>
+                                        <p>{{response.companyDesc}}</p>
+                                        <h5>Launch Date :
+                                            <span> {{response.launchDate || '--'}} </span>
+                                        </h5>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="">
+                                        <h5>Minimum Bounty value :
+                                            <span>{{response.minimumReward || 'null'}}</span>
+                                        </h5>
+                                        <h5>Hall of Fame :
+                                            <span> {{response.hall_of_fame}}</span>
+                                        </h5>
+                                        <h5>Bounties :
+                                            <span *ngFor="let bounty of response.bounty_type;let last = last;"> {{bounty.type}}
                         <span *ngIf="!last">,</span>
-                      </span>
-                    </h5>
-                  </div>
-                </div>
-                <div class="clearfix"></div>
-                <br/>
-                <div class="col-sm-9">
-                  <div class=" ">
-                    <h5>Program Name :
-                      <span>{{response.program_name}}</span>
-                    </h5>
-                    <h5>Product Name :
-                      <span>{{response.product_name}}</span>
-                    </h5>
-                    <h5>Program Type :
-                      <span>{{response.program_type}} </span>
-                    </h5>
-                    <h5>Expected No of Researchers :
-                      <span>{{response.expectedNoOfResearchers}} </span>
-                    </h5>
+                                            </span>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <br/>
+                                <div class="col-sm-9">
+                                    <div class=" ">
+                                        <h5>Program Name :
+                                            <span>{{response.program_name}}</span>
+                                        </h5>
+                                        <h5>Product Name :
+                                            <span>{{response.product_name}}</span>
+                                        </h5>
+                                        <h5>Program Type :
+                                            <span>{{response.program_type}} </span>
+                                        </h5>
+                                        <h5>Expected No of Researchers :
+                                            <span>{{response.expectedNoOfResearchers}} </span>
+                                        </h5>
 
-                    <h5>Program Description :</h5>
-                    <p>{{response.description}}</p>
+                                        <h5>Program Description :
+                                            <span>{{response.description}}</span>
+                                        </h5>
 
-                    <h5>In Scope</h5>
-                    <div class="table-responsive">
-                      <table class="mui-table">
-                        <thead>
-                          <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Category</th>
-                          <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Target Domain Name</th>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let inscope of response.in_scope">
-                            <td>{{inscope.category}}</td>
-                            <td>{{inscope.targetDomain}}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <h5>Out of Scope</h5>
-                    <div class="table-responsive">
-                      <table class="mui-table">
-                        <thead>
-                          <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Category</th>
-                          <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Target Domain Name</th>
-                        </thead>
+                                        <h5>In Scope</h5>
+                                        <div class="table-responsive">
+                                            <table class="mui-table">
+                                                <thead>
+                                                    <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Category</th>
+                                                    <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Target Domain Name</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let inscope of response.in_scope">
+                                                        <td>{{inscope.category}}</td>
+                                                        <td>{{inscope.targetDomain}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <h5>Out of Scope</h5>
+                                        <div class="table-responsive">
+                                            <table class="mui-table">
+                                                <thead>
+                                                    <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Category</th>
+                                                    <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Target Domain Name</th>
+                                                </thead>
 
-                        <tbody>
-                          <tr *ngFor="let outscope of response.out_scope">
-                            <td>{{outscope.category}}</td>
-                            <td>{{outscope.targetDomain}}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <h5>Bounty Type</h5>
-                    <div class="table-responsive">
-                      <table class="mui-table">
-                        <thead>
-                          <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Severity</th>
-                          <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Bounty Type</th>
-                          <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Reward</th>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let bountyTypeTbl of response.bounty_type">
-                            <td>{{bountyTypeTbl.severity}}</td>
-                            <td>{{bountyTypeTbl.type}}</td>
-                            <td>{{bountyTypeTbl.reward}}</td>
-                          </tr>
+                                                <tbody>
+                                                    <tr *ngFor="let outscope of response.out_scope">
+                                                        <td>{{outscope.category}}</td>
+                                                        <td>{{outscope.targetDomain}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <h5>Bounty Type</h5>
+                                        <div class="table-responsive">
+                                            <table class="mui-table">
+                                                <thead>
+                                                    <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Severity</th>
+                                                    <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Bounty Type</th>
+                                                    <th style=" border-bottom: 2px solid rgba(0,0,0,.12);font-weight: 700;">Reward</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let bountyTypeTbl of response.bounty_type">
+                                                        <td>{{bountyTypeTbl.severity?bountyTypeTbl.severity: '--' }}</td>
+                                                        <td>{{bountyTypeTbl.type}}</td>
+                                                        <td>{{bountyTypeTbl.reward}}</td>
+                                                    </tr>
 
-                        </tbody>
-                      </table>
-                    </div>
-                    <h5>Product Access information</h5>
-                    <p>{{response.access_info}}</p>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <h5>Product Access information:
+                                            <span>{{response.access_info}}</span>
+                                        </h5>
 
-                    <h5>Policy</h5>
-                    <p>{{response.policy}}</p>
+                                        <h5>Policy:
+                                            <span>{{response.policy}}</span>
+                                        </h5>
 
 
-                    <h5>Rules</h5>
+                                        <h5>Rules:
+                                            <span>{{response.rules}}</span>
+                                        </h5>
 
-                    <p>{{response.rules}}</p>
-
-                  </div>
-                </div>
-                <div class="col-sm-3">
-                  <div class=" ">
-                    <span *ngIf="userType=='C'">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class=" ">
+                                        <span *ngIf="userType=='C'">
                       <a routerLink="/submissions" class="mui-btn mui-btn--raised mui-btn--primary btn-block">View Submissions</a>
                     </span>
-                    <span *ngIf="userType=='R'">
+                                        <span *ngIf="userType=='R'">
 
                       <button type="button" *ngIf='!submitbutton' (click)="participateOrJoinPrograms()" class="mui-btn mui-btn--raised mui-btn--primary btn-block">
-                        <span *ngIf="response.program_type == 'public'; else accept">Participate</span>
-                        <ng-template #accept>
-                          <span>Accept Invitation</span>
-                        </ng-template>
-                      </button>
-                      <div class="clearfix"> </div>
-                      <a *ngIf='submitbutton' [routerLink]="['/submit-report', pid,'aaa']" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Submit Report</a>
-                      <div class="clearfix"> </div>
-                      <button type="button" *ngIf='submitbutton' (click)="cancelPrograms()" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Cancel</button>
+                        <span *ngIf="response.program_type == 'open discover'; else accept">Participate</span>
+                                        <ng-template #accept>
+                                            <span>Accept Invitation</span>
+                                        </ng-template>
+                                        </button>
+                                        <div class="clearfix"> </div>
+                                        <a *ngIf='submitbutton' [routerLink]="['/submit-report', pid, response.program_name]" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Submit Report</a>
+                                        <div class="clearfix"> </div>
+                                        <button type="button" *ngIf='submitbutton' (click)="cancelPrograms()" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Cancel</button>
 
-                      <!-- <a routerLink = "/submissions" class="mui-btn mui-btn--raised mui-btn--primary btn-block">View Submissions</a> -->
-                    </span>
-                    <div class="">
-                      <h5> Participated Researchers :
-                        <span>{{response.participatedResearchers}}</span>
-                      </h5>
-                      <h5> Total Bugs :
-                        <span>{{totalBugs}}</span>
-                      </h5>
-                      <h5> Rewards
-                        <i class="fa fa-inr"> </i> :
-                        <span>{{response.reward_cash ||'null'}}</span>
-                      </h5>
-                      <h5> Rewards
-                        <i class="fa fa-gift"> </i> :
-                        <span>{{response.reward_gift || 'null'}}</span>
-                      </h5>
-                    </div>
-                    <div class="card ">
-                      <div class="card-body">
-                        <div class="card-block">
-                          <h5>Risk score</h5>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card ">
-                      <div class="card-body">
-                        <div class="card-block">
-                          <h5 style="margin-top: 0;">Hall of Fame </h5>
-                          <p *ngIf="listofHallOfFame.length == 0">Hall of fame is empty </p>
-                          <ng-container *ngFor='let hof of listofHallOfFame'>
-                            <div class="media">
-                              <div class="pull-left">
-                                <img src="{{hof.profileImage}}" class="img-responsive profile-img" style="height:  24px;width:  24px;" alt="user">
-                              </div>
-                              <div class="pull-left">
-                                <span>{{hof.fullname}}</span>
-                              </div>
+                                        <!-- <a routerLink = "/submissions" class="mui-btn mui-btn--raised mui-btn--primary btn-block">View Submissions</a> -->
+                                        </span>
+                                        <div class="">
+                                            <h5> Participated Researchers :
+                                                <span>{{response.participatedResearchers}}</span>
+                                            </h5>
+                                            <h5> Total Bugs :
+                                                <span>{{totalBugs}}</span>
+                                            </h5>
+                                            <h5> Rewards
+                                                <i class="fa fa-inr"> </i> :
+                                                <span>{{response.reward_cash ||'null'}}</span>
+                                            </h5>
+                                            <h5> Rewards
+                                                <i class="fa fa-gift"> </i> :
+                                                <span>{{response.reward_gift || 'null'}}</span>
+                                            </h5>
+                                        </div>
+                                        <div class="card ">
+                                            <div class="card-body">
+                                                <div class="card-block">
+                                                    <h5>Risk score</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card ">
+                                            <div class="card-body">
+                                                <div class="card-block">
+                                                    <h5 style="margin-top: 0;">Hall of Fame </h5>
+                                                    <p *ngIf="listofHallOfFame.length == 0">Hall of fame is empty </p>
+                                                    <ng-container *ngFor='let hof of listofHallOfFame'>
+                                                        <div class="media">
+                                                            <div class="pull-left">
+                                                                <img src="{{hof.profileImage}}" class="img-responsive profile-img" style="height:  24px;width:  24px;" alt="user">
+                                                            </div>
+                                                            <div class="pull-left">
+                                                                <span>{{hof.fullname}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="clearfix"> </div>
+                                                    </ng-container>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
 
-                            <div class="clearfix"> </div>
-                          </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="more_submissions_section" style="margin-top: 2em; ">
+            <div class="card ">
+                <div class="card-body">
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table class="mui-table">
+                                <thead>
+                                    <th>Date</th>
+                                    <th>Submission Id</th>
+                                    <th>Scope</th>
+                                    <th>Researcher Name</th>
+                                    <th>Severity</th>
+                                    <th>Status</th>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let bug of response.bugs| paginate: { itemsPerPage: 5, currentPage: p }">
+                                        <td>{{bug.date | date : 'dd-MM-yyyy'}}</td>
+                                        <td>{{bug.id}}</td>
+                                        <td>Category : {{bug.scope.category}}</td>
+                                        <td>{{bug.researcherName}}</td>
+                                        <td>
+                                            <label class="label label-success">{{bug.severity}} </label>
+                                        </td>
+                                        <td>
+                                            <label class="label label-success">{{bug.status}} </label>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="response.bugs.length == 0">
+                                        <td colspan="06" style="text-align: center;">No Data</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
 
                         </div>
-                      </div>
+
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
+        </section>
 
-          </div>
-        </div>
-      </div>
     </div>
-
-    <section id="more_submissions_section" style="margin-top: 2em; ">
-      <div class="card ">
-        <div class="card-body">
-          <div class="card-block">
-            <div class="table-responsive">
-              <table class="mui-table">
-                <thead>
-                  <th>Date</th>
-                  <th>Submission Id</th>
-                  <th>Scope</th>
-                  <th>Researcher Name</th>
-                  <th>Severity</th>
-                  <th>Status</th>
-                </thead>
-                <tbody>
-
-                  <tr *ngFor="let bug of response.bugs| paginate: { itemsPerPage: 5, currentPage: p }">
-                    <td>{{bug.date | date : 'dd-MM-yyyy'}}</td>
-                    <td>{{bug.id}}</td>
-                    <td>Category : {{bug.scope.category}}</td>
-                    <td>{{bug.researcherName}}</td>
-                    <td>
-                      <label class="label label-success">{{bug.severity}} </label>
-                    </td>
-                    <td>
-                      <label class="label label-success">{{bug.status}} </label>
-                    </td>
-                  </tr>
-                  <tr *ngIf="response.bugs.length == 0">
-                    <td colspan="06" style="text-align: center;">No Data</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <pagination-controls (pageChange)="p = $event" ></pagination-controls>
-	
-
-            </div>
-          
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </div>
 
 </div>
 <!-- END MAIN CONTAINER -->

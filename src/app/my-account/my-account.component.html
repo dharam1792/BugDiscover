@@ -1,367 +1,362 @@
 <div id="page">
 
-  <app-header></app-header>
+    <app-header></app-header>
 
 
 
-  <div class="page-content">
+    <div class="page-content">
 
 
-    <!-- START MAIN CONTAINER -->
-    <div class="main-container" id="profile-page">
-      <h3 class="with-breaker animate-me fadeInUp">
-        Profile
-        <span> Settings </span>
-      </h3>
+        <!-- START MAIN CONTAINER -->
+        <div class="main-container" id="profile-page">
+            <h3 class="with-breaker animate-me fadeInUp">
+                Profile
+                <span> Settings </span>
+            </h3>
 
-      <div class="container" *ngIf="isLoader">
-        <div class="center">
-          <div class="loader"></div>
-          <br>
-          <b> Loading... </b>
-        </div>
-      </div>
-
-
-
-      <div class="container" *ngIf="!isLoader">
-        <div class="row">
-          <div class="col-md-3 profile-left">
-            <div class="card">
-              <div class="card-body">
-                <ul class="nav nav-tabs-left" role="tablist" style="width: 100%;float: none;">
-                  <li [ngClass]="{'active': isTabActive===1}" (click)="makeTabActive(1)">
-                    <a routerLink="/myaccount">
-                      <i class="fa fa-user"></i> Profile Settings</a>
-                  </li>
-                  <li [ngClass]="{'active': isTabActive===2}" (click)="makeTabActive(2)">
-                    <a>
-                      <i class="fa fa-lock"></i> Security </a>
-                  </li>
-                  <li [ngClass]="{'active': isTabActive===3}" (click)="makeTabActive(3)">
-                    <a>
-                      <i class="fa fa-history"></i> Login Activity</a>
-                  </li>
-                </ul>
-              </div>
+            <div class="container" *ngIf="isLoader">
+                <div class="center">
+                    <div class="loader"></div>
+                    <br>
+                    <b> Loading... </b>
+                </div>
             </div>
-          </div>
-          <div class="col-md-9 profile-right" *ngIf="isTabActive==1">
-            <div class="card">
-              <div class="card-body">
-                <div class="">
-
-                  <ul class="mui-tabs__bar mui-tabs__bar--justified">
-                    <li class="" [ngClass]="{'mui--is-active': isSubTabActive===1}" (click)="isSubTabActive===1">
-                      <a data-mui-toggle="tab" data-mui-controls="pane-justified-1">Profile</a>
-                    </li>
-                    <li class="" [ngClass]="{'mui--is-active': isSubTabActive===2}" (click)="isSubTabActive===2">
-                      <a data-mui-toggle="tab" data-mui-controls="pane-justified-2">Edit Profile</a>
-                    </li>
-                    <li class="" [ngClass]="{'mui--is-active': isSubTabActive===3}" (click)="isSubTabActive===3">
-                      <a data-mui-toggle="tab" data-mui-controls="pane-justified-3">Privacy</a>
-                    </li>
-                  </ul>
-                  <div class="" style="padding: 2em 0 0; ">
-                    <div class="mui-tabs__pane " [ngClass]="{'mui--is-active': isSubTabActive===1}" id="pane-justified-1">
 
 
-                      <div *ngIf="userType=='R'">
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <img [src]="userProfileInfo.profileImageUrl" onError="this.src='assets/images/avatar.jpg'" class="img-responsive profile-img"
-                              style=" height:  180px;    width:  180px;" alt="user">
-                            <br>
-                            <h3 class="text-center">{{userProfileInfo.fullName?userProfileInfo.fullName:'---'}}</h3>
 
-
-                            <br>
-
-                            <div class="card small-card">
-                              <div class="card-body">
-                                <div class="card-block">
-                                  <div class="media">
-                                    <div class="media-body text-xs-left">
-                                      <h3 class="teal">{{userProfileInfo?(userProfileInfo.reward?userProfileInfo.reward:0):0}}</h3>
-                                      <span>Rewards</span>
-                                    </div>
-                                    <div class="media-right media-middle">
-                                      <i class="fa fa-inr green font-large-2 float-xs-right"></i>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+            <div class="container" *ngIf="!isLoader">
+                <div class="row">
+                    <div class="col-md-3 profile-left">
+                        <div class="card">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs-left" role="tablist" style="width: 100%;float: none;">
+                                    <li [ngClass]="{'active': isTabActive===1}" (click)="makeTabActive(1)">
+                                        <a routerLink="/myaccount">
+                                            <i class="fa fa-user"></i> Profile Settings</a>
+                                    </li>
+                                    <li [ngClass]="{'active': isTabActive===2}" (click)="makeTabActive(2)">
+                                        <a>
+                                            <i class="fa fa-lock"></i> Security </a>
+                                    </li>
+                                    <li [ngClass]="{'active': isTabActive===3}" (click)="makeTabActive(3)">
+                                        <a>
+                                            <i class="fa fa-history"></i> Login Activity</a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="card small-card">
-                              <div class="card-body">
-                                <div class="card-block">
-                                  <div class="media">
-                                    <div class="media-body text-xs-left">
-                                      <h3 class="green">{{userProfileInfo?(userProfileInfo.score?userProfileInfo.score:0):0}}</h3>
-                                      <span>Score</span>
-                                    </div>
-                                    <div class="media-right media-middle">
-                                      <i class="fa fa-balance-scale green font-large-2 float-xs-right"></i>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="card small-card">
-                              <div class="card-body">
-                                <div class="card-block">
-                                  <div class="media">
-                                    <div class="media-body text-xs-left">
-                                      <h3 class="pink">{{userProfileInfo?(userProfileInfo.rank?userProfileInfo.rank:0):0}}</h3>
-                                      <span>Rank</span>
-                                    </div>
-                                    <div class="media-right media-middle">
-                                      <i class="fa fa-trophy pink font-large-2 float-xs-right" style="margin-right: 8px;"></i>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-sm-8">
-                            <h5>Personal Information : </h5>
-                            <div class="table-responsive">
-                              <table class="mui-table">
-                                <tbody>
-                                  <tr>
-                                    <td>Username</td>
-                                    <td colspan="2">{{userProfileInfo.userName?userProfileInfo.userName:'---'}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Fullname</td>
-                                    <td colspan="2">{{userProfileInfo.fullName?userProfileInfo.fullName:'---'}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>About Me</td>
-                                    <td colspan="2">
-                                      <p class="">{{userProfileInfo.aboutMe?userProfileInfo.aboutMe:'---'}}
-                                      </p>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>Email</td>
-                                    <td colspan="2">{{userProfileInfo.email?userProfileInfo.email:'---'}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Phone Number</td>
-                                    <td colspan="2">{{userProfileInfo.phone?userProfileInfo.phone:'---'}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Skype Id</td>
-                                    <td colspan="2">{{userProfileInfo.skype?userProfileInfo.skype:'---'}}</td>
-                                  </tr>
-
-                                  <tr>
-                                    <td>Website</td>
-                                    <td colspan="2">{{userProfileInfo.website?userProfileInfo.website:'---'}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Social Links</td>
-                                    <td colspan="2">{{userProfileInfo.socialLinks?userProfileInfo.socialLinks:'---'}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Achivements</td>
-                                    <td colspan="2">{{userProfileInfo.achivements?userProfileInfo.achivements:'---'}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Hall of Fame</td>
-                                    <td colspan="2">{{userProfileInfo.hallOfFame?userProfileInfo.hallOfFame:'---'}}</td>
-                                  </tr>
-                                  <tr *ngFor="let cetrificate of userProfileInfo.certificates">
-                                    <td>Certificates</td>
-                                    <td>{{cetrificate.license?cetrificate.certificate:'---'}}</td>
-                                    <td>Licence {{cetrificate.license?cetrificate.license:'---'}}</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
                         </div>
-                      </div>
-
-                      <div *ngIf="userType=='C'">
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <img [src]="userProfileInfo.profileImageUrl" onError="this.src='assets/images/avatar.jpg'"class="img-responsive profile-img"
-                              style=" height:  180px;    width:  180px;" alt="user">
-                            <br>
-                            <h3 class="text-center">{{userProfileInfo.companyName?userProfileInfo.companyName:'---'}}</h3>
-
-
-                            <br>
-
-
-                          </div>
-                          <div class="col-sm-8">
-                            <h5>Personal Information : </h5>
-                            <div class="table-responsive">
-                              <table class="mui-table">
-                                <tbody>
-                                  <tr>
-                                    <td>Company Name</td>
-                                    <td colspan="2">{{userProfileInfo.companyName?userProfileInfo.companyName:'---'}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Registarar Name</td>
-                                    <td colspan="2">{{userProfileInfo.registrarName?userProfileInfo.registrarName:'---'}}</td>
-                                  </tr>
-
-                                  <tr>
-                                    <td>Registarar Designation </td>
-                                    <td colspan="2">{{userProfileInfo.designation?userProfileInfo.designation:'---'}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>About Me</td>
-                                    <td colspan="2">
-                                      <div>
-                                        <p class="">{{userProfileInfo.aboutMe?userProfileInfo.aboutMe:'---'}}
-                                        </p>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>Email</td>
-                                    <td colspan="2">{{userProfileInfo.email?userProfileInfo.email:'---'}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Phone Number</td>
-                                    <td colspan="2">{{userProfileInfo.phone?userProfileInfo.phone:'---'}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Skype Id</td>
-                                    <td colspan="2">{{userProfileInfo.skype?userProfileInfo.skype:'---'}}</td>
-                                  </tr>
-
-                                  <tr>
-                                    <td>Website</td>
-                                    <td colspan="2">{{userProfileInfo.website?userProfileInfo.website:'---'}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Social Links</td>
-                                    <td colspan="2">{{userProfileInfo.socialLinks?userProfileInfo.socialLinks:'---'}}</td>
-                                  </tr>
-
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-
                     </div>
-                    <div class="mui-tabs__pane" [ngClass]="{'mui--is-active': isSubTabActive===2}" id="pane-justified-2">
+                    <div class="col-md-9 profile-right" *ngIf="isTabActive==1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="">
+
+                                    <ul class="mui-tabs__bar mui-tabs__bar--justified">
+                                        <li class="" [ngClass]="{'mui--is-active': isSubTabActive===1}" (click)="isSubTabActive===1">
+                                            <a data-mui-toggle="tab" data-mui-controls="pane-justified-1">Profile</a>
+                                        </li>
+                                        <li class="" [ngClass]="{'mui--is-active': isSubTabActive===2}" (click)="isSubTabActive===2">
+                                            <a data-mui-toggle="tab" data-mui-controls="pane-justified-2">Edit Profile</a>
+                                        </li>
+                                        <li class="" [ngClass]="{'mui--is-active': isSubTabActive===3}" (click)="isSubTabActive===3">
+                                            <a data-mui-toggle="tab" data-mui-controls="pane-justified-3">Privacy</a>
+                                        </li>
+                                    </ul>
+                                    <div class="" style="padding: 2em 0 0; ">
+                                        <div class="mui-tabs__pane " [ngClass]="{'mui--is-active': isSubTabActive===1}" id="pane-justified-1">
+
+
+                                            <div *ngIf="userType=='R'">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <img [src]="userProfileInfo.profileImageUrl" onError="this.src='assets/images/avatar.jpg'" class="img-responsive profile-img" style=" height:  180px;    width:  180px;" alt="user">
+                                                        <br>
+                                                        <h3 class="text-center">{{userProfileInfo.fullName?userProfileInfo.fullName:'---'}}</h3>
+
+
+                                                        <br>
+
+                                                        <div class="card small-card">
+                                                            <div class="card-body">
+                                                                <div class="card-block">
+                                                                    <div class="media">
+                                                                        <div class="media-body text-xs-left">
+                                                                            <h3 class="teal">{{userProfileInfo.rewardsCount?userProfileInfo.rewardsCount:0}}</h3>
+                                                                            <span>Rewards</span>
+                                                                        </div>
+                                                                        <div class="media-right media-middle">
+                                                                            <i class="fa fa-inr green font-large-2 float-xs-right"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card small-card">
+                                                            <div class="card-body">
+                                                                <div class="card-block">
+                                                                    <div class="media">
+                                                                        <div class="media-body text-xs-left">
+                                                                            <h3 class="green">{{userProfileInfo?(userProfileInfo.score?userProfileInfo.score:0):0}}</h3>
+                                                                            <span>Score</span>
+                                                                        </div>
+                                                                        <div class="media-right media-middle">
+                                                                            <i class="fa fa-balance-scale green font-large-2 float-xs-right"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card small-card">
+                                                            <div class="card-body">
+                                                                <div class="card-block">
+                                                                    <div class="media">
+                                                                        <div class="media-body text-xs-left">
+                                                                            <h3 class="pink">{{userProfileInfo?(userProfileInfo.rank?userProfileInfo.rank:0):0}}</h3>
+                                                                            <span>Rank</span>
+                                                                        </div>
+                                                                        <div class="media-right media-middle">
+                                                                            <i class="fa fa-trophy pink font-large-2 float-xs-right" style="margin-right: 8px;"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <h5>Personal Information : </h5>
+                                                        <div class="table-responsive">
+                                                            <table class="mui-table">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Username</td>
+                                                                        <td colspan="2">{{userProfileInfo.userName?userProfileInfo.userName:'---'}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Fullname</td>
+                                                                        <td colspan="2">{{userProfileInfo.fullName?userProfileInfo.fullName:'---'}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>About Me</td>
+                                                                        <td colspan="2">
+                                                                            <p class="">{{userProfileInfo.aboutMe?userProfileInfo.aboutMe:'---'}}
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Email</td>
+                                                                        <td colspan="2">{{userProfileInfo.email?userProfileInfo.email:'---'}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Phone Number</td>
+                                                                        <td colspan="2">{{userProfileInfo.phone?userProfileInfo.phone:'---'}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Skype Id</td>
+                                                                        <td colspan="2">{{userProfileInfo.skype?userProfileInfo.skype:'---'}}</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>Website</td>
+                                                                        <td colspan="2">{{userProfileInfo.website?userProfileInfo.website:'---'}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Social Links</td>
+                                                                        <td colspan="2">{{userProfileInfo.socialLinks?userProfileInfo.socialLinks:'---'}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Achivements</td>
+                                                                        <td colspan="2">{{userProfileInfo.achivements?userProfileInfo.achivements:'---'}}</td>
+                                                                    </tr>
+                                                                    <tr *ngFor="let item of userProfileInfo.hallOfFame">
+                                                                        <td>Hall of Fame</td>
+                                                                        <td colspan="2">{{item}}</td>
+                                                                    </tr>
+                                                                    <tr *ngFor="let cetrificate of userProfileInfo.certificates">
+                                                                        <td>Certificates</td>
+                                                                        <td>{{cetrificate.license?cetrificate.certificate:'---'}}</td>
+                                                                        <td>Licence {{cetrificate.license?cetrificate.license:'---'}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="userType=='C'">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <img [src]="userProfileInfo.profileImageUrl" onError="this.src='assets/images/avatar.jpg'" class="img-responsive profile-img" style=" height:  180px;    width:  180px;" alt="user">
+                                                        <br>
+                                                        <h3 class="text-center">{{userProfileInfo.companyName?userProfileInfo.companyName:'---'}}</h3>
+
+
+                                                        <br>
+
+
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <h5>Personal Information : </h5>
+                                                        <div class="table-responsive">
+                                                            <table class="mui-table">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Company Name</td>
+                                                                        <td colspan="2">{{userProfileInfo.companyName?userProfileInfo.companyName:'---'}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Registarar Name</td>
+                                                                        <td colspan="2">{{userProfileInfo.registrarName?userProfileInfo.registrarName:'---'}}</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>Registarar Designation </td>
+                                                                        <td colspan="2">{{userProfileInfo.designation?userProfileInfo.designation:'---'}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>About Me</td>
+                                                                        <td colspan="2">
+                                                                            <div>
+                                                                                <p class="">{{userProfileInfo.aboutMe?userProfileInfo.aboutMe:'---'}}
+                                                                                </p>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Email</td>
+                                                                        <td colspan="2">{{userProfileInfo.email?userProfileInfo.email:'---'}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Phone Number</td>
+                                                                        <td colspan="2">{{userProfileInfo.phone?userProfileInfo.phone:'---'}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Skype Id</td>
+                                                                        <td colspan="2">{{userProfileInfo.skype?userProfileInfo.skype:'---'}}</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>Website</td>
+                                                                        <td colspan="2">{{userProfileInfo.website?userProfileInfo.website:'---'}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Social Links</td>
+                                                                        <td colspan="2">{{userProfileInfo.socialLinks?userProfileInfo.socialLinks:'---'}}</td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="mui-tabs__pane" [ngClass]="{'mui--is-active': isSubTabActive===2}" id="pane-justified-2">
 
 
 
 
-                      <div *ngIf="userType=='R'">
-                        <div class="row">
-                          <div class="col-sm-3">
-                            <img *ngIf="!previewImageSRC" [src]="userProfileInfo.profileImageUrl" onError="this.src='assets/images/avatar.jpg'" class="img-responsive profile-img"
-                              style=" height:  180px;    width:  180px;" alt="user">
+                                            <div *ngIf="userType=='R'">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <img *ngIf="!previewImageSRC" [src]="userProfileInfo.profileImageUrl" onError="this.src='assets/images/avatar.jpg'" class="img-responsive profile-img" style=" height:  180px;    width:  180px;" alt="user">
 
-                            <img *ngIf="previewImageSRC" [src]="previewImageSRC" class="img-responsive profile-img" style=" height:  180px;    width:  180px;"
-                              alt="user">
+                                                        <img *ngIf="previewImageSRC" [src]="previewImageSRC" class="img-responsive profile-img" style=" height:  180px;    width:  180px;" alt="user">
 
-                            <br>
-                            <br>
-                            <div class="form-group text-center">
-                              <div class="upload8">
+                                                        <br>
+                                                        <br>
+                                                        <div class="form-group text-center">
+                                                            <div class="upload8">
 
-                                <span *ngIf="isFileUploadLoader">
+                                                                <span *ngIf="isFileUploadLoader">
                                   <label class="uploadFile">
                                     <i class="fa fa-spinner fa-spin"></i> Uploading...</label>
                                 </span>
 
-                                <span *ngIf="!isFileUploadLoader">
+                                                                <span *ngIf="!isFileUploadLoader">
                                   <label class="uploadFile" (click)="fileInput.click()"> Upload Photo</label>
                                   <input type="file" name="images" [(ngModel)]="profileImageUrl" id="avatar" accept="image/*" (change)="onFileChange($event)" #fileInput>
                                 </span>
 
 
-                              </div>
-                            </div>
-                          </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
 
-                          <div class="col-sm-9">
+                                                    <div class="col-sm-9">
 
 
-                            <div class="media">
-                              <form class="" [formGroup]="ProfileForm" novalidate enctype="multipart/form-data">
+                                                        <div class="media">
+                                                            <form class="" [formGroup]="ProfileForm" novalidate enctype="multipart/form-data">
 
-                                <div class="col-sm-6">
-                                  <div class="mui-textfield ">
-                                    <input type="text" name="userName" formControlName="userName" class="" placeholder="" required>
-                                    <label>User Name</label>
+                                                                <div class="col-sm-6">
+                                                                    <div class="mui-textfield ">
+                                                                        <input type="text" name="userName" formControlName="userName" class="" placeholder="" readonly>
+                                                                        <label>User Name</label>
 
-                                    <!-- <div *ngIf="userName.errors && (userName.dirty || userName.touched)">
+                                                                        <!-- <div *ngIf="userName.errors && (userName.dirty || userName.touched)">
       
                                           <p > This filed is required!</p>
                                           
                                         </div> -->
 
-                                  </div>
-                                </div>
-                                <div class="col-sm-6">
-                                  <div class="mui-textfield">
-                                    <input type="text" name="fullName" formControlName="fullName" class="" placeholder="" required>
-                                    <label>Full Name</label>
-                                  </div>
-                                </div>
-                                <div class="col-sm-6">
-                                  <div class="mui-textfield ">
-                                    <input type="email" name="email" formControlName="email" class="" placeholder="" required readonly>
-                                    <label>Email</label>
-                                  </div>
-                                </div>
-                                <div class="col-sm-6">
-                                  <div class="mui-textfield ">
-                                    <input type="text" name="phone" formControlName="phone" class="" placeholder="" pattern="[0-9]*" minlength="10" maxlength="10"
-                                      required>
-                                    <label>Phone Number</label>
-                                  </div>
-                                </div>
-                                <div class="col-sm-6">
-                                  <div class="mui-textfield ">
-                                    <input type="text" name="skype" formControlName="skype" class="" placeholder="" required>
-                                    <label>Skype Id</label>
-                                  </div>
-                                </div>
-                                <div class="col-sm-6">
-                                  <div class="mui-textfield ">
-                                    <input type="text" name="website" formControlName="website" class="" pattern="https?://.+" placeholder="" required>
-                                    <label>Website</label>
-                                  </div>
-                                </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="mui-textfield" [ngClass]="{'has-error': ((!fullName.valid && fullName.touched)), 'has-success': (fullName.valid && fullName.touched)}">
+                                                                        <input type="text" name="fullName" formControlName="fullName" class="" placeholder="" required>
+                                                                        <label>Full Name</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="mui-textfield ">
+                                                                        <input type="email" name="email" formControlName="email" class="" placeholder="" required readonly>
+                                                                        <label>Email</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="mui-textfield " [ngClass]="{'has-error': ((!phone.valid && phone.touched)), 'has-success': (phone.valid && phone.touched)}">
+                                                                        <input type="text" name="phone" formControlName="phone" class="" placeholder="" pattern="[0-9]*" minlength="10" maxlength="10" required>
+                                                                        <label>Phone Number</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="mui-textfield " [ngClass]="{'has-error': ((!skype.valid && skype.touched)), 'has-success': (skype.valid && skype.touched)}">
+                                                                        <input type="text" name="skype" formControlName="skype" class="" placeholder="" required>
+                                                                        <label>Skype Id</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="mui-textfield " [ngClass]="{'has-error': ((!website.valid && website.touched)), 'has-success': (website.valid && website.touched)}">
+                                                                        <input type="text" name="website" formControlName="website" class="" pattern="https?://.+" placeholder="" required>
+                                                                        <label>Website</label>
+                                                                    </div>
+                                                                </div>
 
-                                <div class="col-sm-12">
-                                  <div class="mui-textfield ">
-                                    <textarea name="aboutMe" formControlName="aboutMe" class="" placeholder=""></textarea>
-                                    <label>About Me</label>
-                                  </div>
-                                </div>
-                                <div class="col-sm-12">
-                                  <div class="row">
-                                    <div class="col-xs-12">
-                                      <div class="mui-textfield ">
-                                        <input type="text" name="socialLinks" formControlName="socialLinks" pattern="https?://.+" placeholder="" required>
-                                        <label>Social Links</label>
-                                      </div>
-                                    </div>
-                                    <!-- <div class="col-xs-2">
+                                                                <div class="col-sm-12">
+                                                                    <div class="mui-textfield " [ngClass]="{'has-error': ((!aboutMe.valid && aboutMe.touched)), 'has-success': (aboutMe.valid && aboutMe.touched)}">
+                                                                        <input name="aboutMe" formControlName="aboutMe" style="height:60px;">
+                                                                        <label>About Me</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-xs-12">
+                                                                            <div class="mui-textfield " [ngClass]="{'has-error': ((!socialLinks.valid && socialLinks.touched)), 'has-success': (socialLinks.valid && socialLinks.touched)}">
+                                                                                <input type="text" name="socialLinks" formControlName="socialLinks" pattern="https?://.+" placeholder="" required>
+                                                                                <label>Social Links</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- <div class="col-xs-2">
                                           <button type="button" class="btn btn-success btn-add-more ">
                                             <i class="fa fa-plus"> </i>
                                           </button>
                                         </div> -->
-                                  </div>
-                                  <!-- <div class="row">
+                                                                    </div>
+                                                                    <!-- <div class="row">
                                         <div class="col-xs-10">
                                           <div class="mui-textfield ">
                                             <input type="text"  name="images" formControlName="profileImageUrl" class="mui--is-empty mui--is-untouched mui--is-pristine">
@@ -374,169 +369,172 @@
                                           </button>
                                         </div>
                                       </div> -->
-                                </div>
-                                <div class="col-sm-12">
-                                  <div class="row">
-                                    <div class="col-xs-12">
-                                      <div class="mui-textfield ">
-                                        <input type="text" name="achivements" formControlName="achivements" class="" placeholder="" required>
-                                        <label>Achivements</label>
-                                      </div>
-                                    </div>
-                                    <!-- <div class="col-xs-2">
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-xs-12">
+                                                                            <div class="mui-textfield " [ngClass]="{'has-error': ((!achivements.valid && achivements.touched)), 'has-success': (achivements.valid && achivements.touched)}">
+                                                                                <input type="text" name="achivements" formControlName="achivements" class="" placeholder="" required>
+                                                                                <label>Achivements</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- <div class="col-xs-2">
                                           <button type="button" class="btn btn-success btn-add-more ">
                                             <i class="fa fa-plus"> </i>
                                           </button>
                                         </div> -->
-                                  </div>
-                                </div>
-                                <div class="col-sm-12">
-                                  <div class="row">
-                                    <div class="col-xs-12">
-                                      <div class="mui-textfield ">
-                                        <input type="text" name="hallOfFame" formControlName="hallOfFame" class="" placeholder="" required>
-                                        <label>Hall of Fame</label>
-                                      </div>
-                                    </div>
-                                    <!-- <div class="col-xs-2">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-xs-12">
+                                                                            <div class="mui-textfield " [ngClass]="{'has-error': ((!hallOfFame.valid && hallOfFame.touched)), 'has-success': (hallOfFame.valid && hallOfFame.touched)}">
+                                                                                <input type="text" name="hallOfFame" formControlName="hallOfFame" class="" placeholder="" required>
+                                                                                <label>Hall of Fame</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- <div class="col-xs-2">
                                           <button type="button" class="btn btn-success btn-add-more ">
                                             <i class="fa fa-plus"> </i>
                                           </button>
                                         </div> -->
-                                  </div>
-                                </div>
+                                                                    </div>
+                                                                </div>
 
-                              </form>
-
-
-                              <div class="col-sm-12">
-                                <div class="row">
-
-                                  <div *ngFor="let certificateItem of certificatesList; let i=index;">
-                                    <div class="col-xs-12 col-md-5">
-                                      <div class="mui-textfield ">
-                                        <!-- [value]="ProfileForm.value.certificates[0].certificate" -->
-
-                                        <input type="text" [(ngModel)]="certificateItem.certificate" class="" placeholder="">
-                                        <label>Certificate Name</label>
+                                                            </form>
 
 
-                                      </div>
-                                    </div>
-                                    <div class="col-xs-8 col-md-5">
-                                      <div class="mui-textfield ">
-                                        <!-- [value]="ProfileForm.value.certificates[0].certificate[0].license"  -->
-                                        <input type="text" [(ngModel)]="certificateItem.license" class="mui--is-empty mui--is-untouched mui--is-pristine">
-                                        <label>License</label>
-                                      </div>
-                                    </div>
+                                                            <div class="col-sm-12">
+                                                                <div class="row">
 
-                                    <div class="col-xs-2 col-md-2">
+                                                                    <a role="button" (click)="AddCertificates()" style="float: right; margin-right: 4em;">
+                                                                        <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
+                                                                    </a>
+                                                                    <div *ngFor="let item of certificatesList; let i=index;" style="margin-top: 2em;">
+                                                                        <div class="col-xs-12 col-md-5">
+                                                                            <div class="mui-textfield ">
+                                                                                <!-- [value]="ProfileForm.value.certificates[0].certificate" -->
 
-                                      <!-- <span *ngIf="i<(certificatesList.length-1)" class="addMore">
+                                                                                <input type="text" [disabled]="editEnable == true" [(ngModel)]="item.certificate" class="" placeholder="">
+                                                                                <label>Certificate Name</label>
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-xs-8 col-md-5">
+                                                                            <div class="mui-textfield ">
+                                                                                <!-- [value]="ProfileForm.value.certificates[0].certificate[0].license"  -->
+                                                                                <input [disabled]="editEnable == true" type="text" [(ngModel)]="item.license" class="mui--is-empty mui--is-untouched mui--is-pristine">
+                                                                                <label>License</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-xs-2 col-md-2" style="margin-top: 1em;">
+
+                                                                            <!-- <span *ngIf="i<(certificatesList.length-1)" class="addMore">
                                                 <i class="fa fa-minus"> </i>
                                               </span>
   
                                               <span *ngIf="i==(certificatesList.length-1)" class="addMore">
-                                                <i class="fa fa-plus"> </i>
+                                                <i class="fa fa-plus"> </i>  <i class="fa fa-pencil" aria-hidden="true"></i>
                                               </span> -->
+                                                                            <a *ngIf="editEnable == true" role="button" (click)="editCertificates(i)">
+                                                                                <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                                                                            </a>&nbsp;&nbsp;
+                                                                            <a *ngIf="editEnable == true" role="button" (click)="removeCertificates(i)">
+                                                                                <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                                                                            </a>
+                                                                            <a *ngIf="addEnable == true && itemIndex == i" role="button" (click)="AddCertificates(i)">
+                                                                                <i class="fa fa-check-circle fa-2x" aria-hidden="true"></i>
+                                                                            </a>&nbsp;&nbsp;
+                                                                            <a *ngIf="addEnable == true && itemIndex == i" role="button" (click)="removeCertificates(i)">
+                                                                                <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                                                                            </a>
+                                                                            <!-- <a *ngIf="i==(certificatesList.length-1)" role="button" (click)="AddCertificates()">
+                                                                                <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
+                                                                            </a> -->
 
-                                      <button *ngIf="i<(certificatesList.length-1)" type="button" class="btn btn-success btn-add-more remove " (click)="removeCertificates(i)">
-                                        <i class="fa fa-minus"> </i>
-                                      </button>
+                                                                        </div>
+                                                                    </div>
 
-                                      <button *ngIf="i==(certificatesList.length-1)" type="button" class="btn btn-success btn-add-more " (click)="AddCertificates()">
-                                        <i class="fa fa-plus"> </i>
-                                      </button>
-
-                                    </div>
-                                  </div>
-
-                                </div>
-                              </div>
-                              <div class="col-md-offset-2 col-md-6  ">
-                                <div class="form-group">
-                                  <br>
-                                  <button type="button" (click)="doSubmit()" [disabled]="!ProfileForm.valid" class="mui-btn btn-block mui-btn--raised mui-btn--primary">Update</button>
-                                </div>
-                              </div>
-
-
-
-
-                              <div class="col-md-offset-2 col-md-6 " *ngIf="responseMsg">
-                                <div class="alert alert-success" *ngIf="responseMsg.success">
-                                  <!-- <strong>Success!</strong> -->
-                                  {{responseMsg.message}}
-                                </div>
-
-                                <div class="alert alert-danger" *ngIf="!responseMsg.success">
-                                  <!-- <strong>Error!</strong> -->
-                                  {{responseMsg.message}}
-                                </div>
-                              </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-offset-2 col-md-6  ">
+                                                                <div class="form-group">
+                                                                    <br>
+                                                                    <button type="button" (click)="doSubmit()" class="mui-btn btn-block mui-btn--raised mui-btn--primary">Update</button>
+                                                                </div>
+                                                            </div>
 
 
-                            </div>
 
-                          </div>
-                        </div>
 
-                      </div>
+                                                            <div class="col-md-offset-2 col-md-6 " *ngIf="responseMsg">
+                                                                <div class="alert alert-success" *ngIf="responseMsg.success" style="text-transform: capitalize">
+                                                                    <!-- <strong>Success!</strong> -->
+                                                                    {{responseMsg.message}}
+                                                                </div>
 
-                      <div *ngIf="userType=='C'">
-                        <div class="row">
-                          <div class="col-sm-3">
-                            <img *ngIf="!previewImageSRC" [src]="userProfileInfo.profileImageUrl" onError="this.src='assets/images/avatar.jpg'" class="img-responsive profile-img"
-                              style=" height:  180px;    width:  180px;" alt="user">
+                                                                <div class="alert alert-danger" *ngIf="!responseMsg.success" style="text-transform: capitalize">
+                                                                    <!-- <strong>Error!</strong> -->
+                                                                    {{responseMsg.message}}
+                                                                </div>
+                                                            </div>
 
-                            <img *ngIf="previewImageSRC" [src]="previewImageSRC" class="img-responsive profile-img" style=" height:  180px;    width:  180px;"
-                              alt="user">
 
-                            <br>
-                            <br>
-                            <div class="form-group text-center">
-                              <div class="upload8">
+                                                        </div>
 
-                                <span *ngIf="isFileUploadLoader">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div *ngIf="userType=='C'">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <img *ngIf="!previewImageSRC" [src]="userProfileInfo.profileImageUrl" onError="this.src='assets/images/avatar.jpg'" class="img-responsive profile-img" style=" height:  180px;    width:  180px;" alt="user">
+
+                                                        <img *ngIf="previewImageSRC" [src]="previewImageSRC" class="img-responsive profile-img" style=" height:  180px;    width:  180px;" alt="user">
+
+                                                        <br>
+                                                        <br>
+                                                        <div class="form-group text-center">
+                                                            <div class="upload8">
+
+                                                                <span *ngIf="isFileUploadLoader">
                                   <label class="uploadFile">
                                     <i class="fa fa-spinner fa-spin"></i> Uploading...</label>
                                 </span>
 
-                                <span *ngIf="!isFileUploadLoader">
+                                                                <span *ngIf="!isFileUploadLoader">
                                   <label class="uploadFile" (click)="fileInput.click()" [innerHtml]="btnTaxt"> </label>
                                   <input type="file" name="images" [(ngModel)]="profileImageUrl"   accept="image/*"  id="avatar" (change)="onFileChange($event)" #fileInput>
                                 </span>
 
-                                <!-- <label class="uploadFile" (click)="fileInput.click()">
+                                                                <!-- <label class="uploadFile" (click)="fileInput.click()">
                                      <i class="fa fa-spinner fa-spin"></i> Upload Photo
                                     </label>
                                     <input type="file" name="images" [(ngModel)]="profileImageUrl" id="avatar" (change)="onFileChange($event)" #fileInput>
        -->
-                              </div>
-                            </div>
-                          </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
 
 
-                          <div class="col-sm-9">
+                                                    <div class="col-sm-9">
 
 
-                            <div class="media">
-                              <form class="" [formGroup]="ProfileFormCompany" novalidate  enctype="multipart/form-data">
+                                                        <div class="media">
+                                                            <form class="" [formGroup]="ProfileFormCompany" novalidate enctype="multipart/form-data">
 
-                                <div class="col-sm-12">
-                                  <div class="mui-textfield ">
-                                    <input type="text" name="CompanyName"
-                                     formControlName="CompanyName"
-                                     
-                                     class="" 
-                                     placeholder="" 
-                                     required>
-                                    <label>Company Name</label>
-                                   </div>
-                                </div>
-<!--
+                                                                <div class="col-sm-12">
+                                                                    <div class="mui-textfield ">
+                                                                        <input type="text" name="CompanyName" formControlName="CompanyName" class="" placeholder="" required>
+                                                                        <label>Company Name</label>
+                                                                    </div>
+                                                                </div>
+                                                                <!--
                                 <div class="col-sm-6">
                                   <div class="mui-textfield">
                                     <input type="text" name="RegistararName" formControlName="RegistararName" class="" placeholder="" required>
@@ -545,203 +543,215 @@
                                 </div>
 -->
 
-                                <div class="col-sm-6">
-                                  <div class="mui-textfield">
-                                    <input type="text" name="RegistararName" formControlName="RegistararName" class="" placeholder="">
-                                    <label>Registarar Name</label>
-                                  </div>
-                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="mui-textfield">
+                                                                        <input type="text" name="RegistararName" formControlName="RegistararName" class="" placeholder="">
+                                                                        <label>Registarar Name</label>
+                                                                    </div>
+                                                                </div>
 
 
-                                <div class="col-sm-6">
-                                  <div class="mui-textfield ">
-                                    <input type="text" name="RegistararDesignation" formControlName="RegistararDesignation" class="" placeholder="" required>
-                                    <label>Registarar Designation</label>
-                                  </div>
-                                </div>
-
-
-
-
-                                <div class="col-sm-6">
-                                  <div class="mui-textfield ">
-                                    <input type="email" name="email" formControlName="email" class="" placeholder="" required>
-                                    <label>Email</label>
-                                  </div>
-                                </div>
-
-
-                                <div class="col-sm-6">
-                                  <div class="mui-textfield ">
-                                    <input type="text" name="phone" formControlName="phone" class="" placeholder="" pattern="[0-9]*" minlength="10" maxlength="15"
-                                      required>
-                                    <label>Phone Number</label>
-                                  </div>
-                                </div>
-
-                                <div class="col-sm-12">
-                                  <div class="mui-textfield ">
-                                    <input type="text" name="website" formControlName="website" class="" pattern="https?://.+" placeholder="" required>
-                                    <label>Website</label>
-                                  </div>
-                                </div>
-
-                                <div class="col-sm-12">
-                                  <div class="mui-textfield ">
-                                    <textarea name="aboutMe"  formControlName="aboutMe" class="" placeholder=""></textarea>
-                                    <label>About Us</label>
-                                  </div>
-                                </div>
-                                <div class="col-sm-12">
-                                  <div class="row">
-                                    <div class="col-xs-12">
-                                      <div class="mui-textfield ">
-                                        <input type="text" name="socialLinks" formControlName="socialLinks" class="" pattern="https?://.+" placeholder="">
-                                        <label>Social Links</label>
-                                      </div>
-                                    </div>
-
-                                  </div>
-
-                                </div>
-
-
-                              </form>
-
-
-
-                              <div class="col-md-offset-2 col-md-6  ">
-                                <div class="form-group">
-                                  <br>
-                                  <button type="button" (click)="doSubmit()" [disabled]="!ProfileFormCompany.valid" class="mui-btn btn-block mui-btn--raised mui-btn--primary">Update</button>
-                                </div>
-                              </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="mui-textfield ">
+                                                                        <input type="text" name="RegistararDesignation" formControlName="RegistararDesignation" class="" placeholder="" required>
+                                                                        <label>Registarar Designation</label>
+                                                                    </div>
+                                                                </div>
 
 
 
 
-                              <div class="col-md-offset-2 col-md-6 " *ngIf="responseMsg">
-                                <div class="alert alert-success" *ngIf="responseMsg.success">
-                                  <!-- <strong>Success!</strong> -->
-                                  {{responseMsg.message}}
-                                </div>
-
-                                <div class="alert alert-danger" *ngIf="!responseMsg.success">
-                                  <!-- <strong>Error!</strong> -->
-                                  {{responseMsg.message}}
-                                </div>
-                              </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="mui-textfield ">
+                                                                        <input type="email" name="email" formControlName="email" class="" placeholder="" readonly>
+                                                                        <label>Email</label>
+                                                                    </div>
+                                                                </div>
 
 
-                            </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="mui-textfield ">
+                                                                        <input type="text" name="phone" formControlName="phone" class="" placeholder="" pattern="[0-9]*" minlength="10" maxlength="15" required>
+                                                                        <label>Phone Number</label>
+                                                                    </div>
+                                                                </div>
 
-                          </div>
-                        </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="mui-textfield ">
+                                                                        <input type="text" name="website" formControlName="website" class="" pattern="https?://.+" placeholder="" required>
+                                                                        <label>Website</label>
+                                                                    </div>
+                                                                </div>
 
-                      </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="mui-textfield ">
+                                                                        <textarea name="aboutMe" formControlName="aboutMe" class="" placeholder=""></textarea>
+                                                                        <label>About Us</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-xs-12">
+                                                                            <div class="mui-textfield ">
+                                                                                <input type="text" name="socialLinks" formControlName="socialLinks" class="" pattern="https?://.+" placeholder="">
+                                                                                <label>Social Links</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
 
 
-                    </div>
-                    <div class="mui-tabs__pane" [ngClass]="{'mui--is-active': isSubTabActive===3}" id="pane-justified-3">
+                                                            </form>
 
-                      <div class="table-responsive">
-                        <table class="mui-table mui-table--bordered">
-                          <tbody>
 
-                            <tr *ngFor="let privacy of userPrivacy; let i=index;">
-                                <td>{{privacy.label}}</td>
-                                <td *ngIf="privacy.property!='photo' && privacy.property!='certificates'">{{privacy.value?privacy.value:'---'}}</td>
-                                <td *ngIf="privacy.property=='photo' && privacy.property!='certificates'">
-                                    <img [src]="privacy.value?privacy.value:'assets/images/avatar.jpg'" alt="Profile Image" style="height: 24px;width: 24px;">
-                                </td>
-                                <td *ngIf="privacy.property=='certificates'">
-                                  <span *ngFor="let val of privacy.value;let last = last ">
+
+                                                            <div class="col-md-offset-2 col-md-6  ">
+                                                                <div class="form-group">
+                                                                    <br>
+                                                                    <button type="button" (click)="doSubmit()" [disabled]="!ProfileFormCompany.valid" class="mui-btn btn-block mui-btn--raised mui-btn--primary">Update</button>
+                                                                </div>
+                                                            </div>
+
+
+
+
+                                                            <div class="col-md-offset-2 col-md-6 " *ngIf="responseMsg">
+                                                                <div class="alert alert-success" *ngIf="responseMsg.success" style="text-transform: capitalize">
+                                                                    <!-- <strong>Success!</strong> -->
+                                                                    {{responseMsg.message}}
+                                                                </div>
+
+                                                                <div class="alert alert-danger" *ngIf="!responseMsg.success" style="text-transform: capitalize">
+                                                                    <!-- <strong>Error!</strong> -->
+                                                                    {{responseMsg.message}}
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                        <div class="mui-tabs__pane" [ngClass]="{'mui--is-active': isSubTabActive===3}" id="pane-justified-3">
+
+                                            <div class="table-responsive">
+                                                <table class="mui-table mui-table--bordered">
+                                                    <tbody>
+
+                                                        <tr *ngFor="let privacy of userPrivacy; let i=index;">
+                                                            <td>{{privacy.label}}</td>
+                                                            <td *ngIf="privacy.property!='photo' && privacy.property!='certificates'">{{privacy.value?privacy.value:'---'}}</td>
+                                                            <td *ngIf="privacy.property=='photo' && privacy.property!='certificates'">
+                                                                <img [src]="privacy.value?privacy.value:'assets/images/avatar.jpg'" alt="Profile Image" style="height: 24px;width: 24px;">
+                                                            </td>
+                                                            <td *ngIf="privacy.property=='certificates'">
+                                                                <span *ngFor="let val of privacy.value;let last = last ">
                                     {{val.certificate}}<span *ngIf="!last">,</span>
-                                  </span>
-                              </td>
-                                
-                                <td>
-                                  <div class="">
-                                    <input  name="checkbox" type="checkbox" [(ngModel)]="userPrivacy[i].privacy" (change)="checkValue()" style="height:auto !important;">
-                                    <label for="checkbox">Show</label>
-                                  </div>
-                                </td>
-                            </tr>
+                                                                </span>
+                                                            </td>
 
-                          </tbody>
-                        </table>
-                      </div>
+                                                            <td>
+                                                                <div class="">
+                                                                    <input name="checkbox" type="checkbox" [(ngModel)]="userPrivacy[i].privacy" (change)="checkValue()" style="height:auto !important;">
+                                                                    <label for="checkbox">Show</label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
 
-                     
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-                <div class="clearfix"> </div>
-              </div>
-            </div>
-          </div>
 
 
-          <div class="col-md-9 profile-right" *ngIf="isTabActive==2">
-            <div class="card">
-              <div class="card-body">
+                    <div class="col-md-9 profile-right" *ngIf="isTabActive==2">
+                        <div class="card">
+                            <div class="card-body">
 
-                <div class="">
+                                <div class="">
 
-                  <ul class="mui-tabs__bar mui-tabs__bar--justified">
-                    <li class="mui--is-active">
-                      <a data-mui-toggle="tab" data-mui-controls="pane-justified-1">Change Password</a>
-                    </li>
-                    <li class="">
-                      <a data-mui-toggle="tab" data-mui-controls="pane-justified-2">Change Email</a>
-                    </li>
-                    <!-- <li class="">
+                                    <ul class="mui-tabs__bar mui-tabs__bar--justified">
+                                        <li class="mui--is-active">
+                                            <a data-mui-toggle="tab" data-mui-controls="pane-justified-1">Change Password</a>
+                                        </li>
+                                        <li class="">
+                                            <a data-mui-toggle="tab" data-mui-controls="pane-justified-2">Change Email</a>
+                                        </li>
+                                        <!-- <li class="">
                       <a data-mui-toggle="tab" data-mui-controls="pane-justified-3">2FA</a>
                     </li> -->
-                  </ul>
-                  <div class="" style="padding: 2em 0 0; ">
-                    <div class="mui-tabs__pane mui--is-active" id="pane-justified-1">
-                      <form class="mui-form" [formGroup]="ChangePasswordForm" (ngSubmit)="ChangePassword()" novalidate>
-                        <div class="col-sm-6">
-                          <div class="mui-textfield mui-textfield--float-label">
-                            <input type="password" name="oldpassword" formControlName="oldpassword" required class="mui--is-empty mui--is-pristine mui--is-touched">
-                            <label>Current Password</label>
-                          </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="col-sm-6">
-                          <div class="mui-textfield mui-textfield--float-label">
-                            <input type="password" name="password" formControlName="password" required class="mui--is-empty mui--is-untouched mui--is-pristine">
-                            <label>New Password</label>
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="mui-textfield mui-textfield--float-label">
-                            <input type="password" name="confirmPassword" formControlName="confirmPassword" class="mui--is-empty mui--is-untouched mui--is-pristine">
-                            <label>Confirm Password</label>
-                          </div>
-                        </div>
-                        <div class="clearfix"> </div>
-                        <br>
+                                    </ul>
+                                    <div class="" style="padding: 2em 0 0; ">
+                                        <div class="mui-tabs__pane mui--is-active" id="pane-justified-1">
+                                            <form class="mui-form" [formGroup]="ChangePasswordForm" (ngSubmit)="ChangePassword()" novalidate>
+                                                <div class="col-sm-6">
+                                                    <div class="mui-textfield mui-textfield--float-label">
+                                                        <input type="password" name="oldpassword" formControlName="oldpassword" required class="mui--is-empty mui--is-pristine mui--is-touched">
+                                                        <label>Current Password</label>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="col-sm-6">
+                                                    <div class="mui-textfield mui-textfield--float-label">
+                                                        <input type="password" name="password" formControlName="password" required class="mui--is-empty mui--is-untouched mui--is-pristine">
+                                                        <label>New Password</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="mui-textfield mui-textfield--float-label">
+                                                        <input type="password" name="confirmPassword" formControlName="confirmPassword" class="mui--is-empty mui--is-untouched mui--is-pristine">
+                                                        <label>Confirm Password</label>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"> </div>
+                                                <br>
 
+                                                <div class="col-md-12" style="text-align: center;">
+                                                    <span style="text-align: center;color: red; font-size: 12px;">{{passwordMismatch}}</span>
+                                                </div>
+                                                <div class="col-md-offset-2 col-md-10 text-center">
+                                                    <div class="col-sm-4 col-xs-12">
 
-                        <div class="col-md-offset-1 col-md-10 text-center">
-                          <div class="col-sm-4 col-xs-12">
-                            <button type="submit" [disabled]="!ChangePasswordForm.valid" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Update password</button>
-                          </div>
-                          <div class="col-sm-4 col-xs-12">
-                            <button type="reset" class="mui-btn mui-btn--raised mui-btn--danger btn-block">Reset</button>
-                          </div>
-                        </div>
+                                                        <button type="submit" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Update password</button>
+                                                    </div>
+                                                    <div class="col-sm-4 col-xs-12">
+                                                        <button type="reset" class="mui-btn mui-btn--raised mui-btn--danger btn-block">Reset</button>
+                                                    </div>
+                                                </div>
 
-                        <div class="clearfix"> </div>
-                        <br>
-                      </form>
+                                                <div class="clearfix"> </div>
+                                                <br>
+                                            </form>
+                                            <div class="col-md-offset-2 col-md-6 " *ngIf="responseMsg">
+                                                <div class="alert alert-success" *ngIf="responseMsg.success" style="text-transform: capitalize">
+                                                    <!-- <strong>Success!</strong> -->
+                                                    {{responseMsg.message}}
+                                                </div>
 
-                    </div>
-                    <div class="mui-tabs__pane" id="pane-justified-2">
+                                                <div class="alert alert-danger" *ngIf="!responseMsg.success" style="text-transform: capitalize">
+                                                    <!-- <strong>Error!</strong> -->
+                                                    {{responseMsg.message}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mui-tabs__pane" id="pane-justified-2">
 
-                      <!-- <div class="col-md-offset-3 col-md-6">
+                                            <!-- <div class="col-md-offset-3 col-md-6">
 
 												<form class="mui-form"> 
 
@@ -775,135 +785,131 @@
 												</form>
                       </div> -->
 
-                      <div class="col-lg-offset-2 col-md-8">
-                        <div class="row">
-                         <div class="container">
-                              <div class="text-center">
-                                  <div class="col-sm-12">
-                                    <div class="mui-textfield mui-textfield--float-label">
-                                      <input type="text" name="password"   class="mui--is-empty mui--is-untouched mui--is-pristine">
-                                      <label>Email-Id</label>
+                                            <!-- <div class="col-lg-offset-2 col-md-8"> -->
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="mui-textfield mui-textfield--float-label">
+                                                        <input type="text" name="password" class="mui--is-empty mui--is-untouched mui--is-pristine">
+                                                        <label>Email-Id</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="mui-textfield mui-textfield--float-label">
+                                                        <input type="text" class="mui--is-empty mui--is-untouched mui--is-pristine">
+                                                        <label>Confirm Email-Id</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 text-center col-md-offset-2">
+
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <button type="submit" [disabled]="!ChangePasswordForm.valid" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Update</button>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <button type="reset" class="mui-btn mui-btn--raised mui-btn--danger btn-block">Reset</button>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- </div> -->
+
+
+                                            <div class="clearfix"> </div>
+                                        </div>
+                                        <div class="mui-tabs__pane" id="pane-justified-3">
+                                            <!-- <h5>2 Factor Authentication </h5> -->
+
+                                            <div class="text-center">
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <h5>we are evolving, will be soon up.</h5>
+                                                <br>
+                                                <br>
+                                                <br>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
-                                  <div class="col-sm-12">
-                                    <div class="mui-textfield mui-textfield--float-label">
-                                      <input type="text"  class="mui--is-empty mui--is-untouched mui--is-pristine">
-                                      <label>Confirm Email-Id</label>
-                                    </div>
-                                  </div>
                                 </div>
-                              </div>
+
+                            </div>
                         </div>
-                        <div class="col-md-10 text-center col-md-offset-2" >
-                          
-                            <div class="col-sm-4 col-xs-12">
-                              <button type="submit" [disabled]="!ChangePasswordForm.valid" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Update</button>
-                            </div>
-                            <div class="col-sm-4 col-xs-12">
-                              <button type="reset" class="mui-btn mui-btn--raised mui-btn--danger btn-block">Reset</button>
-                            </div>
-                          
-                          </div>
-                        
-                      </div>
-
-
-                      <div class="clearfix"> </div>
                     </div>
-                    <div class="mui-tabs__pane" id="pane-justified-3">
-                      <!-- <h5>2 Factor Authentication </h5> -->
 
-                      <div class="text-center">
-                        <br>
-                        <br>
-                        <br>
-                        <h5>we are evolving, will be soon up.</h5>
-                        <br>
-                        <br>
-                        <br>
-                      </div>
+
+
+                    <div class="col-md-9 profile-right" *ngIf="isTabActive==3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-block">
+                                    <div class="card-header">
+                                        <small>Recent Activities</small>
+                                    </div>
+                                    <br>
+                                    <div class="table-responsive" *ngIf="loginActivity.length>0">
+                                        <table class="mui-table mui-table--bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Time </th>
+                                                    <th>Date</th>
+                                                    <th>IP Address</th>
+                                                    <th>User Agent</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let activity of loginActivity; let i = index">
+                                                    <td>{{activity.time}}</td>
+                                                    <td>{{activity.date}}</td>
+                                                    <td>{{activity.ipAddress}}</td>
+                                                    <td>{{activity.userAgent}}</td>
+                                                    <td>
+                                                        <img *ngIf="activity.status=='success'" src="assets/images/active.png" alt="Active">
+                                                        <img *ngIf="activity.status=='failure'" src="assets/images/active.png" alt="Active">
+                                                    </td>
+                                                </tr>
+
+                                                <tr *ngIf="loginActivity?.length==0">
+                                                    <td style="text-align:center;" colspan="5"></td>
+
+                                                </tr>
+
+                                                <tr *ngIf="loginActivity?.length==0">
+                                                    <td style="text-align:center;" colspan="5">No Records!</td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                        <!-- <pagination-controls (pageChange)="p = $event" *ngIf="loginActivity?.length>0"></pagination-controls> -->
+
+
+                                    </div>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
+
+
                 </div>
-
-              </div>
             </div>
-          </div>
-
-
-
-          <div class="col-md-9 profile-right" *ngIf="isTabActive==3">
-            <div class="card">
-              <div class="card-body">
-                <div class="card-block">
-                  <div class="card-header">
-                    <small>Recent Activities</small>
-                  </div>
-                  <br>
-                  <div class="table-responsive" *ngIf="loginActivity.length>0">
-                    <table class="mui-table mui-table--bordered">
-                      <thead>
-                        <tr>
-                          <th>Time </th>
-                          <th>Date</th>
-                          <th>IP Address</th>
-                          <th>User Agent</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let activity of loginActivity  | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
-                          <td>{{activity.time}}</td>
-                          <td>{{activity.date}}</td>
-                          <td>{{activity.ipAddress}}</td>
-                          <td>{{activity.userAgent}}</td>
-                          <td>
-                            <img *ngIf="activity.status=='success'" src="assets/images/active.png" alt="Active">
-                            <img *ngIf="activity.status=='failure'" src="assets/images/active.png" alt="Active">
-                          </td>
-                        </tr>
-
-                        <tr *ngIf="loginActivity?.length==0">
-                          <td style="text-align:center;" colspan="5"></td>
-
-                        </tr>
-
-                        <tr *ngIf="loginActivity?.length==0">
-                          <td style="text-align:center;" colspan="5">No Records!</td>
-
-                        </tr>
-
-                      </tbody>
-                    </table>
-
-                    <pagination-controls (pageChange)="p = $event" *ngIf="loginActivity?.length>0"></pagination-controls>
-
-
-                  </div>
-                </div>
-                <div class="clearfix"> </div>
-              </div>
-            </div>
-          </div>
-
 
         </div>
-      </div>
+        <!-- END MAIN CONTAINER -->
+
 
     </div>
-    <!-- END MAIN CONTAINER -->
-
-
-  </div>
 
 
 
 
-  <app-footer></app-footer>
+    <app-footer></app-footer>
 
-  <!-- SCROLL TOP -->
-  <a id="scroll-top" class="fadeInRight animate-me">
-    <i class="fa fa-angle-double-up"></i>
-  </a>
+    <!-- SCROLL TOP -->
+    <a id="scroll-top" class="fadeInRight animate-me">
+        <i class="fa fa-angle-double-up"></i>
+    </a>
 
 </div>

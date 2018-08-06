@@ -14,7 +14,7 @@ import { ProgramDetailsService } from './program-details.service';
 @Component({
   selector: 'app-program-details',
   templateUrl: './program-details.component.html',
-  styleUrls: ['./program-details.component.css']
+  styleUrls: ['./program-details.component.scss']
 })
 export class ProgramDetailsComponent implements OnInit {
   // isLoader: boolean = true;
@@ -139,8 +139,10 @@ export class ProgramDetailsComponent implements OnInit {
   response: any = {
     'bugs': []
   };
+  totalBugs: any;
   listofHallOfFame: any [] = [];
   p: number = 1;
+  submitbutton = false;
 
   constructor(
     private service: ProgramDetailsService,
@@ -156,12 +158,51 @@ export class ProgramDetailsComponent implements OnInit {
     this.pid = this.route.snapshot.params.pid;
     this.service.getProgramById(this.pid).subscribe(res =>{
       this.response = res;
-      console.log("programInfo",res)
+      this.totalBugs = this.response.bugs.length;
+      this.submitbutton = this.response.isParticipated;
       this.isLoader = false;
     })
     this.service.getHallOfFame(this.pid).subscribe(res =>{
       this.listofHallOfFame = res;
     })
+  }
+
+  participateOrJoinPrograms(){
+     this.isLoader = true;
+
+    this.service.getParticipateOrJoinPrograms(this.pid).subscribe(
+      (result: any) => {
+        this.isLoader = false;
+        if (result) {
+          this.submitbutton = true;
+        }
+
+      }, (error) => {
+        this.isLoader = false;
+      }
+    );
+
+  }
+
+   cancelPrograms() {
+
+    this.isLoader = true;
+
+    this.service.cancelProgram(this.pid).subscribe(
+      (result: any) => {
+        this.isLoader = false;
+        if (result) {
+
+          this.router.navigate(['programs']);
+
+        }
+
+      }, (error) => {
+        this.isLoader = false;
+
+      }
+    );
+
   }
 
 

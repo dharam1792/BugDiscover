@@ -1,0 +1,18 @@
+.card {
+    min-height: 60vh;
+}
+
+.card.small-card {
+    min-height: 13vh !important;
+}
+
+
+/* Validation */
+
+.has-error {
+    border-color: red;
+}
+
+.has-success {
+    border-color: green;
+}

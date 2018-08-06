@@ -6,6 +6,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { OrderModule } from 'ngx-order-pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { AppComponent } from './app.component';
@@ -67,8 +68,11 @@ import { HallOfFameService } from './hall-of-fame/hall-of-fame.service';
 import { ProgramService } from './programs/program.service';
 import { ProgramDetailsService } from './program-details/program-details.service';
 import { SubmissionsService } from './submissions/submissions.service';
+import { SubmitReportService } from './submit-report/submit-report.service';
+import { MyAccountService } from './my-account/my-account.service';
 
 import { DatePipe } from '@angular/common';
+import { CommonModalComponent } from './shared/common-modal/common-modal.component';
  
 export function createHttpService(backend: ConnectionBackend,
   defaultOptions: RequestOptions,
@@ -102,7 +106,8 @@ return new HttpService(backend, defaultOptions, httpCacheService, authService);
     ProgramDetailsComponent,
     LoggedoutComponent,
     ProgramDetailsResearchComponent,
-    SubmitReportComponent
+    SubmitReportComponent,
+    CommonModalComponent
   ],
   imports: [
     NgxPaginationModule,
@@ -112,7 +117,8 @@ return new HttpService(backend, defaultOptions, httpCacheService, authService);
     HttpModule,
     HttpClientModule,
     OrderModule,
-    RouterModule.forRoot(appRoutes,{ useHash: true })
+    RouterModule.forRoot(appRoutes,{ useHash: true }),
+    NgbModule.forRoot()
   ],
   providers: [
     DatePipe,
@@ -132,8 +138,12 @@ return new HttpService(backend, defaultOptions, httpCacheService, authService);
     HallOfFameService,
     ProgramService,
     ProgramDetailsService,
-    SubmissionsService
+    SubmissionsService,
+    SubmitReportService,
+    MyAccountService
   ],
+  entryComponents: [CommonModalComponent],
+  exports: [CommonModalComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -14,4 +14,13 @@ export class ProgramDetailsService {
     getHallOfFame(id: any): Observable<any> {
         return this.http.get('halloffame/program/'+id).map(req => req.json());
     }
+
+    getParticipateOrJoinPrograms(id: any): Observable<any> {
+        return this.http.get('program/join/'+ id);
+    }
+
+    cancelProgram(id: any): Observable<any>{
+        let data = {};
+        return this.http.post('program/leave/'+id, data);
+    }
 }

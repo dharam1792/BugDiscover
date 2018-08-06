@@ -1,62 +1,62 @@
 <app-header></app-header>
 
 <div class="container">
-  <div class=" ">
-    <div class="card-body">
-      <div class="card-block">
-        <div class="row">
-          <div class="col-md-offset-1 col-md-10">
-            <ul class="mui-tabs__bar mui-tabs__bar--justified">
-              <li class="mui--is-active">
-                <a data-mui-toggle="tab" data-mui-controls="pane-justified-1">Report Submission</a>
-              </li>
-              <li>
-                <a data-mui-toggle="tab" data-mui-controls="pane-justified-2">Preview</a>
-              </li>
-              <li>
-                <a data-mui-toggle="tab" data-mui-controls="pane-justified-3">submit</a>
-              </li>
-            </ul>
-            <div class="mui-tabs__pane" [ngClass]="{'mui--is-active':activeTab == '1'}" *ngIf="activeTab == '1'" id="pane-justified-1">
-
-              <form  [formGroup]="submitReportForm" id="myForm" novalidate>
+    <div class=" ">
+        <div class="card-body">
+            <div class="card-block">
                 <div class="row">
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label class="control-label">Program Name</label>
-                      <div class="">
-                        <input type="text" name="progName" value="{{prgName}}" class="form-control"  readonly="">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label class="control-label">Scope</label>
-                      <div class="">
-                        <select class="form-control" formControlName="scope">
+                    <div class="col-md-offset-1 col-md-10">
+                        <ul class="mui-tabs__bar mui-tabs__bar--justified" style="margin-bottom: 1em!important">
+                            <li class="{{active}}">
+                                <a data-mui-toggle="tab" data-mui-controls="pane-justified-1">Report Submission</a>
+                            </li>
+                            <li class="{{active2}}">
+                                <a data-mui-toggle="tab" data-mui-controls="pane-justified-2">Preview</a>
+                            </li>
+                            <li class="{{active3}}">
+                                <a data-mui-toggle="tab" data-mui-controls="pane-justified-3">submit</a>
+                            </li>
+                        </ul>
+                        <div class="mui-tabs__pane" [ngClass]="{'mui--is-active':activeTab == '1'}" *ngIf="activeTab == '1'" id="pane-justified-1">
+
+                            <form [formGroup]="submitReportForm" id="myForm" novalidate>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Program Name</label>
+                                            <div class="">
+                                                <input type="text" name="progName" [(ngModel)]="prgName" [ngModelOptions]="{standalone: true}" class="form-control" readonly="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Scope</label>
+                                            <div [ngClass]="{'has-error': ((!scope.valid && scope.touched)), 'has-success': (scope.valid && scope.touched)}">
+                                                <select class="form-control" formControlName="scope">
                           <option value="" disabled="" selected="">Category</option>
                           <option value="1">Category : Target domain</option>
                           <option value="1">Category : Target domain</option>
                           <option value="1">Category : Target domain</option>
                           <option value="1">Category : Target domain</option>
                         </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label class="control-label">Title</label>
-                      <div class="">
-                        <input type="text" class="form-control" id="" formControlName="title" placeholder="Title ">
-                      </div>
-                    </div>
-                  </div>
-                  <!-- <div class="clearfix"> </div> -->
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label class="control-label">vulnerability Type</label>
-                      <div class="">
-                        <select class="form-control" formControlName="vulnerablity_type" style="text-transform: capitalize;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Title</label>
+                                            <div class="" [ngClass]="{'has-error': ((!title.valid && title.touched)), 'has-success': (title.valid && title.touched)}">
+                                                <input type="text" class="form-control" id="" formControlName="title" placeholder="Title ">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="clearfix"> </div> -->
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">vulnerability Type</label>
+                                            <div class="" [ngClass]="{'has-error': ((!vulnerablity_type.valid && vulnerablity_type.touched)), 'has-success': (vulnerablity_type.valid && vulnerablity_type.touched)}">
+                                                <select class="form-control" formControlName="vulnerablity_type" style="text-transform: capitalize;">
                           <option value="" disabled="" selected="">vulnerability Type</option>
                           <option value="1">Injection</option>
                           <option value="2">Broken Authentication and session management</option>
@@ -70,29 +70,29 @@
                           <option value="unvalidated redirects and forwards">unvalidated redirects and forwards </option>
                           <option value="Other">Other </option>
                         </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label class="control-label">CVSS</label>
-                      <div class="">
-                        <input type="text" class="form-control" formControlName="severity" id="" placeholder="Cvss">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label class="control-label">CVSS SCORE</label>
-                      <div class="">
-                        <input type="text" class="form-control" formControlName="score" name="score" id="" placeholder="Cvss Score">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- <div class="row">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">CVSS</label>
+                                            <div class="" [ngClass]="{'has-error': ((!severity.valid && severity.touched)), 'has-success': (severity.valid && severity.touched)}">
+                                                <input type="text" class="form-control" formControlName="severity" id="" placeholder="Cvss">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">CVSS SCORE</label>
+                                            <div class="">
+                                                <input type="text" class="form-control" formControlName="score" name="score" id="" placeholder="Cvss Score">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
 
                   <div class="col-sm-12">
                     <fieldset id="baseMetricGroup">
@@ -204,118 +204,120 @@
                 </div> -->
 
 
-                <br/>
-                <div class="form-group">
-                  <label class="control-label">Description of the vulnerability</label>
-                  <div class="">
-                    <textarea class="form-control" formControlName="description" rows="4"></textarea>
-                  </div>
-                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <label class="control-label">Description of the vulnerability</label>
+                                    <div class="" [ngClass]="{'has-error': ((!description.valid && description.touched)), 'has-success': (description.valid && description.touched)}">
+                                        <textarea class="form-control" formControlName="description" rows="4"></textarea>
+                                    </div>
+                                </div>
 
-                <div class="form-group">
-                  <label class="control-label">Upload Images</label>
-                  
-                  <input type="file" name= "images" formControlName="images" multiple (change)="detectFiles($event)" style="opacity: 1;">
+                                <div class="form-group">
+                                    <label class="control-label">Upload Images</label>
+
+                                    <input type="file" name="images" formControlName="images" multiple accept=".png, .jpg, .jpeg" (change)="detectFiles($event)" style="opacity: 1;">
 
 
-                  <!-- <img [src]="url" height="200">
+                                    <!-- <img [src]="url" height="200">
                   <input type="file" name="img" formControlName="bugImages"  (change)="onSelectFile($event)" multiple style="opacity: 1;"> -->
-                  <!-- <div class="upload">
+                                    <!-- <div class="upload">
                     <label>Upload Images</label>
                     <input type="file" name="images1[]" id="images" multiple=""> 
                     
                   </div> -->
-                </div>
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label class="control-label">How the bug was Identified</label>
-                      <div class="">
-                        <select class="form-control" formControlName="identifiedBy" style="text-transform: capitalize;">
-                          <option value="" disabled="" selected="">Select</option>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">How the bug was Identified</label>
+                                            <div class="" [ngClass]="{'has-error': ((!identifiedBy.valid && identifiedBy.touched)), 'has-success': (identifiedBy.valid && identifiedBy.touched)}">
+                                                <select class="form-control" formControlName="identifiedBy" style="text-transform: capitalize;">
+                          <option value="" hidden>Select</option>
                           <option value="1">Automated Tools</option>
                           <option value="2">Manually</option>
                           <option value="3">Team Work</option>
                           <option value="4">Other</option>
                         </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label">Is this vulnerability public or known to Third-Party ? </label>
-                  <div class="">
-                    <div class="pure-checkbox">
-                      <input id="radio1" name="answer" type="radio" [value]="1" formControlName="answer">
-                      <label for="radio1">Yes, this vulnerability is public or known to Third-Party </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Is this vulnerability public or known to Third-Party ? </label>
+                                    <div class="">
+                                        <div class="pure-checkbox">
+                                            <input id="radio1" name="answer" type="radio" [value]="1" formControlName="answer">
+                                            <label for="radio1">Yes, this vulnerability is public or known to Third-Party </label>
 
-                      <input id="radio2" name="answer" type="radio" [value]="0" formControlName="answer">
-                      <label for="radio2">No, this vulnerability is private </label>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group" *ngIf="submitReportForm.value.answer">
-                  <label class="control-label">If Yes, </label>
-                  <div class="">
-                    <input type="text" class="form-control" formControlName="ifYes" name="" id="" placeholder="If yes then.." />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label">Additional Notes </label>
-                  <div class="">
-                    <textarea class="form-control" formControlName="notes" rows="4"></textarea>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="pure-checkbox">
-                    <input id="check1" name="" type="checkbox" formControlName="notes">
-                    <label for="check1">I accept the
+                                            <input id="radio2" name="answer" type="radio" [value]="0" formControlName="answer">
+                                            <label for="radio2">No, this vulnerability is private </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" *ngIf="answer.value == 1">
+                                    <label class="control-label">If Yes, </label>
+                                    <div class="">
+                                        <input type="text" class="form-control" formControlName="ifYes" name="" id="" placeholder="If yes then.." />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Additional Notes </label>
+                                    <div class="" [ngClass]="{'has-error': ((!notes.valid && notes.touched)), 'has-success': (notes.valid && notes.touched)}">
+                                        <textarea class="form-control" formControlName="notes" rows="4"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="pure-checkbox">
+                                        <input id="check1" name="" type="checkbox" formControlName="terms">
+                                        <label for="check1">I accept the
                       <a href="terms-and-conditions.html" target="_blank"> Term and conditions </a>
                     </label>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="row">
-                    <div class="col-sm-offset-3 col-sm-6">
-                      <div class=" text-center">
-                        <button type="button" (click)="changeTab('2')"  [disabled]="!submitReportForm.valid"  class="mui-btn mui-btn--raised mui-btn--primary btn-block">Next</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-offset-3 col-sm-6">
+                                            <div class=" text-center">
+                                                <p style="color: red;">{{error}}</p>
+                                                <button type="button" (click)="changeTab('2')" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
 
-            </div>
-            <div class="mui-tabs__pane" id="pane-justified-2" [ngClass]="{'mui--is-active':activeTab == '2'}" *ngIf="activeTab == '2'" style="padding-bottom:0px;">
-              <div class="row">
+                        </div>
+                        <div class="mui-tabs__pane" id="pane-justified-2" [ngClass]="{'mui--is-active':activeTab == '2'}" *ngIf="activeTab == '2'" style="padding-bottom:0px;">
+                            <div class="row">
 
-                <div class="col-sm-9">
-                  <div class=" ">
-                    <h5>Program Name :
-                      <span>{{prgName}},</span>
-                    </h5>
-                    <h5>Scope :
-                      <span>{{submitReportForm.value.scope}},</span>
-                    </h5>
-                    <h5>Title :
-                      <span>{{submitReportForm.value.title}} </span>
-                    </h5>
-                    <h5>vulnerability Type :
-                      <span>{{submitReportForm.value.vulnerablity_type}}</span>
-                    </h5>
-                    <h5>Severity Score :
-                      <span>{{submitReportForm.value.cvssScore}}</span>
-                    </h5>
-                    <!-- <img src="../resources/images/ss.png" height="" alt="Severity Score"> -->
+                                <div class="col-sm-9">
+                                    <div class=" ">
+                                        <h5>Program Name :
+                                            <span>{{prgName}},</span>
+                                        </h5>
+                                        <h5>Scope :
+                                            <span>{{scope.value}},</span>
+                                        </h5>
+                                        <h5>Title :
+                                            <span>{{title.value}} </span>
+                                        </h5>
+                                        <h5>vulnerability Type :
+                                            <span>{{vulnerablity_type.value}}</span>
+                                        </h5>
+                                        <h5>Severity Score :
+                                            <span>{{severity.value}}</span>
+                                        </h5>
+                                        <!-- <img src="../resources/images/ss.png" height="" alt="Severity Score"> -->
 
 
-                    <h5>Description of the vulnerability :</h5>
-                    <p>{{submitReportForm.value.cvssScore}}</p>
-                    <h5>Uploaded Images :</h5>
-                    <div>
-                        <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="180">
-                      </div>
-                    <!-- <div id="text-carousel" class="carousel slide" data-ride="carousel">
+                                        <h5>Description of the vulnerability :
+                                            <span>{{description.value}}</span>
+                                        </h5>
+                                        <h5>Uploaded Images :</h5>
+                                        <div>
+                                            <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="180">
+                                        </div>
+                                        <!-- <div id="text-carousel" class="carousel slide" data-ride="carousel">
                       <div class="carousel-inner">
 
                          
@@ -341,43 +343,44 @@
                       </a>
                     </div> -->
 
-                    <h5>How the bug was Identified :
-                      <span>{{submitReportForm.value.identifiedBy}}</span>
-                    </h5>
-                    <h5>Is this vulnerability public or known to Third-Party ? :
-                      <span>{{submitReportForm.value.answer}}</span>
-                    </h5>
-                    <h5 *ngIf="submitReportForm.value.answer">If Yes, :
-                      <span>{{submitReportForm.value.ifYes}}</span>
-                    </h5>
-                    <h5>Additional Notes</h5>
-                    <p>{{submitReportForm.value.notes}}</p>
-                  </div>
-                </div>
+                                        <h5>How the bug was Identified :
+                                            <span>{{identifiedBy.value}}</span>
+                                        </h5>
+                                        <h5>Is this vulnerability public or known to Third-Party ? :
+                                            <span>{{answer.value}}</span>
+                                        </h5>
+                                        <h5 *ngIf="submitReportForm.value.answer">If Yes, :
+                                            <span>{{ifYes.value}}</span>
+                                        </h5>
+                                        <h5>Additional Notes :
+                                            <span>{{notes.value}}</span>
+                                        </h5>
+                                    </div>
+                                </div>
 
-              </div>
-              <br/>
-              <div class="clearfix"> </div>
-              <div class="row">
-                <div class="col-sm-4 col-xs-12">
-                  <button (click)="changeTab('1')" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Previous</button>
-                </div>
-                <div class="col-sm-4 col-xs-12">
-                  <button data-mui-toggle="tab" data-mui-controls="pane-justified-3" type="button"  (click)="formSubmit();changeTab('3')" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Submit</button>
-                </div>
-              </div>
-            </div>
-            <div class="mui-tabs__pane" id="pane-justified-3" [ngClass]="{'mui--is-active':activeTab == '3'}" *ngIf="activeTab == '3'">
-              <div class="card-block">
-                <div class="text-center">
-                  <h2>Your program submitted successfully.!</h2>
-                </div>
-              </div>
+                            </div>
+                            <br/>
+                            <div class="clearfix"> </div>
+                            <div class="row">
+                                <div class="col-sm-4 col-xs-12">
+                                    <button (click)="changeTab('1')" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Previous</button>
+                                </div>
+                                <div class="col-sm-4 col-xs-12">
+                                    <button data-mui-toggle="tab" data-mui-controls="pane-justified-3" type="button" (click)="formSubmit();changeTab('3')" class="mui-btn mui-btn--raised mui-btn--primary btn-block">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mui-tabs__pane" id="pane-justified-3" [ngClass]="{'mui--is-active':activeTab == '3'}" *ngIf="activeTab == '3'">
+                            <div class="card-block">
+                                <div class="text-center">
+                                    <h2>Your program submitted successfully.!</h2>
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>

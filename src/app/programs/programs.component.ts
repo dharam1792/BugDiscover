@@ -115,9 +115,11 @@ export class ProgramsComponent implements OnInit {
 
   changeSort(data: any){
     // window.alert(data);
-    const date1 = this.datePipe.transform(this.date, 'short');
-    window.alert(this.date);
-    this.orderByValue = data;
+    if(this.date){
+      const date1 = this.datePipe.transform(this.date, 'short');
+    } else {
+      this.orderByValue = data;
+    }
   }
 
 }

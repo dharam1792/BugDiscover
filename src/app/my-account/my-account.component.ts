@@ -1,32 +1,31 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { Http } from "@angular/http";
-import "rxjs/Rx";
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { MyAccountService } from './my-account.service';
+import { AuthenticationService } from '../core/auth/auth.service';
+import { Validator } from '../shared/validator';
 
-import { ConfigService } from '../config';
-import { BaseService } from '../base-service.service';
-
+export class certificateItem {
+  certificate: any;
+  license: any;
+}
 
 @Component({
   selector: 'app-my-account',
   templateUrl: './my-account.component.html',
-  styleUrls: ['./my-account.component.css']
+  styleUrls: ['./my-account.component.scss']
 })
 export class MyAccountComponent implements OnInit {
-  userType: string = localStorage.getItem('userType');
-  userProfile: any = localStorage.getItem('userProfile');
 
   @Output() ProfileUpdate = new EventEmitter();
+
+  userType: any;
 
   isTabActive = 1;
   isSubTabActive = 1;
 
   isLoader: boolean = true;
-  userProfileInfo: any = [];
+  userProfileInfo: any = {};
   loginActivity: any = [];
 
   ProfileForm: FormGroup;
@@ -44,54 +43,52 @@ export class MyAccountComponent implements OnInit {
 
   responseMsg: any;
 
-  userName: FormControl;
-  fullName: FormControl;
-  email: FormControl;
-  skype: FormControl;
-  phone: FormControl;
-  website: FormControl;
-  socialLinks: FormControl;
-  achivements: FormControl;
-  hallOfFame: FormControl;
-  certificates: FormControl;
-  aboutMe: FormControl;
-  profileImageUrl: any;
-  designation: FormControl;
-  score: FormControl;
+  public userName: AbstractControl;
+  public fullName: AbstractControl;
+  public email: AbstractControl;
+  public skype: AbstractControl;
+  public phone: AbstractControl;
+  public website: AbstractControl;
+  public socialLinks: AbstractControl;
+  public achivements: AbstractControl;
+  public hallOfFame: AbstractControl;
+  public certificates: AbstractControl;
+  public aboutMe: AbstractControl;
+  public profileImageUrl: any;
+  public designation: AbstractControl;
+  public score: AbstractControl;
 
-  
-  CompanyName: FormControl;
-  RegistararName: FormControl;
-  RegistararDesignation: FormControl;
+
+  public CompanyName: AbstractControl;
+  public RegistararName: AbstractControl;
+  public RegistararDesignation: AbstractControl;
 
   ChangePasswordForm: FormGroup;
 
-  certificatesList: any[] = [
-    {
-      "certificate": "",
-      "license": ""
-    }
-  ];
+  public oldPassword: AbstractControl;
+  public password: AbstractControl;
+  public confirmPassword: AbstractControl;
+
+  passwordMismatch: any;
+
+  certificatesList: any[] = [];
+  addEnable: boolean = false;
+  editEnable: boolean = true;
+  itemIndex: any;
 
   isFileUploadLoader: boolean = false;
 
   userPrivacy: any = [];
+  personalInfo: any;
 
+  btnTaxt: string = 'Upload Photo';
 
-  btnTaxt:string = 'Upload Photo';
-
-  constructor(public http: Http, public _config: ConfigService, public _baseService: BaseService, private fb: FormBuilder,
+  constructor(
+    public service: MyAccountService,
+    private fb: FormBuilder,
+    private authService: AuthenticationService,
     private router: Router) {
-
-
-    if (localStorage.getItem("token")) {
-      this.getUserProfile();
-      this._baseService.getProfile();
-    }
-    else {
-      this.router.navigate(['dashboard']);
-    }
-
+    this.userType = this.authService.credentials.userType;
     this.createForm();
     this.getUserPrivacy();
 
@@ -110,15 +107,30 @@ export class MyAccountComponent implements OnInit {
   ngOnInit() {
   }
 
-  AddCertificates() {
-    var certificateItem = {
-      "certificate": "",
-      "license": ""
-    };
-
-    this.certificatesList.push(certificateItem);
+  AddCertificates(index: any) {
+    if(index >= 0){
+      let newItem = new certificateItem;
+      newItem.certificate = this.certificatesList[index].certificate;
+      newItem.license = this.certificatesList[index].license;
+      this.certificatesList[index] = newItem;
+      console.log(this.certificatesList);
+      this.addEnable = false;
+      this.editEnable = true;
+      this.itemIndex = null;
+    } else {
+    this.itemIndex = this.certificatesList.length;
+    this.addEnable = true;
+    this.editEnable = false;
+    let newItem = new certificateItem;
+    this.certificatesList.push(newItem);
+    }
   }
 
+  editCertificates(index :any){
+    this.addEnable = true;
+    this.editEnable = false;
+    this.itemIndex = index;
+  }
 
 
   createForm() {
@@ -126,42 +138,77 @@ export class MyAccountComponent implements OnInit {
 
     if (this.userType == 'R') {
       this.ProfileForm = this.fb.group({
-        userName: ['', Validators.required],
-        fullName: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        skype: ['', Validators.required],
-        phone: ['', Validators.required],
-        website: ['', Validators.required],
-        socialLinks: ['', Validators.required],
-        achivements: ['', Validators.required],
-        hallOfFame: ['', Validators.required],
-        // certificates: ['', Validators.required],
-        aboutMe: ['', Validators.required],
+        'userName': ['', Validators.compose([Validators.required])],
+        'fullName': ['', Validators.compose([Validators.required])],
+        'email': ['', Validators.compose([Validators.required])],
+        'skype': ['', Validators.compose([Validators.required])],
+        'phone': ['', Validators.compose([Validators.required])],
+        'website': ['', Validators.compose([Validators.required])],
+        'socialLinks': ['', Validators.compose([Validators.required])],
+        'achivements': ['', Validators.compose([Validators.required])],
+        'hallOfFame': ['', Validators.compose([Validators.required])],
+        'certificates': [''],
+        'aboutMe': ['', Validators.compose([Validators.required])]
       });
+      this.userName = this.ProfileForm.controls['userName'];
+      this.fullName = this.ProfileForm.controls['fullName'];
+      this.email = this.ProfileForm.controls['email'];
+      this.skype = this.ProfileForm.controls['skype'];
+      this.phone = this.ProfileForm.controls['phone'];
+      this.website = this.ProfileForm.controls['website'];
+      this.socialLinks = this.ProfileForm.controls['socialLinks'];
+      this.achivements = this.ProfileForm.controls['achivements'];
+      this.hallOfFame = this.ProfileForm.controls['hallOfFame'];
+      this.certificates = this.ProfileForm.controls['certificates'];
+      this.aboutMe = this.ProfileForm.controls['aboutMe'];
     }
     else if (this.userType == 'C') {
 
       this.ProfileFormCompany = this.fb.group({
-        CompanyName: ['', [Validators.required,Validators.pattern('[a-zA-Z0-9 ]+')]],
-        RegistararName: ['',[ Validators.required,Validators.pattern('[a-zA-Z0-9 ]+')]],
-        RegistararDesignation: ['', [ Validators.required,Validators.pattern('[a-zA-Z0-9 ]+')]],
-        aboutMe: ['', [Validators.required,Validators.minLength(50)]],
-        email: ['', [Validators.required, Validators.email]],
-        phone: ['', Validators.required],
-        website: ['', Validators.required],
-        socialLinks: ['', Validators.required],
+        // CompanyName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')]],
+        // RegistararName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')]],
+        // RegistararDesignation: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')]],
+        // aboutMe: ['', [Validators.required, Validators.minLength(50)]],
+        // email: ['', [Validators.required, Validators.email]],
+        // phone: ['', Validators.required],
+        // website: ['', Validators.required],
+        // socialLinks: ['', Validators.required],
+        'CompanyName': ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')])],
+        'RegistararName': ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')])],
+        'RegistararDesignation': ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')])],
+        'aboutMe': ['', Validators.compose([Validators.required, Validators.minLength(50)])],
+        'email': ['', Validators.compose([Validators.required])],
+        'phone': ['', Validators.compose([Validators.required])],
+        'website': ['', Validators.compose([Validators.required])],
+        'socialLinks': ['', Validators.compose([Validators.required])]
       });
-
+      this.CompanyName = this.ProfileFormCompany.controls['CompanyName'];
+      this.RegistararName = this.ProfileFormCompany.controls['RegistararName'];
+      this.RegistararDesignation = this.ProfileFormCompany.controls['RegistararDesignation'];
+      this.aboutMe = this.ProfileFormCompany.controls['aboutMe'];
+      this.email = this.ProfileFormCompany.controls['email'];
+      this.phone = this.ProfileFormCompany.controls['phone'];
+      this.website = this.ProfileFormCompany.controls['website'];
+      this.socialLinks = this.ProfileFormCompany.controls['socialLinks'];
     }
 
 
     this.ChangePasswordForm = this.fb.group({
-      oldpassword: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(5)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(5)]]
-    }, { validator: this.checkIfMatchingPasswords('password', 'confirmPassword') });
+      'oldpassword': ['', Validators.compose([Validators.required])],
+      'password': ['', Validators.compose([Validators.required, Validators.minLength(5)])],
+      'confirmPassword': ['', Validators.compose([Validators.required, Validators.minLength(5)])]
+    });
+    this.oldPassword = this.ChangePasswordForm.controls['oldPassword'];
+    this.password = this.ChangePasswordForm.controls['password'];
+    this.confirmPassword = this.ChangePasswordForm.controls['confirmPassword'];
 
-
+    this.confirmPassword.valueChanges.subscribe(val =>{
+      if(this.password.value == val){
+        this.passwordMismatch = '';
+      } else {
+        this.passwordMismatch = 'Password and Confirm Password did not match';
+      }
+    })
 
   }
 
@@ -186,12 +233,16 @@ export class MyAccountComponent implements OnInit {
     }
 
 
-    this._baseService.changePassowrd(postData).subscribe(
+    this.service.changePassowrd(postData).subscribe(
       (result: any) => {
+        const res = result.json()
+        if(res.errors){
+          this.responseMsg = { "success": false, "message": res.errors.msg };
+        } else {
+          this.responseMsg = { "success": true, "message": 'Password updated successfully.' };
+        }
 
-        this.responseMsg = result;
-
-        this.ChangePasswordForm.reset();
+        // this.ChangePasswordForm.reset();
         setTimeout(() => {
           this.responseMsg = "";
         }, 3000);
@@ -237,7 +288,7 @@ export class MyAccountComponent implements OnInit {
 
     let reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
-      
+
       let file = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = (e: any) => {
@@ -266,19 +317,16 @@ export class MyAccountComponent implements OnInit {
   ChangeProfilePic(formDataVal) {
 
 
-    this._baseService.ChangeProfilePicture(formDataVal).subscribe(
+    this.service.ChangeProfilePicture(formDataVal).subscribe(
       (result: any) => {
 
         if (result) {
 
           this.isFileUploadLoader = false;
           this.getUserProfile();
-          this._baseService.getProfile();
-
-          setTimeout(() => {
-            // this.ProfileUpdate.emit(this.userProfileInfo);
-          }, 500);
-          //  console.log("Change Profile Image Successfully");
+          this.service.getProfile().subscribe(res => {
+            console.log(res);
+          });
 
         }
 
@@ -286,14 +334,16 @@ export class MyAccountComponent implements OnInit {
       (error) => {
 
         this.getUserProfile();
-        this._baseService.getProfile();
+        this.service.getProfile().subscribe(res => {
+          console.log(res);
+        });
 
         //  console.log("Change Profile Image Failed");
         this.isFileUploadLoader = false;
 
         if (error.status === 401) {
           console.log("Token Expired");
-          this.Logout();
+          this.authService.logout();
         }
 
       }
@@ -304,22 +354,19 @@ export class MyAccountComponent implements OnInit {
 
     this.isLoader = true;
 
-    this._baseService.getUserProfile().subscribe(
+    this.service.getProfile().subscribe(
       (result: any) => {
 
         if (result) {
-
-          if (this._config.isDummyData) {
-            this.userProfileInfo = this._config.dummyData.MyProfile;
-            this.loginActivity = result.loginActivity;
+          this.userProfileInfo = result.personalInfo;
+          let len = result.loginActivity.length;
+          let j = 0;
+          for (let i = len - 1; i >= len - 10; i--){
+            this.loginActivity[j] = (result.loginActivity[i]);
+            j++;
           }
-          else {
-            this.userProfileInfo = result.personalInfo;
-            this.loginActivity = result.loginActivity;
-          }
-// console.log("@@@"+JSON.stringify(this.userProfileInfo));
-
-
+          console.log('Login Activity ', this.loginActivity)
+          // this.certificatesList = result.personalInfo.certificates;
           this.EditForm();
 
           this.isLoader = false;
@@ -330,7 +377,7 @@ export class MyAccountComponent implements OnInit {
 
         if (error.status === 401) {
           console.log("Token Expired");
-          this.Logout();
+          this.authService.logout();
         }
 
 
@@ -343,24 +390,22 @@ export class MyAccountComponent implements OnInit {
 
     this.isLoader = true;
 
-    this._baseService.getUserPrivacy().subscribe(
+    this.service.getPrivacy().subscribe(
       (result: any) => {
 
-          
+
         // console.log(JSON.stringify(result));
 
         if (result) {
+          result.forEach(element => {
+            if(element.property == 'username'){
 
-          if (this._config.isDummyData) {
-            this.userPrivacy = this._config.dummyData.MyProfile;
-            //this.loginActivity = result.loginActivity;
-          }
-          else {
-            this.userPrivacy = result;
-            //  this.loginActivity = result.loginActivity;
-          }
-// console.log("%%%%%"+JSON.stringify(this.userPrivacy));
+            } else {
+              this.userPrivacy.push(element);
+            }
+          });
           this.isLoader = false;
+          console.log(this.userProfileInfo);
         }
 
       }, (error) => {
@@ -368,21 +413,23 @@ export class MyAccountComponent implements OnInit {
 
         if (error.status === 401) {
           console.log("Token Expired");
-          this.Logout();
+          // this.Logout();
+          this.authService.logout();
         }
 
 
       }
     );
+    this.getUserProfile();
 
   }
 
 
-  Logout() {
-    localStorage.setItem('token', '');
-    this.router.navigate(['/']);
+  // Logout() {
+  //   localStorage.setItem('token', '');
+  //   this.router.navigate(['/']);
 
-  }
+  // }
 
 
 
@@ -390,16 +437,16 @@ export class MyAccountComponent implements OnInit {
   EditForm() {
 
     if (this.userType == 'R') {
-      this.ProfileForm.controls['userName'].setValue(this.userProfileInfo.userName);
-      this.ProfileForm.controls['fullName'].setValue(this.userProfileInfo.fullName);
-      this.ProfileForm.controls['email'].setValue(this.userProfileInfo.email);
-      this.ProfileForm.controls['skype'].setValue(this.userProfileInfo.skype);
-      this.ProfileForm.controls['phone'].setValue(this.userProfileInfo.phone);
-      this.ProfileForm.controls['website'].setValue(this.userProfileInfo.website);
-      this.ProfileForm.controls['socialLinks'].setValue(this.userProfileInfo.socialLinks);
-      this.ProfileForm.controls['achivements'].setValue(this.userProfileInfo.achivements);
-      this.ProfileForm.controls['hallOfFame'].setValue(this.userProfileInfo.hallOfFame);
-      this.ProfileForm.controls['aboutMe'].setValue(this.userProfileInfo.aboutMe);
+      this.userName.setValue(this.userProfileInfo.userName);
+      this.fullName.setValue(this.userProfileInfo.fullName);
+      this.email.setValue(this.userProfileInfo.email);
+      this.skype.setValue(this.userProfileInfo.skype);
+      this.phone.setValue(this.userProfileInfo.phone);
+      this.website.setValue(this.userProfileInfo.website);
+      this.socialLinks.setValue(this.userProfileInfo.socialLinks);
+      this.achivements.setValue(this.userProfileInfo.achivements);
+      this.hallOfFame.setValue(this.userProfileInfo.hallOfFame);
+      this.aboutMe.setValue(this.userProfileInfo.aboutMe);
 
       if (this.userProfileInfo.certificates) {
         if (this.userProfileInfo.certificates.length > 0) {
@@ -413,14 +460,14 @@ export class MyAccountComponent implements OnInit {
 
     }
     else if (this.userType == 'C') {
-      this.ProfileFormCompany.controls['CompanyName'].setValue(this.userProfileInfo.companyName);
-      this.ProfileFormCompany.controls['RegistararName'].setValue(this.userProfileInfo.registrarName);
-      this.ProfileFormCompany.controls['RegistararDesignation'].setValue(this.userProfileInfo.designation);
-      this.ProfileFormCompany.controls['aboutMe'].setValue(this.userProfileInfo.aboutMe);
-      this.ProfileFormCompany.controls['email'].setValue(this.userProfileInfo.email);
-      this.ProfileFormCompany.controls['phone'].setValue(this.userProfileInfo.phone);
-      this.ProfileFormCompany.controls['website'].setValue(this.userProfileInfo.website);
-      this.ProfileFormCompany.controls['socialLinks'].setValue(this.userProfileInfo.socialLinks);
+      this.CompanyName.setValue(this.userProfileInfo.companyName);
+      this.RegistararName.setValue(this.userProfileInfo.registrarName);
+      this.RegistararDesignation.setValue(this.userProfileInfo.designation);
+      this.aboutMe.setValue(this.userProfileInfo.aboutMe);
+      this.email.setValue(this.userProfileInfo.email);
+      this.phone.setValue(this.userProfileInfo.phone);
+      this.website.setValue(this.userProfileInfo.website);
+      this.socialLinks.setValue(this.userProfileInfo.socialLinks);
 
     }
 
@@ -429,11 +476,14 @@ export class MyAccountComponent implements OnInit {
 
 
   doSubmit() {
-
-
     var payLoad = {};
 
     if (this.userType == 'R') {
+      for (let i in this.ProfileForm.controls) {
+        if (this.ProfileForm.controls[i]) {
+          this.ProfileForm.controls[i].markAsTouched();
+        }
+      }
 
       var certificateListData = [];
 
@@ -453,11 +503,16 @@ export class MyAccountComponent implements OnInit {
         halloffame: [this.ProfileForm.value.hallOfFame],
         certificates: certificateListData,
         usernote: this.ProfileForm.value.aboutMe,
-        id: localStorage.getItem("userID")
+        id: this.authService.credentials.userid
       }
 
     }
     else if (this.userType == 'C') {
+      for (let i in this.ProfileFormCompany.controls) {
+        if (this.ProfileFormCompany.controls[i]) {
+          this.ProfileFormCompany.controls[i].markAsTouched();
+        }
+      }
       payLoad = {
         companyName: this.ProfileFormCompany.value.CompanyName,
         registrarName: this.ProfileFormCompany.value.RegistararName,
@@ -467,50 +522,100 @@ export class MyAccountComponent implements OnInit {
         phone: [this.ProfileFormCompany.value.phone],
         website: [this.ProfileFormCompany.value.website],
         socialLinks: [this.ProfileFormCompany.value.socialLinks],
-        id: localStorage.getItem("userID")
+        id: this.authService.credentials.userid
       }
 
     }
 
-    this._baseService.updateProfile(payLoad).subscribe(
-      (result: any) => {
-
-        if (result) {
-
-          this.responseMsg = result;
-          this.isSubTabActive = 1;
-          this._baseService.getProfile();
-
-          this.getUserProfile();
-          this.responseMsg = { "success": true, "message": 'You have successfull updated your profile.' };
-
-
-
-        }
-
-      },
-      (error: any) => {
-        if (error.status === 401) {
-          console.log("Token Expired");
-          this.Logout();
-        }
-        else {
-          let errorval = error;
-
-          let errorResponse = errorval.errors;
-
-          if (errorResponse) {
-            this.responseMsg = { "success": false, "message": 'Profile Updated Failed..' };
+    if(this.userType == 'R') {
+      if(this.ProfileForm.valid){
+        this.service.updateProfile(payLoad).subscribe(
+          (result: any) => {
+    
+            if (result) {
+    
+              this.responseMsg = result;
+              this.isSubTabActive = 1;
+              this.service.getProfile().subscribe(res => {
+                console.log(res);
+              });
+    
+              this.getUserProfile();
+              this.responseMsg = { "success": true, "message": 'You have successfull updated your profile.' };
+    
+    
+    
+            }
+    
+          },
+          (error: any) => {
+            if (error.status === 401) {
+              console.log("Token Expired");
+              this.authService.logout();
+            }
+            else {
+              let errorval = error;
+    
+              let errorResponse = errorval.errors;
+    
+              if (errorResponse) {
+                this.responseMsg = { "success": false, "message": 'Profile Updated Failed..' };
+              }
+              // if (errorResponse.email || errorResponse.username) {
+              //   //code
+              //   this.responseMsg = { "success": false, "message": errorResponse.email.msg ? errorResponse.email.msg : errorResponse.username.msg };
+              // }
+              // console.log("Update Profile Sumbitter failed");
+            }
+    
           }
-          // if (errorResponse.email || errorResponse.username) {
-          //   //code
-          //   this.responseMsg = { "success": false, "message": errorResponse.email.msg ? errorResponse.email.msg : errorResponse.username.msg };
-          // }
-          // console.log("Update Profile Sumbitter failed");
-        }
-
+        );
       }
-    );
+    } else {
+      if(this.ProfileFormCompany.valid){
+        this.service.updateProfile(payLoad).subscribe(
+          (result: any) => {
+    
+            if (result) {
+    
+              this.responseMsg = result;
+              this.isSubTabActive = 1;
+              this.service.getProfile().subscribe(res => {
+                console.log(res);
+              });
+    
+              this.getUserProfile();
+              this.responseMsg = { "success": true, "message": 'You have successfull updated your profile.' };
+    
+    
+    
+            }
+    
+          },
+          (error: any) => {
+            if (error.status === 401) {
+              console.log("Token Expired");
+              this.authService.logout();
+            }
+            else {
+              let errorval = error;
+    
+              let errorResponse = errorval.errors;
+    
+              if (errorResponse) {
+                this.responseMsg = { "success": false, "message": 'Profile Updated Failed..' };
+              }
+              // if (errorResponse.email || errorResponse.username) {
+              //   //code
+              //   this.responseMsg = { "success": false, "message": errorResponse.email.msg ? errorResponse.email.msg : errorResponse.username.msg };
+              // }
+              // console.log("Update Profile Sumbitter failed");
+            }
+    
+          }
+        );
+      }
+    }
 
 
 
@@ -530,9 +635,9 @@ export class MyAccountComponent implements OnInit {
 
 
   checkValue(event: any) {
-      
 
-    var privacyObject:any = {};
+
+    var privacyObject: any = {};
     this.userPrivacy.forEach(element => {
 
       let label = element.property;
@@ -540,46 +645,46 @@ export class MyAccountComponent implements OnInit {
 
       switch (label) {
         case 'email':
-          privacyObject.email = privacy?1:0;
+          privacyObject.email = privacy ? 1 : 0;
           break;
         case 'username':
-          privacyObject.username = privacy?1:0;
+          privacyObject.username = privacy ? 1 : 0;
           break;
         case 'fullname':
-          privacyObject.fullname = privacy?1:0;
+          privacyObject.fullname = privacy ? 1 : 0;
           break;
         case 'skypeID':
-          privacyObject.skypeID = privacy?1:0;
+          privacyObject.skypeID = privacy ? 1 : 0;
           break;
         case 'phone':
-          privacyObject.phone = privacy?1:0;
+          privacyObject.phone = privacy ? 1 : 0;
           break;
         case 'website':
-          privacyObject.website = privacy?1:0;
+          privacyObject.website = privacy ? 1 : 0;
           break;
         case 'socialLinks':
-          privacyObject.socialLinks = privacy?1:0;
+          privacyObject.socialLinks = privacy ? 1 : 0;
           break;
         case 'achivements':
-          privacyObject.achivements = privacy?1:0;
+          privacyObject.achivements = privacy ? 1 : 0;
           break;
         case 'halloffame':
-          privacyObject.halloffame = privacy?1:0;
+          privacyObject.halloffame = privacy ? 1 : 0;
           break;
         case 'certificates':
-          privacyObject.certificates = privacy?1:0;
+          privacyObject.certificates = privacy ? 1 : 0;
           break;
         case 'usernote':
-          privacyObject.usernote = privacy?1:0;
+          privacyObject.usernote = privacy ? 1 : 0;
           break;
         case 'companyname':
-          privacyObject.companyname = privacy?1:0;
+          privacyObject.companyname = privacy ? 1 : 0;
           break;
         case 'designation':
-          privacyObject.designation = privacy?1:0;
+          privacyObject.designation = privacy ? 1 : 0;
           break;
         case 'photo':
-          privacyObject.photo = privacy?1:0;
+          privacyObject.photo = privacy ? 1 : 0;
           break;
 
       }
@@ -588,8 +693,8 @@ export class MyAccountComponent implements OnInit {
 
     console.log(privacyObject);
 
-    
-    this._baseService.updatePrivacy(privacyObject).subscribe(
+
+    this.service.updatePrivacy(privacyObject).subscribe(
       (result: any) => {
 
         if (result) {
@@ -601,7 +706,7 @@ export class MyAccountComponent implements OnInit {
 
         if (error.status === 401) {
           console.log("Token Expired");
-          this.Logout();
+          this.authService.logout();
         }
 
       }
