@@ -293,7 +293,7 @@
 														<tbody>
 															<tr>
 																<td>Email</td>
-																<td colspan="2">{{userProfileInfo[0].email?userProfileInfo[0].email:'---'}}</td>
+																<td class="social-link" colspan="2">{{userProfileInfo[0].email?userProfileInfo[0].email:'---'}}</td>
 															</tr>
 															<tr>
 																<td>Phone Number</td>
@@ -301,20 +301,20 @@
 															</tr>
 															<tr>
 																<td>Skype Id</td>
-																<td colspan="2">{{userProfileInfo[0].skype?userProfileInfo[0].skype:'---'}}</td>
+																<td class="social-link" colspan="2">{{userProfileInfo[0].skype?userProfileInfo[0].skype:'---'}}</td>
 															</tr>
 
 															<tr>
 																<td>Website</td>
-																<td colspan="2">{{userProfileInfo[0].website?userProfileInfo[0].website:'---'}}</td>
+																<td class="social-link" colspan="2">{{userProfileInfo[0].website?userProfileInfo[0].website:'---'}}</td>
 															</tr>
 															<tr>
 																<td>Social Links</td>
-																<td colspan="2">{{userProfileInfo[0].socialLinks?userProfileInfo[0].socialLinks:'---'}}</td>
+																<td colspan="2" class="social-link">{{userProfileInfo[0].socialLinks?userProfileInfo[0].socialLinks:'---'}}</td>
 															</tr>
 															<tr>
 																<td>Achivements</td>
-																<td colspan="2">{{userProfileInfo[0].achivements?userProfileInfo[0].achivements:'---'}}</td>
+																<td colspan="2" class="social-link">{{userProfileInfo[0].achivements?userProfileInfo[0].achivements:'---'}}</td>
 															</tr>
 															<tr>
 																<td>Hall of Fame</td>
@@ -396,8 +396,8 @@
 															<tr><td>Registrar Designation</td><td colspan="2">{{companyInfo.designation || '---'}}</td></tr>
 															<tr><td>Email</td><td colspan="2">XXXX</td></tr>
 															<tr><td>Phone Number</td><td colspan="2">XXXX</td></tr>
-															<tr><td>Website</td><td colspan="2">XXXX</td></tr>
-															<tr><td>Social Links</td><td colspan="2">--</td></tr>
+															<tr><td>Website</td><td class="social-link" colspan="2">XXXX</td></tr>
+															<tr><td>Social Links</td><td class="social-link" colspan="2">--</td></tr>
 															<tr>
 																<td colspan="3">
 																	<button class="btn btn-block btn-danger" (click)="backToMain()">

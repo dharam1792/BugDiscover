@@ -315,7 +315,7 @@ h4,h5,h6{
 }
 .mui-btn.mui-btn--flat[disabled]:active,.mui-btn.mui-btn--flat[disabled]:focus,.mui-btn.mui-btn--flat[disabled]:hover{
     color:rgba(0,0,0,.87);
-    background-color:transparent
+    background-color:transparent;
     box-shadow: none;
     
 }
@@ -1233,8 +1233,7 @@ h4,h5,h6{
     -webkit-box-shadow:none;
     box-shadow:none;
     background-color:transparent;
-    background-image:url(data:image/svg+xml;
-    base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
+    background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
     background-repeat:no-repeat;
     background-position:right center;
     cursor:pointer;
@@ -1340,6 +1339,10 @@ h4,h5,h6{
     text-align:left;
     text-transform:  capitalize;
 }
+.mui-table thead th {
+    padding: 0 10px;
+}
+
 .mui-table>tbody>tr>td,.mui-table>tbody>tr>th,.mui-table>tfoot>tr>td,.mui-table>tfoot>tr>th,.mui-table>thead>tr>td,.mui-table>thead>tr>th{
     padding:10px;
     line-height:1.429

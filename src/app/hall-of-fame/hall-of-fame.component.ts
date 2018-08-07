@@ -161,6 +161,7 @@ export class HallOfFameComponent implements OnInit {
   myhalloffame: any = [];
   isNewHallofFame: boolean = true;
   userProfileInfo: any;
+  getProfile: any;
   companyInfo: any;
   selectedUser: any;
   isLoader: boolean = true;
@@ -178,16 +179,15 @@ export class HallOfFameComponent implements OnInit {
 
   ngOnInit() {
     this.service.getHallOfFame().subscribe(res =>{
-      console.log('Hall of fame', res);
       this.halloffame = res.halloffame;
+      console.log('Hall of fame', this.halloffame);
       this.myhalloffame = res.myhalloffame;
       this.isLoader = false;
     }, err =>{
       this.authService.logout();
     })
-    console.log("hello this.halloffame", this.halloffame);
     this.profileService.getProfile().subscribe(res =>{
-      console.log(res);
+      this.getProfile = res;
       this.isLoader = false;
     }, err =>{
       this.authService.logout();
@@ -200,6 +200,7 @@ export class HallOfFameComponent implements OnInit {
       this.selectedUser = userType;
       this.service.getUserById(id).subscribe(res =>{
         this.userProfileInfo = res;
+        console.log("userProfileInfo",res)
         this.isNewHallofFame = false;
         this.isLoader = false;
       })

@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from '../config';
 import { BaseService } from '../base-service.service';
 import { Validator } from "../shared/validator";
+import { AuthenticationService } from '../core/auth/auth.service';
 
 declare var $: any;
 
@@ -82,12 +83,13 @@ export class ZeroDiscoverComponent implements OnInit {
 
 
   constructor(public http: Http, public _config: ConfigService, public _baseService: BaseService, private fb: FormBuilder,
-    private router: Router) {
+    private router: Router, private authService: AuthenticationService) {
 
 
 
 
-    if (localStorage.getItem("token")) {
+    if (this.authService.credentials.token) {
+    // if (localStorage.getItem("token")) {
       this.createForm();
       this._baseService.getProfile();
     }

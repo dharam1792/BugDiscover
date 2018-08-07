@@ -625,6 +625,7 @@ export class MyAccountComponent implements OnInit {
 
   removeCertificates(index) {
     this.certificatesList.splice(index, 1);
+    this.editEnable = true;
 
   }
 

@@ -341,18 +341,18 @@ export class DashboardComponent implements OnInit {
     this.service.getProfile().subscribe(res =>{
       console.log("res",res);
       if(this.userType == 'R'){
-        this.service.getResearcher().subscribe(res =>{
+        this.service.getResearcher().subscribe(resp =>{
           console.log("res Researcher",res);
-          this.dashboardInfo = res;
-          this.programList = res.tilesData;
+          this.dashboardInfo = resp;
+          this.programList = resp.tilesData;
           this.currentProgram = this.programList.totalPrograms;
           console.log()
         })
       } else if(this.userType == 'C'){
-        this.service.getCompany().subscribe(res =>{
-          console.log("res Company",res);
-          this.dashboardInfo = res;
-          this.programList = res.tilesData;
+        this.service.getCompany().subscribe(resp =>{
+          console.log("res Company",resp);
+          this.dashboardInfo = resp;
+          this.programList = resp.tilesData;
           this.activeTab = 'totalPrograms';
           this.currentProgram = this.programList.totalPrograms;
         })
